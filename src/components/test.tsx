@@ -1,11 +1,11 @@
 import React from 'react'
-import { GetMinistryAcronyms } from 'components'
+import { GetSubmittedRequests } from 'components'
 import { useQuery } from 'react-query'
 
 export const MyTest = () => {
 	const options = {
-		listName: 'MinistryAcronyms',
-		apiCall: GetMinistryAcronyms,
+		listName: 'SubmittedRequests',
+		apiCall: GetSubmittedRequests,
 	}
 
 	const tableQuery = useQuery(options.listName, options.apiCall)

@@ -1,13 +1,12 @@
 import { RestCall } from '../RestCall/RestCall'
 
 interface GetListProps {
-	baseurl: string
-	listName: string
-	listGUID: string
-	expand: string
-	filter: string
-	select: string
-	endPoint: string
+	baseurl?: string
+	listName?: string
+	listGUID?: string
+	expand?: string
+	filter?: string
+	select?: string
 }
 
 export const GetList = async ({

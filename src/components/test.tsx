@@ -1,12 +1,15 @@
 import React from 'react'
-// import { useQueryClient } from 'react-query'
-import { useMinistryAcronyms } from './hooks/useMinistryAcronyms/useMinistryAcronyms'
+import { GetMinistryAcronyms } from 'components'
+import { useQuery } from 'react-query'
 
 export const MyTest = () => {
-	// const queryClient = useQueryClient()
-	const ministryAcronyms = useMinistryAcronyms()
+	const options = {
+		listName: 'MinistryAcronyms',
+		apiCall: GetMinistryAcronyms,
+	}
 
-	console.log('ministryAcronyms :>> ', ministryAcronyms);
-
-	return <div>hello world</div>
+	const tableQuery = useQuery(options.listName, options.apiCall)
+	console.log('tableQuery :>> ', tableQuery)
+	//@ts-ignore
+	return <div>hello</div>
 }

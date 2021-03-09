@@ -1,4 +1,10 @@
+import { GetList } from './GetList'
+import { GetItems } from './GetItems'
+
 export const GetMinistryAcronyms = async () => {
-    await GetList()
-    await GetItems()
+	const listName = 'Ministry Acronym'
+	const listInfo = await GetList({ listName })
+	const items = await GetItems({ listName })
+
+	return { listInfo, items }
 }

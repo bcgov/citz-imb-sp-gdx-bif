@@ -1,45 +1,32 @@
-import { RestCall, isGuid } from '../../../Components'
+import { RestCall } from '../RestCall/RestCall'
+interface GetItemsProps {
+	baseurl?: string
+	listName?: string
+	listGUID?: string
+	expand?: string
+	filter?: string
+	select?: string
+	sort?: string
+	sortDir?: string
+}
+export const GetItems = async ({
+	baseurl = '',
+	listName,
+	listGUID,
+	expand = '',
+	filter = '',
+	select = '',
+	sort = '',
+	sortDir = 'Asc',
+}: GetItemsProps) => {
+	if (!listName && !listGUID) throw 'GetItems requires listGUID or listName'
 
-export const GetItems = (props) => {
-	let baseurl = ''
-	let listName
-	let listGUID
-	let expand = ''
-	let filter = ''
-	let select = ''
-	let sort = ''
-	let sortDir = 'Asc'
-	let endPoint
+	let endPoint = ''
 
-	if (!props) {
-		return Promise.reject('GetListFields requires listGUID or listName')
-	} else if (isGuid(props)) {
-		listGUID = props
-	} else if (typeof props === 'string') {
-		listName = props
-	} else {
-		;({
-			baseurl = '',
-			listName,
-			listGUID,
-			expand = '',
-			filter = '',
-			select = '',
-			sort = '',
-			sortDir = 'Asc'
-		} = props)
-	}
-
-	if (!listGUID) {
-		if (!listName) {
-			return new Promise((resolve, reject) => {
-				reject('GetList requires listGUID or listName')
-			})
-		} else {
-			endPoint = `/_api/web/Lists/getByTitle('${listName}')/items`
-		}
-	} else {
+	if (listGUID) {
 		endPoint = `/_api/web/Lists('${listGUID}')/items`
+	} else {
+		endPoint = `/_api/web/Lists/getByTitle('${listName}')/items`
 	}
 
 	let endPointParameters = []
@@ -53,13 +40,7 @@ export const GetItems = (props) => {
 		endPoint += `?${endPointParameters.join('&')}`
 	}
 
-	return new Promise((resolve, reject) => {
-		RestCall({ url: baseurl, endPoint: endPoint })
-			.then((response) => {
-				resolve(response.d.results)
-			})
-			.catch((response) => {
-				reject(`GetListItems::${response}`)
-			})
-	})
+	const response = await RestCall({ url: baseurl, endPoint: endPoint })
+
+	return response.d.results
 }

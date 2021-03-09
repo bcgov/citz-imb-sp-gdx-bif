@@ -35,10 +35,10 @@ const doFetch = async (
 }
 
 interface RestCallProps {
-	url: string
+	url?: string
 	endPoint: string
-	method: string
-	body: string | object
+	method?: string
+	body?: string | object
 	headers?: {
 		Accept?: string
 		'content-type'?: string
@@ -46,7 +46,7 @@ interface RestCallProps {
 		Pragma?: string
 		'X-RequestDigest'?: string
 	}
-	cache: string
+	cache?: string
 }
 
 export const RestCall = async ({
@@ -101,19 +101,19 @@ export const RestCall = async ({
 
 	switch (options.method.toLowerCase()) {
 		case 'post':
-			DigestValueResponse = await GetFormDigestValue(url)
+			DigestValueResponse = await GetFormDigestValue()
 			options.headers['X-RequestDigest'] = DigestValueResponse
 			break
 		case 'merge':
-			DigestValueResponse = await GetFormDigestValue(url)
+			DigestValueResponse = await GetFormDigestValue()
 			options.headers['X-RequestDigest'] = DigestValueResponse
 			options.headers['X-HTTP-Method'] = 'MERGE'
 			options.headers['If-Match'] = '*'
 			options.method = 'post'
 			break
 		case 'patch':
-			DigestValueResponse = await GetFormDigestValue(url)
-			options.headers['X-RequestDigest'] = response
+			DigestValueResponse = await GetFormDigestValue()
+			options.headers['X-RequestDigest'] = DigestValueResponse
 			options.headers['X-HTTP-Method'] = 'PATCH'
 			options.headers['If-Match'] = '*'
 			options.method = 'post'

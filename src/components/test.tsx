@@ -1,6 +1,6 @@
 import React from 'react'
 import { GetSubmittedRequests } from 'components'
-import { useQuery } from 'react-query'
+import { SPTable } from 'components'
 
 export const MyTest = () => {
 	const options = {
@@ -8,8 +8,5 @@ export const MyTest = () => {
 		apiCall: GetSubmittedRequests,
 	}
 
-	const tableQuery = useQuery(options.listName, options.apiCall)
-	console.log('tableQuery :>> ', tableQuery)
-	//@ts-ignore
-	return <div>hello</div>
+	return <SPTable {...options} />
 }

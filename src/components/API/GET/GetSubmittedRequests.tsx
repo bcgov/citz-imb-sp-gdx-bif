@@ -3,8 +3,16 @@ import { GetItems } from './GetItems'
 
 export const GetSubmittedRequests = async () => {
 	const listName = 'Submitted Requests'
-	const listInfo = await GetList({ listName })
+	const listInfo = await GetList({
+		listName,
+		expand: 'DefaultView,DefaultView/ViewFields',
+	})
+
+	const newListInfo = {
+		...listInfo,
+		Columns: listInfo.DefaultView.ViewFields.Items.results,
+	}
 	const items = await GetItems({ listName })
 
-	return { listInfo, items }
+	return { listInfo: newListInfo, items }
 }

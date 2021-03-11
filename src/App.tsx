@@ -1,26 +1,24 @@
-import React from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React from "react";
+import { QueryClientProvider, QueryClient } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { MyTest } from "components/test";
+import { DetailsListBasicExample } from "components/DetailsList/DetailsList";
+import { TestDetailsList } from "components/DetailsList/TestDetailList";
 
-function App() {
-	return (
-		<div className='App'>
-			<header className='App-header'>
-				<img src={logo} className='App-logo' alt='logo' />
-				<p>
-					<div>Hello There</div>
-					<div>General Kenobi</div>
-				</p>
-				<a
-					className='App-link'
-					href='https://reactjs.org'
-					target='_blank'
-					rel='noopener noreferrer'>
-					Learn React
-				</a>
-			</header>
-		</div>
-	)
-}
+const queryClient = new QueryClient();
 
-export default App
+export const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MyTest />
+      <TestDetailsList />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <DetailsListBasicExample />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
+};

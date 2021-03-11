@@ -2,7 +2,7 @@ import { GetList } from "./GetList";
 import { GetItems } from "./GetItems";
 
 export const GetMinistryAcronyms = async () => {
-  const listName = "Ministry Acronym";
+  const listName = "Ministry Acronyms";
   const listInfo = await GetList({ listName });
   const items = await GetItems({ listName });
   //   const defaultColumns = listInfo.Columns;

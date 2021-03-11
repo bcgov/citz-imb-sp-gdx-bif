@@ -10,14 +10,14 @@ const queryClient = new QueryClient();
 export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <MyTest />
+      {/* <MyTest /> */}
       <TestDetailsList />
       <br />
       <br />
       <br />
       <br />
       <br />
-      <DetailsListBasicExample />
+      {/* <DetailsListBasicExample /> */}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

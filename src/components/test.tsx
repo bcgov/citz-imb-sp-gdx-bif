@@ -1,12 +1,11 @@
-import React from 'react'
-import { GetSubmittedRequests } from 'components'
-import { SPTable } from 'components'
+import React from 'react';
+import { GetSubmittedRequests, GetMinistryAcronyms } from 'components';
+import {useQuery} from 'react-query'
 
 export const MyTest = () => {
-	const options = {
-		listName: 'SubmittedRequests',
-		apiCall: GetSubmittedRequests,
-	}
+	const myList = useQuery('MinistryAcronyms', GetMinistryAcronyms);
 
-	return <SPTable {...options} />
-}
+	console.log('myList :>> ', myList);
+
+	return <div>{myList.status}</div>;
+};

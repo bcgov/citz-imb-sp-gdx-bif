@@ -1,10 +1,18 @@
-import { GetList } from './GetList'
-import { GetItems } from './GetItems'
+import { GetList } from "./GetList";
+import { GetItems } from "./GetItems";
 
 export const GetSubmittedRequests = async () => {
-	const listName = 'Submitted Requests'
-	const listInfo = await GetList({ listName })
-	const items = await GetItems({ listName })
+  const listName = "Submitted Requests";
+  const listInfo = await GetList({
+    listName,
+    expand: "DefaultView,DefaultView/ViewFields,Fields",
+  });
 
-	return { listInfo, items }
-}
+  const newListInfo = {
+    ...listInfo,
+    Columns: listInfo.DefaultView.ViewFields.Items.results,
+  };
+  const items = await GetItems({ listName });
+
+  return { listInfo: newListInfo, items };
+};

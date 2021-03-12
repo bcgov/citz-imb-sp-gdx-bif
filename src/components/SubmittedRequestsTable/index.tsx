@@ -16,7 +16,11 @@ import {
   Text,
 } from "@fluentui/react";
 import { GetColumns } from "components/API/GET/GetColumns";
-export const Table = () => {
+
+// Main Component
+export const SubmittedRequestsTable = () => {
+  const [filter, setFilter] = useState<string | undefined>();
+
   const submittedRequests: any = useQuery(
     "submittedRequests",
     GetSubmittedRequests
@@ -30,6 +34,28 @@ export const Table = () => {
     );
   }, [submittedRequests.isLoading, submittedRequests.isError]);
 
+  const items = useMemo(() => {
+    if (submittedRequests.isLoading || submittedRequests.isError) return [];
+    console.log("filter", filter);
+    let tempItems = [...submittedRequests.data.items];
+
+    return filter
+      ? tempItems.filter((item) => {
+          const filterCriteria = filter.toLowerCase();
+          let keepItem = false;
+          for (let i = 0; i < columns.length; i++) {
+            if (
+              item[columns[i].key].toLowerCase().indexOf(filterCriteria) > -1
+            ) {
+              keepItem = true;
+              break;
+            }
+          }
+          return keepItem;
+        })
+      : tempItems;
+  }, [submittedRequests.isLoading, submittedRequests.isError, filter]);
+
   //   const columns = ministryAcronyms.listInfo.Columns.map((column: string) => {
   //     return { name: column };
   //   });
@@ -37,10 +63,18 @@ export const Table = () => {
 
   if (submittedRequests.isLoading) return <div>Loading...</div>;
 
+  const onFilter = (
+    ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    text?: string
+  ): void => {
+    setFilter(text);
+  };
+
   return (
     <>
+      <TextField label="Filter by name:" onChange={onFilter} />
       <DetailsList
-        items={submittedRequests.data.items}
+        items={items}
         columns={columns}
         disableSelectionZone={true}
         selectionMode={0} //0 = none

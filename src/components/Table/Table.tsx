@@ -16,7 +16,7 @@ import {
   Text,
 } from "@fluentui/react";
 import { GetColumns } from "components/API/GET/GetColumns";
-export const TestDetailsList = () => {
+export const Table = () => {
   const submittedRequests: any = useQuery(
     "submittedRequests",
     GetSubmittedRequests

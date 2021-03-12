@@ -43,7 +43,7 @@ export const Table = () => {
         items={submittedRequests.data.items}
         columns={columns}
         disableSelectionZone={true}
-
+        selectionMode={0} //0 = none
         // setKey="set"
         // layoutMode={DetailsListLayoutMode.justified}
         // selection={this._selection}

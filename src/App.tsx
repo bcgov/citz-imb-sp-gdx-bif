@@ -1,7 +1,7 @@
 import React from "react";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { Table } from "components/Table/Table";
+import { Table } from "components/index";
 
 const queryClient = new QueryClient();
 

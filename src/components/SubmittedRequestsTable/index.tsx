@@ -1,1 +1,1 @@
-export { SubmittedRequestsTable } from "./Table";
+export { SubmittedRequestsTable } from "./SubmittedRequestsTable";

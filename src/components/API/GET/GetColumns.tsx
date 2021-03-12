@@ -13,6 +13,7 @@ export const GetColumns = (viewColumns: [], fields: []) => {
       fieldName: viewField.InternalName,
       minWidth: 100,
       maxWidth: 100,
+      accessor: viewField.InternalName,
     };
 
     return newColumn;

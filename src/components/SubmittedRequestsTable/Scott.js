@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo,useState } from 'react';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
 import { GetColumns } from 'components/API/GET/GetColumns';
 import { useQuery } from 'react-query';
@@ -12,6 +12,7 @@ const transformData = (items) => {
 };
 
 export const Scott = () => {
+	const [sortColumBy, setSortColumBy] = useState(false)
 	const query = useQuery('scott', GetSubmittedRequests);
 
 	const data = useMemo(() => {
@@ -26,20 +27,22 @@ export const Scott = () => {
 			query.data.listInfo.Columns,
 			query.data.listInfo.Fields.results
 		);
-	}, [query.isFetching]);
+	}, [query.isFetching,sortColumBy]);
 
-	const tableInstance = useTable({ columns, data }, useSortBy);
+	const tableInstance = useTable({ columns, data, defaultCanSort:true }, useSortBy);
 
 	const handleColumnClick = (ev, column) => {
 		console.log('tableInstance :>> ', tableInstance);
 		console.log('{ev,column} :>> ', { ev, column });
-	};
+        setSortColumBy(!sortColumBy)
+		const sortedColumn = tableInstance.headerGroups[0].headers.filter((header)=> header.key === column.key)[0]
+console.log(`query.data.items.map(item=>item.Title)`, query.data.items.map(item=> item.Title))	};
 
 	return (
 		<DetailsList
 			items={tableInstance.data}
 			columns={tableInstance.columns}
-			onColumnClick={handleColumnClick}
+			onColumnHeaderClick={handleColumnClick}
 		/>
 	);
 };

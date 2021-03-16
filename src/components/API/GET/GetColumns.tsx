@@ -1,23 +1,26 @@
-import React from "react";
-import moment from "moment";
+import React from 'react';
+import moment from 'moment';
 
 export const GetColumns = (viewColumns: [], fields: []) => {
-  return viewColumns.map((column: string) => {
-    const viewField: { InternalName: string; Title: string } = fields.filter(
-      (field: { InternalName: string }) => field.InternalName === column
-    )[0];
+	return viewColumns.map((column: string) => {
+		const viewField: {
+			InternalName: string;
+			Title: string;
+		} = fields.filter(
+			(field: { InternalName: string }) => field.InternalName === column
+		)[0];
 
-    let newColumn = {
-      key: viewField.InternalName,
-      name: viewField.Title,
-      fieldName: viewField.InternalName,
-      minWidth: 100,
-      maxWidth: 100,
-      accessor: viewField.InternalName,
-    };
+		let newColumn = {
+			key: viewField.InternalName,
+			name: viewField.Title,
+			fieldName: viewField.InternalName,
+			minWidth: 100,
+			maxWidth: 100,
+			accessor: viewField.InternalName,
+		};
 
-    return newColumn;
-  });
+		return newColumn;
+	});
 };
 
 // switch (viewField.FieldTypeKind) {

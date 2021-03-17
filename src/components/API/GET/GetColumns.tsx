@@ -17,6 +17,9 @@ export const GetColumns = (viewColumns: [], fields: []) => {
 			minWidth: 100,
 			maxWidth: 100,
 			accessor: viewField.InternalName,
+			canSort: true,
+			isSortedDesc: true,
+			isSortedDescending: true,
 		};
 
 		return newColumn;

@@ -1,6 +1,3 @@
-import React from 'react';
-import moment from 'moment';
-
 export const GetColumns = (viewColumns: [], fields: []) => {
 	return viewColumns.map((column: string) => {
 		const viewField: {
@@ -21,6 +18,7 @@ export const GetColumns = (viewColumns: [], fields: []) => {
 			isSorted: false,
 			isSortedDesc: true,
 			isSortedDescending: true,
+			canFilter: true,
 		};
 
 		return newColumn;

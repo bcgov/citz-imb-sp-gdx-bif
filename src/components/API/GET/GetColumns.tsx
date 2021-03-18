@@ -17,6 +17,13 @@ export const GetColumns = (viewColumns: [], fields: []) => {
 			minWidth: 100,
 			maxWidth: 100,
 			accessor: viewField.InternalName,
+<<<<<<< HEAD
+=======
+			canSort: true,
+			isSorted: false,
+			isSortedDesc: true,
+			isSortedDescending: true,
+>>>>>>> parent of 3ba3238 (Status filter partially done)
 		};
 
 		return newColumn;

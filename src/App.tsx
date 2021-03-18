@@ -15,7 +15,7 @@ export const App = () => {
       <br />
       <br />
       <br /> */}
-			<ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
 	);
 };

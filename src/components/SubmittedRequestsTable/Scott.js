@@ -1,175 +1,48 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo,useState } from 'react';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
 import { GetColumns } from 'components/API/GET/GetColumns';
 import { useQuery } from 'react-query';
-import {
-	useTable,
-	useSortBy,
-	useFilters,
-	useGlobalFilter,
-	useAsyncDebounce,
-} from 'react-table';
-import { DetailsList, DefaultButton } from '@fluentui/react';
-import { initializeIcons } from '@fluentui/react/lib/Icons';
+import { useTable, useSortBy } from 'react-table';
+import { DetailsList } from '@fluentui/react';
 
-initializeIcons(undefined, { disableWarnings: true });
+const transformData = (items) => {
+	console.log('items :>> ', items);
 
-// Define a default UI for filtering
-function GlobalFilter({
-	preGlobalFilteredRows,
-	globalFilter,
-	setGlobalFilter,
-}) {
-	const count = preGlobalFilteredRows.length;
-	const [value, setValue] = React.useState(globalFilter);
-	const onChange = useAsyncDebounce((value) => {
-		setGlobalFilter(value || undefined);
-	}, 200);
-
-	return (
-		<span>
-			Search:{' '}
-			<input
-				value={value || ''}
-				onChange={(e) => {
-					setValue(e.target.value);
-					onChange(e.target.value);
-				}}
-				placeholder={`${count} records...`}
-				style={{
-					fontSize: '1.1rem',
-					border: '0',
-				}}
-			/>
-		</span>
-	);
-}
-
-const StateFilter = ({ requestStates, onClick }) => {
-	console.log('requestStates :>> ', requestStates);
-	const handleClick = (event) => {
-		onClick(event.target.innerText);
-	};
-	return requestStates.map((state) => {
-		return (
-			<DefaultButton
-				key={state.status}
-				toggle
-				checked={state.checked}
-				text={state.status}
-				// iconProps={muted ? volume0Icon : volume3Icon}
-				onClick={handleClick}
-				// allowDisabledFocus
-				// disabled={disabled}
-				// id={state}
-			/>
-		);
-	});
+	return items;
 };
 
 export const Scott = () => {
-	const [requestStates, setRequestStates] = useState([]);
-
+	const [sortColumBy, setSortColumBy] = useState(false)
 	const query = useQuery('scott', GetSubmittedRequests);
 
 	const data = useMemo(() => {
 		if (query.isLoading || query.isError) return [];
-
-		console.log('query.data.items :>> ', query.data.items);
-
-		const status = [
-			...new Set(query.data.items.map((item) => item.Status)),
-		];
-
-		console.log('status :>> ', status);
-
-		setRequestStates(
-			status.map((state) => {
-				return { status: state, checked: true };
-			})
-		);
-
-		return query.data.items;
-	}, [query.isLoading, query.isError, query.data]);
+		return transformData(query.data.items);
+	}, [query.isFetching]);
 
 	const columns = useMemo(() => {
 		if (query.isLoading || query.isError) return [];
 
-		const tempColumns = GetColumns(
+		return GetColumns(
 			query.data.listInfo.Columns,
 			query.data.listInfo.Fields.results
 		);
+	}, [query.isFetching,sortColumBy]);
 
-		// console.log('tempColumns :>> ', tempColumns);
-		return tempColumns;
-	}, [query.isLoading, query.isError, query.data]);
+	const tableInstance = useTable({ columns, data, defaultCanSort:true }, useSortBy);
 
-	const tableInstance = useTable(
-		{
-			columns,
-			data,
-			disableSortRemove: true,
-			autoResetSortBy: false,
-			autoResetGlobalFilter: false,
-		},
-		useFilters,
-		useGlobalFilter,
-		useSortBy
-	);
-	console.log('tableInstance :>> ', tableInstance);
 	const handleColumnClick = (ev, column) => {
-		//change the sort of the column in tableInstance
-		column.toggleSortBy(!column.isSortedDesc);
-
-		//get index of the current column
-		const currentColumnIndex = tableInstance.columns.findIndex(
-			(tColumn) => tColumn.key === column.key
-		);
-
-		//update fluentUI sort direction indicator
-		tableInstance.columns[
-			currentColumnIndex
-		].isSortedDescending = !column.isSortedDesc;
-	};
-
-	const handleFilterClick = (newStatus) => {
-		console.log('you clicked', newStatus);
-
-		let newRequestStates = requestStates.map((thisStatus) => {
-			if (thisStatus.status === newStatus)
-				return { status: newStatus, checked: !thisStatus.checked };
-			return thisStatus;
-		});
-
-		console.log('newRequestStates :>> ', newRequestStates);
-
-		setRequestStates(newRequestStates);
-
-		const statusColumn = tableInstance.columns.filter(
-			(col) => col.key === 'Status'
-		)[0];
-
-		statusColumn.setFilter(newStatus);
-	};
+		console.log('tableInstance :>> ', tableInstance);
+		console.log('{ev,column} :>> ', { ev, column });
+        setSortColumBy(!sortColumBy)
+		const sortedColumn = tableInstance.headerGroups[0].headers.filter((header)=> header.key === column.key)[0]
+console.log(`query.data.items.map(item=>item.Title)`, query.data.items.map(item=> item.Title))	};
 
 	return (
-		<>
-			<div>{query.status}</div>
-			<br />
-			<GlobalFilter
-				preGlobalFilteredRows={tableInstance.preGlobalFilteredRows}
-				globalFilter={tableInstance.state.globalFilter}
-				setGlobalFilter={tableInstance.setGlobalFilter}
-			/>
-			<StateFilter
-				requestStates={requestStates}
-				onClick={handleFilterClick}
-			/>
-			<DetailsList
-				items={tableInstance.sortedRows.map((row) => row.values)}
-				columns={tableInstance.columns}
-				onColumnHeaderClick={handleColumnClick}
-			/>
-		</>
+		<DetailsList
+			items={tableInstance.data}
+			columns={tableInstance.columns}
+			onColumnHeaderClick={handleColumnClick}
+		/>
 	);
 };

@@ -18,6 +18,10 @@ import { initializeIcons } from '@fluentui/react/lib/Icons';
 
 initializeIcons(undefined, { disableWarnings: true });
 
+const myColumnClick = (): void => {
+	console.log('Iwork');
+};
+
 const classNames = mergeStyleSets({
 	fileIconHeaderIcon: {
 		padding: 0,
@@ -108,7 +112,7 @@ export class DetailsListDocumentsExample extends React.Component<
 				fieldName: 'name',
 				minWidth: 16,
 				maxWidth: 16,
-				onColumnClick: this._onColumnClick,
+				// onColumnClick: this._onColumnClick,
 				onRender: (item: IDocument) => (
 					<TooltipHost content={`${item.fileType} file`}>
 						<img
@@ -131,7 +135,7 @@ export class DetailsListDocumentsExample extends React.Component<
 				isSortedDescending: false,
 				sortAscendingAriaLabel: 'Sorted A to Z',
 				sortDescendingAriaLabel: 'Sorted Z to A',
-				onColumnClick: this._onColumnClick,
+				// onColumnClick: this._onColumnClick,
 				data: 'string',
 				isPadded: true,
 			},
@@ -142,7 +146,7 @@ export class DetailsListDocumentsExample extends React.Component<
 				minWidth: 70,
 				maxWidth: 90,
 				isResizable: true,
-				onColumnClick: this._onColumnClick,
+				// onColumnClick: this._onColumnClick,
 				data: 'number',
 				onRender: (item: IDocument) => {
 					return <span>{item.dateModified}</span>;
@@ -158,7 +162,7 @@ export class DetailsListDocumentsExample extends React.Component<
 				isResizable: true,
 				isCollapsible: true,
 				data: 'string',
-				onColumnClick: this._onColumnClick,
+				// onColumnClick: this._onColumnClick,
 				onRender: (item: IDocument) => {
 					return <span>{item.modifiedBy}</span>;
 				},
@@ -173,7 +177,7 @@ export class DetailsListDocumentsExample extends React.Component<
 				isResizable: true,
 				isCollapsible: true,
 				data: 'number',
-				onColumnClick: this._onColumnClick,
+				// onColumnClick: this._onColumnClick,
 				onRender: (item: IDocument) => {
 					return <span>{item.fileSize}</span>;
 				},
@@ -250,7 +254,9 @@ export class DetailsListDocumentsExample extends React.Component<
 							compact={isCompactMode}
 							columns={columns}
 							selectionMode={SelectionMode.multiple}
-							getKey={this._getKey}
+							// getKey={this._getKey}
+							// @ts-ignore
+							onColumnHeaderClick={myColumnClick}
 							setKey='multiple'
 							layoutMode={DetailsListLayoutMode.justified}
 							isHeaderVisible={true}
@@ -269,11 +275,13 @@ export class DetailsListDocumentsExample extends React.Component<
 						compact={isCompactMode}
 						columns={columns}
 						selectionMode={SelectionMode.none}
-						getKey={this._getKey}
+						// getKey={this._getKey}
 						setKey='none'
 						layoutMode={DetailsListLayoutMode.justified}
 						isHeaderVisible={true}
 						onItemInvoked={this._onItemInvoked}
+						// @ts-ignore
+						onColumnHeaderClick={this._onColumnClick}
 					/>
 				)}
 			</Fabric>
@@ -347,6 +355,7 @@ export class DetailsListDocumentsExample extends React.Component<
 		ev: React.MouseEvent<HTMLElement>,
 		column: IColumn
 	): void => {
+		console.log('column :>> ', column);
 		const { columns, items } = this.state;
 		const newColumns: IColumn[] = columns.slice();
 		const currColumn: IColumn = newColumns.filter(

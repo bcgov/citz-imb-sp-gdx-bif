@@ -64,51 +64,35 @@ export const Scott = () => {
 
 		// console.log('tempColumns :>> ', tempColumns);
 		return tempColumns;
-	}, [query.isFetching]);
+	}, [query.isLoading, query.isError, query.data]);
 
 	const tableInstance = useTable(
-		{ columns, data, disableSortRemove: true },
+		{
+			columns,
+			data,
+			disableSortRemove: true,
+			autoResetSortBy: false,
+			autoResetGlobalFilter: false,
+		},
 		// useFilters,
 		useGlobalFilter,
 		useSortBy
 	);
 
 	const handleColumnClick = (ev, column) => {
-		console.log('column :>> ', column);
+		//change the sort of the column in tableInstance
+		column.toggleSortBy(!column.isSortedDesc);
 
-		if (column.isSortedDesc === undefined) {
-			column.isSorted = false;
-			column.isSortedDescending = true;
-		}
+		//get index of the current column
+		const currentColumnIndex = tableInstance.columns.findIndex(
+			(tColumn) => tColumn.key === column.key
+		);
 
-		if (column.isSortedDesc === true) {
-			column.isSorted = true;
-			column.isSortedDescending = true;
-		}
-
-		if (column.isSortedDesc === false) {
-			column.isSorted = true;
-			column.isSortedDescending = false;
-		}
-		column.toggleSortBy(column.isSortedDescending);
-		// column.isSortedDescending = column.isSortedDesc;
-
-		console.log('sorting :>> ', {
-			isSortDesc: column.isSortedDesc,
-			isSorted: column.isSorted,
-			isSortedDescending: column.isSortedDescending,
-		});
+		//update fluentUI sort direction indicator
+		tableInstance.columns[
+			currentColumnIndex
+		].isSortedDescending = !column.isSortedDesc;
 	};
-
-	// useEffect(() => {
-	// 	console.log('QUERY STATUS: ', query.status, query.isFetching);
-	// 	return () => {};
-	// }, [query.status, query.isFetching]);
-
-	// useEffect(() => {
-	// 	console.log('TABLE STATUS: ', tableInstance.state);
-	// 	return () => {};
-	// }, [tableInstance.state]);
 
 	return (
 		<>

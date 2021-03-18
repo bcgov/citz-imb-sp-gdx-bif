@@ -1,6 +1,3 @@
-import React from 'react';
-import moment from 'moment';
-
 export const GetColumns = (viewColumns: [], fields: []) => {
 	return viewColumns.map((column: string) => {
 		const viewField: {
@@ -17,13 +14,11 @@ export const GetColumns = (viewColumns: [], fields: []) => {
 			minWidth: 100,
 			maxWidth: 100,
 			accessor: viewField.InternalName,
-<<<<<<< HEAD
-=======
 			canSort: true,
 			isSorted: false,
 			isSortedDesc: true,
 			isSortedDescending: true,
->>>>>>> parent of 3ba3238 (Status filter partially done)
+			canFilter: true,
 		};
 
 		return newColumn;

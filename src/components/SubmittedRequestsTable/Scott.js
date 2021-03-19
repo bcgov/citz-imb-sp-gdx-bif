@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
 import { GetColumns } from 'components/API/GET/GetColumns';
 import { useQuery } from 'react-query';
+import {GlobalFilter} from './GlobalFilter'
 import {
 	useTable,
 	useSortBy,
@@ -14,36 +15,7 @@ import { initializeIcons } from '@fluentui/react/lib/Icons';
 
 initializeIcons(undefined, { disableWarnings: true });
 
-// Define a default UI for filtering
-function GlobalFilter({
-	preGlobalFilteredRows,
-	globalFilter,
-	setGlobalFilter,
-}) {
-	const count = preGlobalFilteredRows.length;
-	const [value, setValue] = React.useState(globalFilter);
-	const onChange = useAsyncDebounce((value) => {
-		setGlobalFilter(value || undefined);
-	}, 200);
 
-	return (
-		<span>
-			Search:{' '}
-			<input
-				value={value || ''}
-				onChange={(e) => {
-					setValue(e.target.value);
-					onChange(e.target.value);
-				}}
-				placeholder={`${count} records...`}
-				style={{
-					fontSize: '1.1rem',
-					border: '0',
-				}}
-			/>
-		</span>
-	);
-}
 
 const StateFilter = ({ requestStates, onClick }) => {
 	console.log('requestStates :>> ', requestStates);
@@ -160,6 +132,7 @@ export const Scott = () => {
 				preGlobalFilteredRows={tableInstance.preGlobalFilteredRows}
 				globalFilter={tableInstance.state.globalFilter}
 				setGlobalFilter={tableInstance.setGlobalFilter}
+				useAsyncDebounce={useAsyncDebounce}
 			/>
 			<StateFilter
 				requestStates={requestStates}
@@ -169,6 +142,8 @@ export const Scott = () => {
 				items={tableInstance.sortedRows.map((row) => row.values)}
 				columns={tableInstance.columns}
 				onColumnHeaderClick={handleColumnClick}
+				selectionMode={false}
+				checkboxVisibility={2}
 			/>
 		</>
 	);

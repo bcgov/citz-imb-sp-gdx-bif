@@ -3,6 +3,7 @@ import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
 import { GetColumns } from 'components/API/GET/GetColumns';
 import { useQuery } from 'react-query';
 import {GlobalFilter} from './GlobalFilter'
+import {StatusFilter} from "./StatusFilter"
 import {
 	useTable,
 	useSortBy,
@@ -12,13 +13,12 @@ import {
 } from 'react-table';
 import { DetailsList, DefaultButton } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
-
 initializeIcons(undefined, { disableWarnings: true });
 
 
 
 const StateFilter = ({ requestStates, onClick }) => {
-	console.log('requestStates :>> ', requestStates);
+	// console.log('requestStates :>> ', requestStates);
 	const handleClick = (event) => {
 		onClick(event.target.innerText);
 	};
@@ -47,13 +47,13 @@ export const Scott = () => {
 	const data = useMemo(() => {
 		if (query.isLoading || query.isError) return [];
 
-		console.log('query.data.items :>> ', query.data.items);
+		// console.log('query.data.items :>> ', query.data.items);
 
 		const status = [
 			...new Set(query.data.items.map((item) => item.Status)),
 		];
 
-		console.log('status :>> ', status);
+		// console.log('status :>> ', status);
 
 		setRequestStates(
 			status.map((state) => {
@@ -88,7 +88,7 @@ export const Scott = () => {
 		useGlobalFilter,
 		useSortBy
 	);
-	console.log('tableInstance :>> ', tableInstance);
+	// console.log('tableInstance :>> ', tableInstance);
 	const handleColumnClick = (ev, column) => {
 		//change the sort of the column in tableInstance
 		column.toggleSortBy(!column.isSortedDesc);
@@ -105,7 +105,7 @@ export const Scott = () => {
 	};
 
 	const handleFilterClick = (newStatus) => {
-		console.log('you clicked', newStatus);
+		// console.log('you clicked', newStatus);
 
 		let newRequestStates = requestStates.map((thisStatus) => {
 			if (thisStatus.status === newStatus)
@@ -113,7 +113,7 @@ export const Scott = () => {
 			return thisStatus;
 		});
 
-		console.log('newRequestStates :>> ', newRequestStates);
+		// console.log('newRequestStates :>> ', newRequestStates);
 
 		setRequestStates(newRequestStates);
 
@@ -145,6 +145,7 @@ export const Scott = () => {
 				selectionMode={false}
 				checkboxVisibility={2}
 			/>
+			<StatusFilter query={query}/>
 		</>
 	);
 };

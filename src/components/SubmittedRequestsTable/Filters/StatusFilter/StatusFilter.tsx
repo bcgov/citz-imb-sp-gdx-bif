@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { DefaultButton, IColumn } from "@fluentui/react";
-import { TableContext } from "../../Scott";
 import { SetFilter } from "./SetFilter";
 
 interface StatusFilterTypes {
@@ -15,10 +14,9 @@ interface statusOptionsTypes {
 
 export const StatusFilter = ({ query, columns }: StatusFilterTypes) => {
   const [statusOptions, setStatusOptions] = useState<statusOptionsTypes[]>([]);
-  let tableContext: any = useContext(TableContext);
-  console.log(`tableContext`, tableContext);
   useEffect(() => {
     if (!query.isLoading && !query.isError) {
+      //!Change type "any" to proper type when react-query types are updated
       const TableStatusOptions: any = query.data.items.map(
         (item: any) => item.Status
       );

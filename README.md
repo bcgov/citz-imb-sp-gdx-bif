@@ -1,105 +1,106 @@
-📦src
-┣ 📂components
-┃ ┣ 📂API
-┃ ┃ ┣ 📂GET
-┃ ┃ ┃ ┣ 📜GetColumns.tsx
-┃ ┃ ┃ ┣ 📜GetItems.tsx
-┃ ┃ ┃ ┣ 📜GetList.tsx
-┃ ┃ ┃ ┣ 📜GetMinistryAcronyms.tsx
-┃ ┃ ┃ ┗ 📜GetSubmittedRequests.tsx
-┃ ┃ ┗ 📂RestCall
-┃ ┃ ┃ ┣ 📂GetFormDigestValue
-┃ ┃ ┃ ┃ ┗ 📜GetFormDigestValue.tsx
-┃ ┃ ┃ ┗ 📜RestCall.tsx
-┃ ┣ 📂ApiCalls
-┃ ┃ ┣ 📂AddFieldToList
-┃ ┃ ┃ ┗ 📜AddFieldToList.js
-┃ ┃ ┣ 📂AddItemsToList
-┃ ┃ ┃ ┗ 📜AddItemsToList.js
-┃ ┃ ┣ 📂AddListViewField
-┃ ┃ ┃ ┗ 📜AddListViewField.js
-┃ ┃ ┣ 📂AddPermissionsToList
-┃ ┃ ┃ ┗ 📜AddPermissionsToList.js
-┃ ┃ ┣ 📂AddPermissionsToSite
-┃ ┃ ┃ ┗ 📜AddPermissionsToSite.js
-┃ ┃ ┣ 📂AddUsersToGroup
-┃ ┃ ┃ ┗ 📜AddUsersToGroup.js
-┃ ┃ ┣ 📂BreakListPermissionsInheritance
-┃ ┃ ┃ ┗ 📜BreakListPermissionsInheritance.js
-┃ ┃ ┣ 📂ChangeGroupOwner
-┃ ┃ ┃ ┗ 📜ChangeGroupOwner.js
-┃ ┃ ┣ 📂CreateGroup
-┃ ┃ ┃ ┗ 📜CreateGroup.js
-┃ ┃ ┣ 📂CreateList
-┃ ┃ ┃ ┗ 📜CreateList.js
-┃ ┃ ┣ 📂CreateView
-┃ ┃ ┃ ┗ 📜CreateView.js
-┃ ┃ ┣ 📂DeleteDocument
-┃ ┃ ┃ ┗ 📜DeleteDocument.js
-┃ ┃ ┣ 📂DeleteGroup
-┃ ┃ ┃ ┗ 📜DeleteGroup.js
-┃ ┃ ┣ 📂GetAssociatedGroups
-┃ ┃ ┃ ┗ 📜GetAssociatedGroups.js
-┃ ┃ ┣ 📂GetContextWebInformation
-┃ ┃ ┃ ┗ 📜GetContextWebInformation.js
-┃ ┃ ┣ 📂GetCurrentUser
-┃ ┃ ┃ ┗ 📜GetCurrentUser.js
-┃ ┃ ┣ 📂GetFormDigestValue
-┃ ┃ ┃ ┗ 📜GetFormDigestValue.js
-┃ ┃ ┣ 📂GetGroup
-┃ ┃ ┃ ┗ 📜GetGroup.js
-┃ ┃ ┣ 📂GetGroupMembers
-┃ ┃ ┃ ┗ 📜GetGroupMembers.js
-┃ ┃ ┣ 📂GetList
-┃ ┃ ┃ ┗ 📜GetList.js
-┃ ┃ ┣ 📂GetListDefaultView
-┃ ┃ ┃ ┗ 📜GetListDefaultView.js
-┃ ┃ ┣ 📂GetListItems
-┃ ┃ ┃ ┗ 📜GetListItems.js
-┃ ┃ ┣ 📂GetRoleDefinitions
-┃ ┃ ┃ ┗ 📜GetRoleDefinitions.js
-┃ ┃ ┣ 📂GetSite
-┃ ┃ ┃ ┗ 📜GetSite.js
-┃ ┃ ┣ 📂GetUser
-┃ ┃ ┃ ┗ 📜GetUser.js
-┃ ┃ ┣ 📂GetUserByEmail
-┃ ┃ ┃ ┗ 📜GetUserByEmail.js
-┃ ┃ ┣ 📂RemoveItemsFromList
-┃ ┃ ┃ ┗ 📜RemoveItemsFromList.js
-┃ ┃ ┣ 📂RemoveListViewAllFields
-┃ ┃ ┃ ┗ 📜RemoveListViewAllFields.js
-┃ ┃ ┣ 📂RemovePermissionsFromList
-┃ ┃ ┃ ┗ 📜RemovePermissionsFromList.js
-┃ ┃ ┣ 📂RemoveUsersFromGroup
-┃ ┃ ┃ ┗ 📜RemoveUsersFromGroup.js
-┃ ┃ ┣ 📂RestCall
-┃ ┃ ┃ ┣ 📂DoFetch
-┃ ┃ ┃ ┃ ┗ 📜DoFetch.js
-┃ ┃ ┃ ┗ 📜RestCall.js
-┃ ┃ ┣ 📂SendEmail
-┃ ┃ ┃ ┗ 📜SendEmail.js
-┃ ┃ ┣ 📂UpdateField
-┃ ┃ ┃ ┗ 📜UpdateField.js
-┃ ┃ ┣ 📂UpdateListItem
-┃ ┃ ┃ ┗ 📜UpdateListItem.js
-┃ ┃ ┗ 📜index.js
-┃ ┣ 📂SubmittedRequestsTable
-┃ ┃ ┣ 📂Filters
-┃ ┃ ┃ ┣ 📂StatusFilter
-┃ ┃ ┃ ┃ ┣ 📜SetFilter.tsx
-┃ ┃ ┃ ┃ ┗ 📜StatusFilter.tsx
-┃ ┃ ┃ ┗ 📜GlobalFilter.tsx
-┃ ┃ ┣ 📜columns.tsx
-┃ ┃ ┣ 📜index.tsx
-┃ ┃ ┣ 📜SubmittedRequestsTable.tsx
-┃ ┃ ┗ 📜tableSort.tsx
-┃ ┗ 📜index.tsx
-┣ 📂types
-┃ ┗ 📜react-table-config.d.ts
-┣ 📜App.css
-┣ 📜App.tsx
-┣ 📜index.css
-┣ 📜index.tsx
-┣ 📜react-app-env.d.ts
-┣ 📜reportWebVitals.ts
-┗ 📜setupTests.ts
+# src
+
+- [components/](.\src\components)
+  - [API/](.\src\components\API)
+    - [GET/](.\src\components\API\GET)
+      - [GetColumns.tsx](.\src\components\API\GET\GetColumns.tsx)
+      - [GetItems.tsx](.\src\components\API\GET\GetItems.tsx)
+      - [GetList.tsx](.\src\components\API\GET\GetList.tsx)
+      - [GetMinistryAcronyms.tsx](.\src\components\API\GET\GetMinistryAcronyms.tsx)
+      - [GetSubmittedRequests.tsx](.\src\components\API\GET\GetSubmittedRequests.tsx)
+    - [RestCall/](.\src\components\API\RestCall)
+      - [GetFormDigestValue/](.\src\components\API\RestCall\GetFormDigestValue)
+        - [GetFormDigestValue.tsx](.\src\components\API\RestCall\GetFormDigestValue\GetFormDigestValue.tsx)
+      - [RestCall.tsx](.\src\components\API\RestCall\RestCall.tsx)
+  - [ApiCalls/](.\src\components\ApiCalls)
+    - [AddFieldToList/](.\src\components\ApiCalls\AddFieldToList)
+      - [AddFieldToList.js](.\src\components\ApiCalls\AddFieldToList\AddFieldToList.js)
+    - [AddItemsToList/](.\src\components\ApiCalls\AddItemsToList)
+      - [AddItemsToList.js](.\src\components\ApiCalls\AddItemsToList\AddItemsToList.js)
+    - [AddListViewField/](.\src\components\ApiCalls\AddListViewField)
+      - [AddListViewField.js](.\src\components\ApiCalls\AddListViewField\AddListViewField.js)
+    - [AddPermissionsToList/](.\src\components\ApiCalls\AddPermissionsToList)
+      - [AddPermissionsToList.js](.\src\components\ApiCalls\AddPermissionsToList\AddPermissionsToList.js)
+    - [AddPermissionsToSite/](.\src\components\ApiCalls\AddPermissionsToSite)
+      - [AddPermissionsToSite.js](.\src\components\ApiCalls\AddPermissionsToSite\AddPermissionsToSite.js)
+    - [AddUsersToGroup/](.\src\components\ApiCalls\AddUsersToGroup)
+      - [AddUsersToGroup.js](.\src\components\ApiCalls\AddUsersToGroup\AddUsersToGroup.js)
+    - [BreakListPermissionsInheritance/](.\src\components\ApiCalls\BreakListPermissionsInheritance)
+      - [BreakListPermissionsInheritance.js](.\src\components\ApiCalls\BreakListPermissionsInheritance\BreakListPermissionsInheritance.js)
+    - [ChangeGroupOwner/](.\src\components\ApiCalls\ChangeGroupOwner)
+      - [ChangeGroupOwner.js](.\src\components\ApiCalls\ChangeGroupOwner\ChangeGroupOwner.js)
+    - [CreateGroup/](.\src\components\ApiCalls\CreateGroup)
+      - [CreateGroup.js](.\src\components\ApiCalls\CreateGroup\CreateGroup.js)
+    - [CreateList/](.\src\components\ApiCalls\CreateList)
+      - [CreateList.js](.\src\components\ApiCalls\CreateList\CreateList.js)
+    - [CreateView/](.\src\components\ApiCalls\CreateView)
+      - [CreateView.js](.\src\components\ApiCalls\CreateView\CreateView.js)
+    - [DeleteDocument/](.\src\components\ApiCalls\DeleteDocument)
+      - [DeleteDocument.js](.\src\components\ApiCalls\DeleteDocument\DeleteDocument.js)
+    - [DeleteGroup/](.\src\components\ApiCalls\DeleteGroup)
+      - [DeleteGroup.js](.\src\components\ApiCalls\DeleteGroup\DeleteGroup.js)
+    - [GetAssociatedGroups/](.\src\components\ApiCalls\GetAssociatedGroups)
+      - [GetAssociatedGroups.js](.\src\components\ApiCalls\GetAssociatedGroups\GetAssociatedGroups.js)
+    - [GetContextWebInformation/](.\src\components\ApiCalls\GetContextWebInformation)
+      - [GetContextWebInformation.js](.\src\components\ApiCalls\GetContextWebInformation\GetContextWebInformation.js)
+    - [GetCurrentUser/](.\src\components\ApiCalls\GetCurrentUser)
+      - [GetCurrentUser.js](.\src\components\ApiCalls\GetCurrentUser\GetCurrentUser.js)
+    - [GetFormDigestValue/](.\src\components\ApiCalls\GetFormDigestValue)
+      - [GetFormDigestValue.js](.\src\components\ApiCalls\GetFormDigestValue\GetFormDigestValue.js)
+    - [GetGroup/](.\src\components\ApiCalls\GetGroup)
+      - [GetGroup.js](.\src\components\ApiCalls\GetGroup\GetGroup.js)
+    - [GetGroupMembers/](.\src\components\ApiCalls\GetGroupMembers)
+      - [GetGroupMembers.js](.\src\components\ApiCalls\GetGroupMembers\GetGroupMembers.js)
+    - [GetList/](.\src\components\ApiCalls\GetList)
+      - [GetList.js](.\src\components\ApiCalls\GetList\GetList.js)
+    - [GetListDefaultView/](.\src\components\ApiCalls\GetListDefaultView)
+      - [GetListDefaultView.js](.\src\components\ApiCalls\GetListDefaultView\GetListDefaultView.js)
+    - [GetListItems/](.\src\components\ApiCalls\GetListItems)
+      - [GetListItems.js](.\src\components\ApiCalls\GetListItems\GetListItems.js)
+    - [GetRoleDefinitions/](.\src\components\ApiCalls\GetRoleDefinitions)
+      - [GetRoleDefinitions.js](.\src\components\ApiCalls\GetRoleDefinitions\GetRoleDefinitions.js)
+    - [GetSite/](.\src\components\ApiCalls\GetSite)
+      - [GetSite.js](.\src\components\ApiCalls\GetSite\GetSite.js)
+    - [GetUser/](.\src\components\ApiCalls\GetUser)
+      - [GetUser.js](.\src\components\ApiCalls\GetUser\GetUser.js)
+    - [GetUserByEmail/](.\src\components\ApiCalls\GetUserByEmail)
+      - [GetUserByEmail.js](.\src\components\ApiCalls\GetUserByEmail\GetUserByEmail.js)
+    - [RemoveItemsFromList/](.\src\components\ApiCalls\RemoveItemsFromList)
+      - [RemoveItemsFromList.js](.\src\components\ApiCalls\RemoveItemsFromList\RemoveItemsFromList.js)
+    - [RemoveListViewAllFields/](.\src\components\ApiCalls\RemoveListViewAllFields)
+      - [RemoveListViewAllFields.js](.\src\components\ApiCalls\RemoveListViewAllFields\RemoveListViewAllFields.js)
+    - [RemovePermissionsFromList/](.\src\components\ApiCalls\RemovePermissionsFromList)
+      - [RemovePermissionsFromList.js](.\src\components\ApiCalls\RemovePermissionsFromList\RemovePermissionsFromList.js)
+    - [RemoveUsersFromGroup/](.\src\components\ApiCalls\RemoveUsersFromGroup)
+      - [RemoveUsersFromGroup.js](.\src\components\ApiCalls\RemoveUsersFromGroup\RemoveUsersFromGroup.js)
+    - [RestCall/](.\src\components\ApiCalls\RestCall)
+      - [DoFetch/](.\src\components\ApiCalls\RestCall\DoFetch)
+        - [DoFetch.js](.\src\components\ApiCalls\RestCall\DoFetch\DoFetch.js)
+      - [RestCall.js](.\src\components\ApiCalls\RestCall\RestCall.js)
+    - [SendEmail/](.\src\components\ApiCalls\SendEmail)
+      - [SendEmail.js](.\src\components\ApiCalls\SendEmail\SendEmail.js)
+    - [UpdateField/](.\src\components\ApiCalls\UpdateField)
+      - [UpdateField.js](.\src\components\ApiCalls\UpdateField\UpdateField.js)
+    - [UpdateListItem/](.\src\components\ApiCalls\UpdateListItem)
+      - [UpdateListItem.js](.\src\components\ApiCalls\UpdateListItem\UpdateListItem.js)
+    - [index.js](.\src\components\ApiCalls\index.js)
+  - [SubmittedRequestsTable/](.\src\components\SubmittedRequestsTable)
+    - [Filters/](.\src\components\SubmittedRequestsTable\Filters)
+      - [StatusFilter/](.\src\components\SubmittedRequestsTable\Filters\StatusFilter)
+        - [SetFilter.tsx](.\src\components\SubmittedRequestsTable\Filters\StatusFilter\SetFilter.tsx)
+        - [StatusFilter.tsx](.\src\components\SubmittedRequestsTable\Filters\StatusFilter\StatusFilter.tsx)
+      - [GlobalFilter.tsx](.\src\components\SubmittedRequestsTable\Filters\GlobalFilter.tsx)
+    - [columns.tsx](.\src\components\SubmittedRequestsTable\columns.tsx)
+    - [index.tsx](.\src\components\SubmittedRequestsTable\index.tsx)
+    - [SubmittedRequestsTable.tsx](.\src\components\SubmittedRequestsTable\SubmittedRequestsTable.tsx)
+    - [tableSort.tsx](.\src\components\SubmittedRequestsTable\tableSort.tsx)
+  - [index.tsx](.\src\components\index.tsx)
+- [types/](.\src\types)
+  - [react-table-config.d.ts](.\src\types\react-table-config.d.ts)
+- [App.css](.\src\App.css)
+- [App.tsx](.\src\App.tsx)
+- [index.css](.\src\index.css)
+- [index.tsx](.\src\index.tsx)
+- [react-app-env.d.ts](.\src\react-app-env.d.ts)
+- [reportWebVitals.ts](.\src\reportWebVitals.ts)
+- [setupTests.ts](.\src\setupTests.ts)

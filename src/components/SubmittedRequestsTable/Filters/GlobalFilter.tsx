@@ -27,8 +27,12 @@ export const GlobalFilter = ({
         styles={searchBoxStyles}
         placeholder={`Filter ${count} records...`}
         iconProps={filterIcon}
-        onChange={(event?, newValue?: string) => {
+        onChange={(ev, newValue?: string) => {
+          ev?.preventDefault();
           onChange(newValue);
+        }}
+        onClick={(ev) => {
+          ev.stopPropagation();
         }}
       />
     </span>

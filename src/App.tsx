@@ -1,23 +1,16 @@
 import React from "react";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { MyTest } from "components/test";
-import { DetailsListBasicExample } from "components/DetailsList/DetailsList";
-import { TestDetailsList } from "components/DetailsList/TestDetailList";
-
+import { SubmittedRequestsTable } from "components";
+import { Scott } from "./components/SubmittedRequestsTable/Scott.js";
 const queryClient = new QueryClient();
 
 export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <MyTest />
-      <TestDetailsList />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <DetailsListBasicExample />
+      {/* <Scott /> */}
+      <SubmittedRequestsTable />
+
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

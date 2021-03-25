@@ -1,0 +1,1 @@
+export { SubmittedRequestsTable } from "./SubmittedRequestsTable";

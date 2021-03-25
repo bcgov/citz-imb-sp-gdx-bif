@@ -3,3 +3,4 @@ export { GetSubmittedRequests } from "./API/GET/GetSubmittedRequests";
 
 // Components
 export * from "components/SubmittedRequestsTable";
+export * from './mycomponents'

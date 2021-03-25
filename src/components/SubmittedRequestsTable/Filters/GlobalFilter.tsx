@@ -31,8 +31,11 @@ export const GlobalFilter = ({
           ev?.preventDefault();
           onChange(newValue);
         }}
-        onClick={(ev) => {
-          ev.stopPropagation();
+        onKeyPress={(ev) => {
+          if (ev.code === "NumpadEnter" || ev.code === "Enter") {
+            ev.preventDefault();
+            return false;
+          }
         }}
       />
     </span>

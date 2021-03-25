@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { DefaultButton, IColumn } from "@fluentui/react";
-import { SetFilter } from "./SetFilter";
+import { setStatusFilter } from "./setStatusFilter";
 
 interface StatusFilterTypes {
   query: any;
   columns: Array<IColumn>;
+  setAllFilters: Function;
 }
 
 interface statusOptionsTypes {
@@ -12,7 +13,11 @@ interface statusOptionsTypes {
   checked?: boolean;
 }
 
-export const StatusFilter = ({ query, columns }: StatusFilterTypes) => {
+export const StatusFilter = ({
+  query,
+  columns,
+  setAllFilters,
+}: StatusFilterTypes) => {
   const [statusOptions, setStatusOptions] = useState<statusOptionsTypes[]>([]);
   useEffect(() => {
     if (!query.isLoading && !query.isError) {
@@ -40,7 +45,7 @@ export const StatusFilter = ({ query, columns }: StatusFilterTypes) => {
 
     setStatusOptions(newRequestStates);
 
-    SetFilter(event.target.innerText, columns);
+    setStatusFilter(setAllFilters, columns);
   };
 
   return (

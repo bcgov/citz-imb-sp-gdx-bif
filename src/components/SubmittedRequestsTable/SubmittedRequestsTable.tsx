@@ -69,7 +69,11 @@ export const SubmittedRequestsTable = () => {
         setGlobalFilter={tableInstance.setGlobalFilter}
         useAsyncDebounce={useAsyncDebounce}
       />
-      <StatusFilter query={query} columns={tableInstance.columns} />
+      <StatusFilter
+        query={query}
+        columns={tableInstance.columns}
+        setAllFilters={tableInstance.setAllFilters}
+      />
 
       <DetailsList
         items={tableInstance.sortedRows.map((row: Row) => row.values)}

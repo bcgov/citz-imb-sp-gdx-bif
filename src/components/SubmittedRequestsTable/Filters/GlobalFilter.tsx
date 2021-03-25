@@ -27,8 +27,14 @@ export const GlobalFilter = ({
         styles={searchBoxStyles}
         placeholder={`Filter ${count} records...`}
         iconProps={filterIcon}
-        onChange={(event?, newValue?: string) => {
+        onChange={(ev, newValue?: string) => {
           onChange(newValue);
+        }}
+        onKeyPress={(ev) => {
+          if (ev.code === "NumpadEnter" || ev.code === "Enter") {
+            ev.preventDefault();
+            return false;
+          }
         }}
       />
     </span>

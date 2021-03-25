@@ -28,7 +28,6 @@ export const GlobalFilter = ({
         placeholder={`Filter ${count} records...`}
         iconProps={filterIcon}
         onChange={(ev, newValue?: string) => {
-          ev?.preventDefault();
           onChange(newValue);
         }}
         onKeyPress={(ev) => {

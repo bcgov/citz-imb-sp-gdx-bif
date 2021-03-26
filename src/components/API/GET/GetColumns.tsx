@@ -1,6 +1,5 @@
 import { IColumn } from "@fluentui/react";
 import { Column } from "react-table";
-import { multiSelectFilter } from "components/SubmittedRequestsTable/Filters/StatusFilter/multiSelectFilter";
 
 export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
   return viewColumns.map((column: string) => {

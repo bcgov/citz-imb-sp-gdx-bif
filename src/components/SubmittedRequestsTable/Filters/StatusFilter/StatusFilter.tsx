@@ -5,7 +5,7 @@ import { setStatusFilter } from "./setStatusFilter";
 interface StatusFilterTypes {
   query: any;
   columns: Array<IColumn>;
-  setAllFilters: Function;
+  setFilter: Function;
 }
 
 interface statusOptionsTypes {
@@ -16,7 +16,7 @@ interface statusOptionsTypes {
 export const StatusFilter = ({
   query,
   columns,
-  setAllFilters,
+  setFilter,
 }: StatusFilterTypes) => {
   const [statusOptions, setStatusOptions] = useState<statusOptionsTypes[]>([]);
   useEffect(() => {
@@ -45,7 +45,7 @@ export const StatusFilter = ({
 
     setStatusOptions(newRequestStates);
 
-    setStatusFilter(setAllFilters, columns);
+    setStatusFilter(setFilter, columns);
   };
 
   return (

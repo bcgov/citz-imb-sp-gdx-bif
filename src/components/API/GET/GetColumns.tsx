@@ -1,6 +1,8 @@
 import { IColumn } from "@fluentui/react";
+import { Column } from "react-table";
+import { multiSelectFilter } from "components/SubmittedRequestsTable/Filters/StatusFilter/multiSelectFilter";
 
-export const GetColumns = (viewColumns: [], fields: []) => {
+export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
   return viewColumns.map((column: string) => {
     const viewField: {
       InternalName: string;
@@ -9,7 +11,7 @@ export const GetColumns = (viewColumns: [], fields: []) => {
       (field: { InternalName: string }) => field.InternalName === column
     )[0];
 
-    let newColumn = {
+    let newColumn: IColumn & any = {
       key: viewField.InternalName,
       name: viewField.Title,
       fieldName: viewField.InternalName,

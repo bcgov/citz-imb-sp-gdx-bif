@@ -4,6 +4,9 @@ import { GetColumns } from "components/API/GET/GetColumns";
 import { useQuery } from "react-query";
 import { GlobalFilter } from "./Filters/GlobalFilter";
 import { StatusFilter } from "./Filters/StatusFilter/StatusFilter";
+import { IColumn } from "@fluentui/react";
+import { Column } from "react-table";
+
 import {
   useTable,
   useSortBy,
@@ -32,7 +35,7 @@ export const SubmittedRequestsTable = () => {
     return query.data.items;
   }, [query.isLoading, query.isError, query.data]);
 
-  const columns = useMemo(() => {
+  const columns: IColumn & any = useMemo(() => {
     if (query.isLoading || query.isError) return [];
 
     return GetColumns(
@@ -53,7 +56,6 @@ export const SubmittedRequestsTable = () => {
     useGlobalFilter,
     useSortBy
   );
-
   // When a user clicks a column sort by it
   const handleColumnClick = (ev: any, column: any) => {
     tableSort(ev, column, tableInstance);
@@ -72,7 +74,7 @@ export const SubmittedRequestsTable = () => {
       <StatusFilter
         query={query}
         columns={tableInstance.columns}
-        setAllFilters={tableInstance.setAllFilters}
+        setFilter={tableInstance.setFilter}
       />
 
       <DetailsList

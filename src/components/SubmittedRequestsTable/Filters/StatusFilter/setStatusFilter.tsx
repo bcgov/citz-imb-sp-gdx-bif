@@ -1,11 +1,11 @@
 import { IColumn } from "@fluentui/react";
 export const setStatusFilter = (
-  setAllFilters: Function,
+  setFilter: Function,
   columns: Array<IColumn>
 ) => {
   const statusColumn: any = columns.filter((col: any) => {
     return col.key === "Status";
   })[0];
-
-  setAllFilters([{ id: "Title", value: ["test7"] }]);
+  setFilter("Status", "New");
+  console.log(`columns`, columns);
 };

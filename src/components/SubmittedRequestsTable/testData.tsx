@@ -1,0 +1,17 @@
+export const testData = {
+	Status: 'New',
+	Ministry: 'CITZ',
+	Division: 'CSD',
+	ClientName: 'CITZ-CSD',
+	ClientNumber: 5689,
+	Approver: 6,
+	PrimaryContact: 6,
+	FinContact: 6,
+	CASExpAuth: 6,
+	OtherContact: 6,
+	CASClient: 123,
+	CASResp: 78945,
+	CASServ: 78945,
+	CASSToB: 5689,
+	CASProj: 7894815,
+};

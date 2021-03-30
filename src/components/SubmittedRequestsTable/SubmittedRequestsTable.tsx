@@ -12,7 +12,6 @@ import {
 } from 'react-table';
 import { DetailsList } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
-
 import { GetColumns } from 'components/API/GET/GetColumns';
 import { tableSort } from './tableSort';
 import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
@@ -39,6 +38,7 @@ export const SubmittedRequestsTable = () => {
 
 	//@ts-ignore //!because React-Table is not properly typed
 	const query: any = useQuery(queryName, GetSubmittedRequests);
+
 
 	const data = useMemo(() => {
 		if (query.isLoading || query.isError) return [];
@@ -71,6 +71,7 @@ export const SubmittedRequestsTable = () => {
 		];
 
 		return modifiedColumns;
+
 	}, [query.isLoading, query.isError, query.data]);
 
 	const tableInstance: any = useTable(
@@ -85,6 +86,7 @@ export const SubmittedRequestsTable = () => {
 		useGlobalFilter,
 		useSortBy
 	);
+
 	// When a user clicks a column sort by it
 	const handleColumnClick = (ev: any, column: any) => {
 		tableSort(ev, column, tableInstance);

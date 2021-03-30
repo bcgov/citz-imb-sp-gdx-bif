@@ -24,6 +24,7 @@ gulp.task('build-script-uat', function () {
 		.pipe(concat('gdxintake.js'))
 		.pipe(gulp.dest('./dist/js'))
         .pipe(gulp.dest('b:/GDXBIF/SiteAssets/js'))  //uat
+
 })
 
 gulp.task('build-css-uat', function () {
@@ -32,6 +33,7 @@ gulp.task('build-css-uat', function () {
 		.pipe(concat('gdxintake.css'))
 		.pipe(gulp.dest('./dist/css'))
 		.pipe(gulp.dest('b:/GDXBIF/SiteAssets/css'))  //uat
+
 
 })
 

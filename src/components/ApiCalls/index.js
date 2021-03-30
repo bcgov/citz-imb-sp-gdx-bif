@@ -31,4 +31,4 @@ export * from './CreateGroup/CreateGroup';
 export * from './AddPermissionsToSite/AddPermissionsToSite';
 export * from './GetSite/GetSite';
 export * from './SendEmail/SendEmail';
-export * from './PeoplePickerSearch'
+export * from './PeoplePickerSearch/PeoplePickerSearch'

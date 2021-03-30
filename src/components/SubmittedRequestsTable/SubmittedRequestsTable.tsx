@@ -1,29 +1,38 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import {useMemo } from 'react';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
-import { GetColumns } from 'components/API/GET/GetColumns';
 import { useQuery } from 'react-query';
-import { GlobalFilter } from './Filters/GlobalFilter';
-import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
 import { IColumn } from '@fluentui/react';
-import { Column } from 'react-table';
-
 import {
 	useTable,
 	useSortBy,
 	useFilters,
 	useGlobalFilter,
 	useAsyncDebounce,
-	TableInstance,
-	TableOptions,
 	Row,
 } from 'react-table';
 import { DetailsList } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
+
+import { GetColumns } from 'components/API/GET/GetColumns';
 import { tableSort } from './tableSort';
+import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
+import { GlobalFilter } from './Filters/GlobalFilter';
+import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
+
 //!because React-Table is not properly typed
 // import { QuerySuccessResult } from "react-query";
 // To intialize
 initializeIcons(undefined, { disableWarnings: true });
+
+/*
+	Request States:
+		new
+		submitted
+		sent for approval
+		accepted
+		rejected
+		closed
+*/
 
 export const SubmittedRequestsTable = () => {
 	const queryName: string = 'submittedRequests';
@@ -53,32 +62,7 @@ export const SubmittedRequestsTable = () => {
 
 		//set the custom filter functionality on 'Status' column
 		//@ts-ignore //!because React-Table is not properly typed
-		statusColumn.filter = (
-			rows: Array<Row>,
-			columnIds: Array<string>,
-			filterValue: Array<string> | string
-		) => {
-			//'filterValue' can be a string or an array, our code needs it to be an array
-			if (!Array.isArray(filterValue)) filterValue = [filterValue];
-
-			//start with no rows
-			let filteredRows: Row[] = [];
-
-			//for each filter value
-			for (let i = 0; i < filterValue.length; i++) {
-				//add in rows that match the filter value
-				filteredRows = [
-					...filteredRows,
-					//@ts-ignore //!because React-Table is not properly typed
-					...rows.filter(
-						(row) => row.values.Status === filterValue[i]
-					),
-				];
-			}
-			console.log('filteredRows :>> ', filteredRows);
-			//return the filtered rows
-			return filteredRows;
-		};
+		statusColumn.filter = statusColumnFilter
 
 		//add the modified 'Status' column back in with the other columns
 		const modifiedColumns = [
@@ -108,7 +92,7 @@ export const SubmittedRequestsTable = () => {
 
 	if (query.isLoading) return <div>loading...</div>;
 
-	if (query.isError) return <div>query.error</div>;
+	if (query.isError) return <div>{query.error}</div>;
 
 	return (
 		<>

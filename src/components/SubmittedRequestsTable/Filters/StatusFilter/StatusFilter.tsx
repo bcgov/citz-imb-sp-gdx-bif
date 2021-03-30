@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { DefaultButton, IColumn } from '@fluentui/react';
+import { Toggle, IColumn, Stack } from '@fluentui/react';
 
 interface StatusFilterTypes {
 	data: Array<any>;
@@ -34,36 +34,39 @@ export const StatusFilter = ({
 			const statusSet = [...new Set(TableStatusOptions)];
 
 			const status = statusSet.map((status) => {
-				return { status, checked: false };
+				console.log('status :>> ', status);
+				let checked = true;
+				if (status === 'Closed' || status === 'Rejected') {
+					checked = false;
+				}
+				return { status, checked };
 			});
-
+			status.push({ status: 'Show All', checked: false });
 			//@ts-ignore //!because Set is not properly typed
 			setStatusOptions(status);
 		}
-	}, [data]);
+	}, []);
 
 	useEffect(() => {
-		console.log('statusOptions :>> ', statusOptions);
-
 		//when the statusOptions change, get all the ones that are checked
 		const filterValues = statusOptions
 			.filter((option) => !option.checked)
 			.map((option) => option.status);
 
-		console.log('filterValues :>> ', filterValues);
 		//filter the data based on the checked statusOptions
 		setFilter('Status', filterValues);
 
 		return () => {};
 	}, [statusOptions]);
 
-	const handleFilterClick = (event: any) => {
-		//update the button state to show that whether it is in effect
+	const handleFilterChange = (status: string, checked?: boolean) => {
+		console.log('status, checked :>> ', status, checked);
+		// update the button state to show that whether it is in effect
 		let newRequestStates = statusOptions.map((thisStatus) => {
-			if (thisStatus.status === event.target.innerText)
+			if (thisStatus.status === status)
 				return {
-					status: event.target.innerText,
-					checked: !thisStatus.checked,
+					status,
+					checked: checked,
 				};
 			return thisStatus;
 		});
@@ -72,23 +75,24 @@ export const StatusFilter = ({
 	};
 
 	return (
-		<>
-			{' '}
+		<Stack horizontal>
 			{statusOptions.map((statusContainer: any) => {
 				return (
-					<DefaultButton
+					<Toggle
 						key={statusContainer.status}
-						toggle
+						label={statusContainer.status}
 						checked={statusContainer.checked}
-						text={statusContainer.status}
-						// iconProps={muted ? volume0Icon : volume3Icon}
-						onClick={handleFilterClick}
-						// allowDisabledFocus
-						// disabled={disabled}
-						// id={state}
+						onText='On'
+						offText='Off'
+						onChange={(
+							event: React.MouseEvent<HTMLElement>,
+							checked?: boolean
+						) =>
+							handleFilterChange(statusContainer.status, checked)
+						}
 					/>
 				);
 			})}
-		</>
+		</Stack>
 	);
 };

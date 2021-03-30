@@ -1,7 +1,7 @@
 import { DoFetch } from '../RestCall/DoFetch/DoFetch';
 
 export const GetContextWebInformation = async () => {
-	// eslint-disable-next-line
+	// eslint-disable-next-line //!not defined in code - only on sharepoint page
 	const siteAbsoluteUrl = _spPageContextInfo.siteAbsoluteUrl;
 
 	const fetchResponse = await DoFetch(siteAbsoluteUrl, `/_api/contextinfo`, {
@@ -11,6 +11,6 @@ export const GetContextWebInformation = async () => {
 			'content-type': 'application/json;odata=verbose',
 		},
 	});
-	// console.log('GetContextWebInformation fetchResponse :>> ', fetchResponse);
+
 	return fetchResponse.d.GetContextWebInformation;
 };

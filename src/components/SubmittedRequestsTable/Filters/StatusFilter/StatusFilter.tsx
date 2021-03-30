@@ -1,68 +1,73 @@
-import React, { useState, useEffect, useContext } from "react";
-import { DefaultButton, IColumn } from "@fluentui/react";
-import { TableContext } from "../../Scott";
-import { SetFilter } from "./SetFilter";
+import React, { useState, useEffect, useContext } from 'react';
+import { DefaultButton, IColumn } from '@fluentui/react';
+import { TableContext } from '../../Scott';
+import { SetFilter } from './SetFilter';
 
 interface StatusFilterTypes {
-  query: any;
-  columns: Array<IColumn>;
+	query: any;
+	columns: Array<IColumn>;
 }
 
 interface statusOptionsTypes {
-  status?: string;
-  checked?: boolean;
+	status?: string;
+	checked?: boolean;
 }
 
 export const StatusFilter = ({ query, columns }: StatusFilterTypes) => {
-  const [statusOptions, setStatusOptions] = useState<statusOptionsTypes[]>([]);
-  let tableContext: any = useContext(TableContext);
-  console.log(`tableContext`, tableContext);
-  useEffect(() => {
-    if (!query.isLoading && !query.isError) {
-      const TableStatusOptions: any = query.data.items.map(
-        (item: any) => item.Status
-      );
-      const statusSet: unknown[] = [...new Set(TableStatusOptions)];
-      const status: statusOptionsTypes[] = statusSet.map((status: any) => {
-        return { status, checked: true };
-      });
+	const [statusOptions, setStatusOptions] = useState<statusOptionsTypes[]>(
+		[]
+	);
+	let tableContext: any = useContext(TableContext);
 
-      setStatusOptions(status);
-    }
-  }, [query.data?.items]);
+	useEffect(() => {
+		if (!query.isLoading && !query.isError) {
+			const TableStatusOptions: any = query.data.items.map(
+				(item: any) => item.Status
+			);
+			const statusSet: unknown[] = [...new Set(TableStatusOptions)];
+			const status: statusOptionsTypes[] = statusSet.map(
+				(status: any) => {
+					return { status, checked: true };
+				}
+			);
 
-  const handleFilterClick = (event: any) => {
-    // console.log(`event`, event.target.innerText);
+			setStatusOptions(status);
+		}
+	}, [query.data?.items]);
 
-    let newRequestStates = statusOptions.map((thisStatus) => {
-      if (thisStatus.status === event.target.innerText)
-        return { status: event.target.innerText, checked: !thisStatus.checked };
-      return thisStatus;
-    });
+	const handleFilterClick = (event: any) => {
+		let newRequestStates = statusOptions.map((thisStatus) => {
+			if (thisStatus.status === event.target.innerText)
+				return {
+					status: event.target.innerText,
+					checked: !thisStatus.checked,
+				};
+			return thisStatus;
+		});
 
-    setStatusOptions(newRequestStates);
+		setStatusOptions(newRequestStates);
 
-    SetFilter(event.target.innerText, columns);
-  };
+		SetFilter(event.target.innerText, columns);
+	};
 
-  return (
-    <>
-      {" "}
-      {statusOptions.map((statusContainer: any) => {
-        return (
-          <DefaultButton
-            key={statusContainer.status}
-            toggle
-            checked={statusContainer.checked}
-            text={statusContainer.status}
-            // iconProps={muted ? volume0Icon : volume3Icon}
-            onClick={handleFilterClick}
-            // allowDisabledFocus
-            // disabled={disabled}
-            // id={state}
-          />
-        );
-      })}
-    </>
-  );
+	return (
+		<>
+			{' '}
+			{statusOptions.map((statusContainer: any) => {
+				return (
+					<DefaultButton
+						key={statusContainer.status}
+						toggle
+						checked={statusContainer.checked}
+						text={statusContainer.status}
+						// iconProps={muted ? volume0Icon : volume3Icon}
+						onClick={handleFilterClick}
+						// allowDisabledFocus
+						// disabled={disabled}
+						// id={state}
+					/>
+				);
+			})}
+		</>
+	);
 };

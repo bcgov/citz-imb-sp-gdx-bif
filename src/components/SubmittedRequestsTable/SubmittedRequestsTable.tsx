@@ -1,7 +1,19 @@
+
 import {useMemo } from 'react';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
 import { useQuery } from 'react-query';
 import { IColumn } from '@fluentui/react';
+
+import { ISubmittedRequestItem } from './ISubmittedRequestItem';
+import { testData } from './testData';
+import React, { useEffect, useMemo, useState } from 'react';
+import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
+import { GetColumns } from 'components/API/GET/GetColumns';
+import { AddItemsToList } from 'components/ApiCalls';
+import { useQuery, useQueryClient, useMutation } from 'react-query';
+import { GlobalFilter } from './Filters/GlobalFilter';
+import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
+
 import {
 	useTable,
 	useSortBy,
@@ -34,10 +46,47 @@ initializeIcons(undefined, { disableWarnings: true });
 */
 
 export const SubmittedRequestsTable = () => {
+
 	const queryName: string = 'submittedRequests';
 
 	//@ts-ignore //!because React-Table is not properly typed
 	const query: any = useQuery(queryName, GetSubmittedRequests);
+
+
+	const listName = 'Submitted Requests';
+	//!The type for query should be "QuerySuccessResult", but waiting for an update for the dev before we can use it
+	const query: any = useQuery(listName, GetSubmittedRequests);
+	const queryClient: any = useQueryClient();
+
+	const addItemMutation = useMutation(
+		(newItem: ISubmittedRequestItem) =>
+			AddItemsToList({
+				listName,
+				items: newItem,
+			}),
+		{
+			onMutate: async (newItem: ISubmittedRequestItem) => {
+				await queryClient.cancelQueries(listName);
+
+				const previousValues = queryClient.getQueryData(listName);
+
+				//@ts-ignore //!react-query is not typed
+				queryClient.setQueryData(listName, (oldValues) => {
+					let newValues = [...oldValues.items];
+
+					newValues.push(newItem);
+					return { listInfo: oldValues.listInfo, items: newValues };
+				});
+
+				return { previousValues };
+			},
+			//@ts-ignore //!react-query is not typed
+			onError: (error, newItem: ISubmittedRequestItem, context) =>
+				queryClient.setQueryData(listName, context?.previousValues),
+			onSettled: async () =>
+				await queryClient.invalidateQueries(listName),
+		}
+	);
 
 
 	const data = useMemo(() => {
@@ -48,6 +97,7 @@ export const SubmittedRequestsTable = () => {
 
 	const columns: IColumn & any = useMemo(() => {
 		if (query.isLoading || query.isError) return [];
+
 
 		const initialColumns = GetColumns(
 			query.data.listInfo.Columns,
@@ -74,6 +124,14 @@ export const SubmittedRequestsTable = () => {
 
 	}, [query.isLoading, query.isError, query.data]);
 
+console.log('query :>> ', query);
+		return GetColumns(
+			query.data.listInfo.Columns,
+			query.data.listInfo.Fields.results
+		);
+	}, [query.isLoading, query.isError, query.data?.listInfo]);
+
+
 	const tableInstance: any = useTable(
 		{
 			columns,
@@ -92,9 +150,16 @@ export const SubmittedRequestsTable = () => {
 		tableSort(ev, column, tableInstance);
 	};
 
+
 	if (query.isLoading) return <div>loading...</div>;
 
 	if (query.isError) return <div>{query.error}</div>;
+
+	const addNewRequest = () => {
+		console.log('add new request');
+		addItemMutation.mutateAsync(testData);
+	};
+
 
 	return (
 		<>

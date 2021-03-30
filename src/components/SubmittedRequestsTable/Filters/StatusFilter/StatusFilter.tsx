@@ -30,8 +30,12 @@ export const StatusFilter = ({
 				(item) => item.Status
 			);
 
+
 			//get rid of duplicate Status values
 			const statusSet = [...new Set(TableStatusOptions)];
+
+  const handleFilterClick = (event: any) => {
+
 
 			const status = statusSet.map((status) => {
 				console.log('status :>> ', status);

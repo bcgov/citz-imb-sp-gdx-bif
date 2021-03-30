@@ -63,17 +63,7 @@ export const RestCall = async ({
 		default:
 	}
 
-	// try {
-		fetchResponse = await DoFetch(webAbsoluteUrl, endPoint, options);
-		// console.log('fetchResponse :>> ', fetchResponse);
-		return fetchResponse;
-	// } catch (error) {
-	// 	console.error('RestCall error :>> ', {
-	// 		endPoint,
-	// 		method,
-	// 		body,
-	// 		headers,
-	// 		cache,
-	// 	});
-	// }
+	fetchResponse = await DoFetch(webAbsoluteUrl, endPoint, options);
+
+	return fetchResponse;
 };

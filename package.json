@@ -20,7 +20,8 @@
 		"eject": "react-scripts eject",
 		"proxy": "node ./api-server.js",
 		"startServers": "concurrently --kill-others \"npm run proxy\" \"npm run start\"",
-		"devbuild": "react-scripts build && gulp dev"
+		"devbuild": "react-scripts build && gulp dev",
+	    "uatbuild":"react-scripts build && gulp uat"
 	},
 	"eslintConfig": {
 		"extends": [

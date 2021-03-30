@@ -85,18 +85,10 @@ export const RestCall = async ({
 			'content-type': 'application/json;odata=verbose',
 		}
 	}
-	// if (cache) {
-	// 	options.cache = cache
-	// } else {
 	if (method === 'get') {
-		//options.cache = 'reload'
-		//options.headers['If-Match'] = "*"
 		options.headers['Cache-Control'] = 'no-cache'
 		options.headers['Pragma'] = 'no-cache'
 	}
-	// }
-
-	// console.log('{url, endPoint, method, headers, body} :>> ', {url, endPoint, method, headers, body});
 	let DigestValueResponse: string
 
 	switch (options.method.toLowerCase()) {

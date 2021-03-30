@@ -30,7 +30,6 @@ export const StatusFilter = ({ query, columns }: StatusFilterTypes) => {
   }, [query.data?.items]);
 
   const handleFilterClick = (event: any) => {
-    // console.log(`event`, event.target.innerText);
 
     let newRequestStates = statusOptions.map((thisStatus) => {
       if (thisStatus.status === event.target.innerText)

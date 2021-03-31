@@ -1,29 +1,27 @@
-import { IColumn } from '@fluentui/react';
-
-import { ISubmittedRequestItem } from './ISubmittedRequestItem';
-import { testData } from './testData';
-import React, { useEffect, useMemo, useState } from 'react';
-import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
-import { AddItemsToList } from 'components/ApiCalls';
-import { useQuery, useQueryClient, useMutation } from 'react-query';
-
-import {
-	useTable,
-	useSortBy,
-	useFilters,
-	useGlobalFilter,
-	useAsyncDebounce,
-	Row,
-} from 'react-table';
-import { DetailsList } from '@fluentui/react';
+import { DetailsList, IColumn } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { GetColumns } from 'components/API/GET/GetColumns';
-import { tableSort } from './tableSort';
-import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
-import { GlobalFilter } from './Filters/GlobalFilter';
-import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
+import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
+import { AddItemsToList } from 'components/ApiCalls';
 import { IntakeForm } from 'components/IntakeForm/IntakeForm';
+import React, { useMemo } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {
+	Row,
+	useAsyncDebounce,
+	useFilters,
+	useGlobalFilter,
+	useSortBy,
+	useTable,
+} from 'react-table';
+import { GlobalFilter } from './Filters/GlobalFilter';
+import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
+import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
+import { ISubmittedRequestItem } from './ISubmittedRequestItem';
 import { NavBar } from './NavBar/NavBar';
+import { tableSort } from './tableSort';
+import { testData } from './testData';
+
 //!because React-Table is not properly typed
 // import { QuerySuccessResult } from "react-query";
 // To intialize

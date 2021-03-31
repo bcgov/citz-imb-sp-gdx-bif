@@ -1,34 +1,26 @@
-
-import {useMemo } from 'react';
-import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
-import { useQuery } from 'react-query';
-import { IColumn } from '@fluentui/react';
-
-import { ISubmittedRequestItem } from './ISubmittedRequestItem';
-import { testData } from './testData';
-import React, { useEffect, useMemo, useState } from 'react';
-import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
-import { GetColumns } from 'components/API/GET/GetColumns';
-import { AddItemsToList } from 'components/ApiCalls';
-import { useQuery, useQueryClient, useMutation } from 'react-query';
-import { GlobalFilter } from './Filters/GlobalFilter';
-import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
-
-import {
-	useTable,
-	useSortBy,
-	useFilters,
-	useGlobalFilter,
-	useAsyncDebounce,
-	Row,
-} from 'react-table';
-import { DetailsList } from '@fluentui/react';
+import { DetailsList, IColumn } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { GetColumns } from 'components/API/GET/GetColumns';
-import { tableSort } from './tableSort';
-import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
+import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
+import { AddItemsToList } from 'components/ApiCalls';
+import { IntakeForm } from 'components/IntakeForm/IntakeForm';
+import React, { useMemo } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {
+	Row,
+	useAsyncDebounce,
+	useFilters,
+	useGlobalFilter,
+	useSortBy,
+	useTable,
+} from 'react-table';
 import { GlobalFilter } from './Filters/GlobalFilter';
+import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
 import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
+import { ISubmittedRequestItem } from './ISubmittedRequestItem';
+import { NavBar } from './NavBar/NavBar';
+import { tableSort } from './tableSort';
+import { testData } from './testData';
 
 //!because React-Table is not properly typed
 // import { QuerySuccessResult } from "react-query";
@@ -46,16 +38,11 @@ initializeIcons(undefined, { disableWarnings: true });
 */
 
 export const SubmittedRequestsTable = () => {
-
-	const queryName: string = 'submittedRequests';
+	const listName = 'Submitted Requests';
 
 	//@ts-ignore //!because React-Table is not properly typed
-	const query: any = useQuery(queryName, GetSubmittedRequests);
-
-
-	const listName = 'Submitted Requests';
-	//!The type for query should be "QuerySuccessResult", but waiting for an update for the dev before we can use it
 	const query: any = useQuery(listName, GetSubmittedRequests);
+
 	const queryClient: any = useQueryClient();
 
 	const addItemMutation = useMutation(
@@ -88,16 +75,14 @@ export const SubmittedRequestsTable = () => {
 		}
 	);
 
-
 	const data = useMemo(() => {
 		if (query.isLoading || query.isError) return [];
 
 		return query.data.items;
-	}, [query.isLoading, query.isError, query.data]);
+	}, [query.isLoading, query.isError, query.data?.items]);
 
 	const columns: IColumn & any = useMemo(() => {
 		if (query.isLoading || query.isError) return [];
-
 
 		const initialColumns = GetColumns(
 			query.data.listInfo.Columns,
@@ -112,7 +97,7 @@ export const SubmittedRequestsTable = () => {
 
 		//set the custom filter functionality on 'Status' column
 		//@ts-ignore //!because React-Table is not properly typed
-		statusColumn.filter = statusColumnFilter
+		statusColumn.filter = statusColumnFilter;
 
 		//add the modified 'Status' column back in with the other columns
 		const modifiedColumns = [
@@ -121,16 +106,7 @@ export const SubmittedRequestsTable = () => {
 		];
 
 		return modifiedColumns;
-
 	}, [query.isLoading, query.isError, query.data]);
-
-console.log('query :>> ', query);
-		return GetColumns(
-			query.data.listInfo.Columns,
-			query.data.listInfo.Fields.results
-		);
-	}, [query.isLoading, query.isError, query.data?.listInfo]);
-
 
 	const tableInstance: any = useTable(
 		{
@@ -150,7 +126,6 @@ console.log('query :>> ', query);
 		tableSort(ev, column, tableInstance);
 	};
 
-
 	if (query.isLoading) return <div>loading...</div>;
 
 	if (query.isError) return <div>{query.error}</div>;
@@ -160,23 +135,22 @@ console.log('query :>> ', query);
 		addItemMutation.mutateAsync(testData);
 	};
 
-
 	return (
 		<>
-			<div>{query.status}</div>
-			<br />
-			<GlobalFilter
-				preGlobalFilteredRows={tableInstance.preGlobalFilteredRows}
-				globalFilter={tableInstance.state.globalFilter}
-				setGlobalFilter={tableInstance.setGlobalFilter}
-				useAsyncDebounce={useAsyncDebounce}
-			/>
-			<StatusFilter
-				data={tableInstance.data}
-				columns={tableInstance.columns}
-				setFilter={tableInstance.setFilter}
-			/>
-
+			<NavBar addNewRequest={addNewRequest}>
+				<IntakeForm />
+				<GlobalFilter
+					preGlobalFilteredRows={tableInstance.preGlobalFilteredRows}
+					globalFilter={tableInstance.state.globalFilter}
+					setGlobalFilter={tableInstance.setGlobalFilter}
+					useAsyncDebounce={useAsyncDebounce}
+				/>
+				<StatusFilter
+					data={tableInstance.data}
+					columns={tableInstance.columns}
+					setFilter={tableInstance.setFilter}
+				/>
+			</NavBar>
 			<DetailsList
 				items={tableInstance.sortedRows.map((row: Row) => row.values)}
 				columns={tableInstance.columns}

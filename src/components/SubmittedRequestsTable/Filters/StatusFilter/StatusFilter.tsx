@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Toggle, IColumn, Stack } from '@fluentui/react';
 
 interface StatusFilterTypes {
@@ -12,11 +12,9 @@ interface statusOptionsTypes {
 	checked?: boolean;
 }
 
-export const StatusFilter = ({
-	data,
-	columns,
-	setFilter,
-}: StatusFilterTypes) => {
+export const StatusFilter = (props: StatusFilterTypes) => {
+	const { data, columns, setFilter } = props;
+
 	const [statusOptions, setStatusOptions] = useState<statusOptionsTypes[]>(
 		[]
 	);
@@ -30,31 +28,47 @@ export const StatusFilter = ({
 				(item) => item.Status
 			);
 
+			// get rid of duplicate Status values
 
-			//get rid of duplicate Status values
 			const statusSet = [...new Set(TableStatusOptions)];
 
-  const handleFilterClick = (event: any) => {
+			setStatusOptions((prevState) => {
+				let tempArray: statusOptionsTypes[] = [];
 
+				for (let i = 0; i < statusSet.length; i++) {
+					const index = prevState.findIndex(
+						(option) => option.status === statusSet[i]
+					);
 
-			const status = statusSet.map((status) => {
-				console.log('status :>> ', status);
-				let checked = true;
-				if (status === 'Closed' || status === 'Rejected') {
-					checked = false;
+					if (index > -1) {
+						tempArray.push(prevState[index]);
+					} else {
+						if (
+							statusSet[i] === 'Closed' ||
+							statusSet[i] === 'Rejected'
+						) {
+							tempArray.push({
+								status: statusSet[i],
+								checked: false,
+							});
+						} else {
+							tempArray.push({
+								status: statusSet[i],
+								checked: true,
+							});
+						}
+					}
 				}
-				return { status, checked };
+
+				return tempArray;
 			});
-			status.push({ status: 'Show All', checked: false });
-			//@ts-ignore //!because Set is not properly typed
-			setStatusOptions(status);
 		}
-	}, []);
+	}, [data]);
 
 	useEffect(() => {
 		//when the statusOptions change, get all the ones that are checked
 		const filterValues = statusOptions
-			.filter((option) => !option.checked)
+			.filter((option) => option.checked)
 			.map((option) => option.status);
 
 		//filter the data based on the checked statusOptions
@@ -63,8 +77,7 @@ export const StatusFilter = ({
 		return () => {};
 	}, [statusOptions]);
 
-	const handleFilterChange = (status: string, checked?: boolean) => {
-		console.log('status, checked :>> ', status, checked);
+	const handleFilterChange = (status: string, checked: boolean) => {
 		// update the button state to show that whether it is in effect
 		let newRequestStates = statusOptions.map((thisStatus) => {
 			if (thisStatus.status === status)
@@ -92,7 +105,10 @@ export const StatusFilter = ({
 							event: React.MouseEvent<HTMLElement>,
 							checked?: boolean
 						) =>
-							handleFilterChange(statusContainer.status, checked)
+							handleFilterChange(
+								statusContainer.status,
+								checked ?? false
+							)
 						}
 					/>
 				);

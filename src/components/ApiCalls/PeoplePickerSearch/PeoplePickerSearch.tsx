@@ -1,5 +1,35 @@
-import React from "react";
+import { PeoplePickerSearchProps } from "./PeoplePickerSearchProps";
+import { RestCall } from "../../ApiCalls/RestCall/RestCall";
 
-export const PeoplePickerSearch = () => {
-  return <div></div>;
+export const PeoplePickerSearch = async ({
+  pickerValue,
+  __metadata = {
+    type: "SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters",
+  },
+  AllowEmailAddresses = true,
+  AllowMultipleEntities = false,
+  AllUrlZones = false,
+  MaximumEntitySuggestions = 50,
+  PrincipalSource = 1,
+  PrincipalType = 1,
+}: PeoplePickerSearchProps) => {
+  const options = {
+    endPoint:
+      "/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser",
+    method: "post",
+    body: {
+      queryParams: {
+        __metadata,
+        AllowEmailAddresses,
+        AllowMultipleEntities,
+        AllUrlZones,
+        MaximumEntitySuggestions,
+        PrincipalSource,
+        PrincipalType,
+        QueryString: pickerValue,
+      },
+    },
+  };
+  //@ts-ignore
+  return await RestCall(options);
 };

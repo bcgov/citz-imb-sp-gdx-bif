@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { RestCall } from "../ApiCalls/RestCall/RestCall";
-
+import { PeoplePickerSearch } from "../ApiCalls/PeoplePickerSearch/PeoplePickerSearch";
 export const usePeoplePicker = () => {
   const [searchResults, setSearchResults] = useState([]);
 
@@ -8,38 +7,13 @@ export const usePeoplePicker = () => {
     setSearchResults([]);
   };
 
-  const onChange = async (event: any) => {
-    if (event.currentTarget.value.length > 2) {
-      const options = {
-        endPoint:
-          "/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser",
-        method: "post",
-        body: {
-          queryParams: {
-            __metadata: {
-              type: "SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters",
-            },
-            AllowEmailAddresses: true,
-            AllowMultipleEntities: false,
-            AllUrlZones: false,
-            MaximumEntitySuggestions: 50,
-            PrincipalSource: 1,
-            PrincipalType: 1,
-            QueryString: event.currentTarget.value,
-            // Required: false,
-            // SharePointGroupID: null,
-            // UrlZone: null,
-            // UrlZoneSpecified: false,
-            // Web: null,
-            // WebApplicationID: null,
-          },
-        },
-        // headers:'',
-        // cache:''
-      };
-      //@ts-ignore
-      const results = await RestCall(options);
-      setSearchResults(JSON.parse(results.d.ClientPeoplePickerSearchUser));
+  const onChange = async (pickerValue: any) => {
+    if (pickerValue.length > 2) {
+      console.log(`pickerValue`, pickerValue);
+      const results = await PeoplePickerSearch(pickerValue);
+      console.log(`results`, results);
+      // //@ts-ignore
+      // setSearchResults(JSON.parse(results.d.ClientPeoplePickerSearchUser));
     }
   };
 

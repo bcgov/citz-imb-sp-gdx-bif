@@ -1,4 +1,8 @@
-export const DoFetch = async (url, endPoint, options) => {
+export const DoFetch = async (
+	url: string,
+	endPoint: string,
+	options?: object
+) => {
 	const response = await fetch(`${url}${endPoint}`, options);
 
 	if (response.ok) {
@@ -6,7 +10,7 @@ export const DoFetch = async (url, endPoint, options) => {
 			//no content
 			return;
 		} else if (response.status === 304) {
-			console.warning(
+			console.warn(
 				`${response.status} ${response.statusText} ${endPoint}`
 			);
 			return response.json();

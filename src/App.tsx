@@ -1,17 +1,38 @@
-import React from "react";
-import { QueryClientProvider, QueryClient } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
-import { SubmittedRequestsTable } from "components";
-import { PeoplePicker } from "./components/IntakeForm/Inputs/PeoplePicker";
+import { SubmittedRequestsTable } from 'components';
+import { GetListItems } from 'components/ApiCalls';
+import React, { useEffect, useState } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+
 const queryClient = new QueryClient();
 
 export const App = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <SubmittedRequestsTable />
-      <h1>Custom PeoplePicker</h1>
-      <PeoplePicker />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  );
+	const [isLoading, setIsLoading] = useState(true);
+
+	const prefetch = async () => {
+		await queryClient.prefetchQuery(
+			'Config',
+			() => GetListItems({ listName: 'Config' }),
+			{
+				staleTime: 30 * 1000, //30 minutes
+				cacheTime: 30 * 1000, //30 minutes
+			}
+		);
+		setIsLoading(false);
+	};
+
+	useEffect(() => {
+		prefetch();
+		return () => {};
+	}, []);
+
+  if(isLoading) return <div>loading App...</div>
+
+	return (
+		<QueryClientProvider client={queryClient}>
+			<SubmittedRequestsTable />
+
+			<ReactQueryDevtools initialIsOpen={false} />
+		</QueryClientProvider>
+	);
 };

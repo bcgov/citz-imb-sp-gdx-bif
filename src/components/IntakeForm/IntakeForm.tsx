@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-
+import { RenderInputs } from "./Inputs/RenderInputs";
 const createProjSchema = Yup.object().shape({
   //Example
   //Title: Yup.string().required("Project Name is required"),
@@ -10,8 +10,10 @@ const createProjSchema = Yup.object().shape({
 export const IntakeForm = ({ columns }: any) => {
   return (
     <Formik
-      initialValues={{}}
-      onSubmit={() => {}}
+      initialValues={{ Ministry: "noneee" }}
+      onSubmit={(value: any) => {
+        console.log(`value`, value);
+      }}
       validationSchema={createProjSchema}
     >
       {({
@@ -26,8 +28,10 @@ export const IntakeForm = ({ columns }: any) => {
         return (
           <Form>
             {columns.map((column: any) => {
-              return column.fieldRender;
+              return RenderInputs(column.FieldTypeKind, column.fieldName);
+              // return column.fieldRender;
             })}
+            <button>test</button>
           </Form>
         );
       }}

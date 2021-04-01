@@ -1,6 +1,6 @@
 import { IColumn } from "@fluentui/react";
 import { Column } from "react-table";
-import { RenderInputs } from "components/IntakeForm/Inputs/RenderInputs";
+// import { RenderInputs } from "components/IntakeForm/Inputs/RenderInputs";
 export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
   return viewColumns.map((column: string) => {
     const viewField: {
@@ -11,7 +11,8 @@ export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
       (field: { InternalName: string }) => field.InternalName === column
     )[0];
     let newColumn: IColumn & any = {
-      fieldRender: RenderInputs(viewField.FieldTypeKind),
+      // fieldRender: RenderInputs(viewField.FieldTypeKind),
+      FieldTypeKind: viewField.FieldTypeKind,
       key: viewField.InternalName,
       name: viewField.Title,
       fieldName: viewField.InternalName,
@@ -24,7 +25,6 @@ export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
       isSortedDescending: true,
       canFilter: true,
     };
-
     return newColumn;
   });
 };

@@ -1,14 +1,13 @@
 //https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-csom/ee540543(v=office.15)
 import { PeoplePicker } from "components/IntakeForm/Inputs/PeoplePicker";
 
-export function RenderInputs(fieldType?: any) {
-  console.log(`fieldType`, fieldType);
+export const RenderInputs = (fieldType: any, fieldName: any) => {
   switch (fieldType) {
     case 2: //Text
       //example
       // <SingleLineTextField label={title} name={internalName} toolTip={description} required={required} />
 
-      return <PeoplePicker />;
+      return <PeoplePicker fieldName={fieldName} />;
 
       break;
     case 3: //"Note"
@@ -36,4 +35,4 @@ export function RenderInputs(fieldType?: any) {
       return <div>default render</div>;
       break;
   }
-}
+};

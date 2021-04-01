@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { PeoplePickerSearch } from "../ApiCalls/PeoplePickerSearch/PeoplePickerSearch";
+import { IPersonaProps } from "@fluentui/react";
 export const usePeoplePicker = () => {
   const [searchResults, setSearchResults] = useState([]);
 
@@ -7,15 +8,28 @@ export const usePeoplePicker = () => {
     setSearchResults([]);
   };
 
-  const onChange = async (pickerValue: string) => {
+  const onChange = async (
+    pickerValue: string,
+    currentPersonas: IPersonaProps[],
+    limitResults: number,
+    fieldProps: any,
+    fieldName: string
+  ) => {
+    if (currentPersonas.length > 0) {
+      setTimeout(() => {
+        fieldProps.form.setFieldValue(fieldName, currentPersonas, true);
+        fieldProps.form.setFieldTouched(fieldName, true, true);
+        reset();
+      }, 100); //Time before execution
+    }
     if (pickerValue.length > 2) {
       const results = await PeoplePickerSearch({ pickerValue });
-
-      const test = results.map((result: any) => {
-        return { text: result.DisplayText };
+      // People picker user properties that are available
+      const users = results.map((result: any) => {
+        return { text: result.DisplayText, userId: result.EntityData.SPUserID };
       });
-      console.log(`test`, test);
-      return test;
+
+      return users;
     }
   };
 

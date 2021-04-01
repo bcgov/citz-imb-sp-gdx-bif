@@ -68,7 +68,11 @@ export const FormDialog = ({ columns }: any) => {
         <IntakeForm columns={columns} />
         <DialogFooter>
           <DefaultButton onClick={toggleHideDialog} text='Close' />
-          <PrimaryButton onClick={toggleHideDialog} text='Submit' />
+          <PrimaryButton
+            type='submit'
+            onClick={toggleHideDialog}
+            text='Submit'
+          />
         </DialogFooter>
       </Dialog>
     </>

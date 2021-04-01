@@ -7,15 +7,27 @@ export const usePeoplePicker = () => {
     setSearchResults([]);
   };
 
-  const onChange = async (pickerValue: any) => {
+  const onChange = async (pickerValue: string) => {
     if (pickerValue.length > 2) {
-      console.log(`pickerValue`, pickerValue);
-      const results = await PeoplePickerSearch(pickerValue);
-      console.log(`results`, results);
-      // //@ts-ignore
-      // setSearchResults(JSON.parse(results.d.ClientPeoplePickerSearchUser));
+      const results = await PeoplePickerSearch({ pickerValue });
+
+      const test = results.map((result: any) => {
+        return { text: result.DisplayText };
+      });
+      console.log(`test`, test);
+      return test;
     }
   };
 
   return { onChange, searchResults, reset };
 };
+
+// Description: "i:0ǵ.t|bcgovidp|bf9add39be63420694fabcca01771a5a"
+// DisplayText: "Abraham, Adam PSSG:EX"
+// EntityData: {PrincipalType: "User", Title: "Senior Probation Officer", Email: "Adam.Abraham@gov.bc.ca", SPUserID: "1370", AccountName: "i:0ǵ.t|bcgovidp|bf9add39be63420694fabcca01771a5a", …}
+// EntityType: ""
+// IsResolved: false
+// Key: "i:0ǵ.t|bcgovidp|bf9add39be63420694fabcca01771a5a"
+// MultipleMatches: []
+// ProviderDisplayName: ""
+// ProviderName: ""

@@ -56,9 +56,11 @@
 		"@types/sharepoint": "^2016.1.9",
 		"@uifabric/example-data": "^7.1.6",
 		"concurrently": "^6.0.0",
+		"formik": "^2.2.6",
 		"gulp": "^4.0.2",
 		"gulp-concat": "^2.6.1",
-		"sp-rest-proxy": "^3.0.5"
+		"sp-rest-proxy": "^3.0.5",
+		"yup": "^0.32.9"
 	},
 	"proxy": "http://localhost:8081"
 }

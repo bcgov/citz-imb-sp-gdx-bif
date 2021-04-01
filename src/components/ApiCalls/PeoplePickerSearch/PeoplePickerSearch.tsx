@@ -31,5 +31,6 @@ export const PeoplePickerSearch = async ({
     },
   };
   //@ts-ignore
-  return await RestCall(options);
+  const results = await RestCall(options);
+  return JSON.parse(results.d.ClientPeoplePickerSearchUser);
 };

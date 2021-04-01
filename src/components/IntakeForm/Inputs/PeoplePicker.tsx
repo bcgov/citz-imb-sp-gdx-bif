@@ -17,7 +17,7 @@ const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsAvailableAlertText: "People Picker Suggestions available",
   suggestionsContainerAriaLabel: "Suggested contacts",
 };
-
+console.log(`people`, people);
 // const onFilterChanged = (
 //   filterText: string,
 //   currentPersonas: IPersonaProps[],
@@ -55,7 +55,10 @@ export const PeoplePicker: React.FunctionComponent = () => {
       key={"normal"}
       // // eslint-disable-next-line react/jsx-no-bind
       // onRemoveSuggestion={onRemoveSuggestion}
-      // onValidateInput={validateInput}
+      onValidateInput={(input: any) => {
+        console.log(`input`, input);
+        return input;
+      }}
       removeButtonAriaLabel={"Remove"}
       // inputProps={{
       //   onBlur: (ev: React.FocusEvent<HTMLInputElement>) =>
@@ -65,7 +68,10 @@ export const PeoplePicker: React.FunctionComponent = () => {
       //   "aria-label": "People Picker",
       // }}
       // componentRef={picker}
-      // onInputChange={onInputChange}
+      onInputChange={(input: any) => {
+        console.log(`input`, input);
+        return input;
+      }}
       // resolveDelay={300}
       // disabled={isPickerDisabled}
     />

@@ -1,6 +1,5 @@
 //https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-csom/ee540543(v=office.15)
-import { PeoplePicker } from "components/IntakeForm/Inputs/PeoplePicker";
-
+import { NumberField, PeoplePicker } from "./index";
 export const RenderInputs = (fieldType: any, fieldName: any) => {
   switch (fieldType) {
     case 2: //Text
@@ -15,7 +14,7 @@ export const RenderInputs = (fieldType: any, fieldName: any) => {
 
       break;
     case 9: //"Number"
-      return <div>Number Field PlaceHolder</div>;
+      return <NumberField fieldName={fieldName} />;
 
       break;
     case 4: //"DateTime":

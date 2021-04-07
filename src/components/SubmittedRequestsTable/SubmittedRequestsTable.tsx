@@ -3,7 +3,7 @@ import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { GetColumns } from 'components/API/GET/GetColumns';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
 import { AddItemsToList } from 'components/ApiCalls';
-import { IntakeForm } from 'components/IntakeForm/IntakeForm';
+import { FormDialog } from 'components/IntakeForm/FormDialog';
 import React, { useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
@@ -12,7 +12,7 @@ import {
 	useFilters,
 	useGlobalFilter,
 	useSortBy,
-	useTable,
+	useTable
 } from 'react-table';
 import { GlobalFilter } from './Filters/GlobalFilter';
 import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
@@ -134,11 +134,10 @@ export const SubmittedRequestsTable = () => {
 		console.log('add new request');
 		addItemMutation.mutateAsync(testData);
 	};
-
 	return (
 		<>
 			<NavBar addNewRequest={addNewRequest}>
-				<IntakeForm />
+				<FormDialog columns={tableInstance.columns} />
 				<GlobalFilter
 					preGlobalFilteredRows={tableInstance.preGlobalFilteredRows}
 					globalFilter={tableInstance.state.globalFilter}

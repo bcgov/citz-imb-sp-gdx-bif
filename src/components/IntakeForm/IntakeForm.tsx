@@ -1,74 +1,40 @@
-import * as React from "react";
-import {
-  Dialog,
-  DialogType,
-  DialogFooter,
-  PrimaryButton,
-  DefaultButton,
-  hiddenContentStyle,
-  mergeStyles,
-  Toggle,
-  ContextualMenu,
-} from "@fluentui/react";
-import { useId, useBoolean } from "@fluentui/react-hooks";
+import React from "react";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { RenderInputs } from "./Inputs/RenderInputs";
+const createProjSchema = Yup.object().shape({
+  //Example
+  //Title: Yup.string().required("Project Name is required"),
+});
 
-const dialogStyles = { main: { maxWidth: 450 } };
-const dragOptions = {
-  moveMenuItemText: "Move",
-  closeMenuItemText: "Close",
-  menu: ContextualMenu,
-  keepInBounds: true,
-};
-const screenReaderOnly = mergeStyles(hiddenContentStyle);
-const dialogContentProps = {
-  type: DialogType.normal,
-  title: "New Intake",
-  closeButtonAriaLabel: "Close",
-  subText: "Do you want to send this message without a subject?",
-};
-
-export const IntakeForm: React.FunctionComponent = () => {
-  const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
-  const [isDraggable, { toggle: toggleIsDraggable }] = useBoolean(false);
-  const labelId: string = useId("dialogLabel");
-  const subTextId: string = useId("subTextLabel");
-
-  const modalProps = React.useMemo(
-    () => ({
-      titleAriaId: labelId,
-      subtitleAriaId: subTextId,
-      isBlocking: false,
-      styles: dialogStyles,
-      dragOptions: isDraggable ? dragOptions : undefined,
-    }),
-    [isDraggable, labelId, subTextId]
-  );
-
+export const IntakeForm = ({ columns }: any) => {
   return (
-    <>
-      <DefaultButton
-        secondaryText="Opens the Sample Dialog"
-        onClick={toggleHideDialog}
-        text="New +"
-      />
-      <label id={labelId} className={screenReaderOnly}>
-        My sample label
-      </label>
-      <label id={subTextId} className={screenReaderOnly}>
-        My sample description
-      </label>
-
-      <Dialog
-        hidden={hideDialog}
-        onDismiss={toggleHideDialog}
-        dialogContentProps={dialogContentProps}
-        modalProps={modalProps}
-      >
-        <DialogFooter>
-          <DefaultButton onClick={toggleHideDialog} text="Close" />
-          <PrimaryButton onClick={toggleHideDialog} text="Submit" />
-        </DialogFooter>
-      </Dialog>
-    </>
+    <Formik
+      initialValues={{ Ministry: "noneee" }}
+      onSubmit={(value: any) => {
+        console.log(`value`, value);
+      }}
+      validationSchema={createProjSchema}
+    >
+      {({
+        setFieldValue,
+        values,
+        errors,
+        touched,
+        setFieldTouched,
+        handleChange,
+        handleBlur,
+      }) => {
+        return (
+          <Form>
+            {columns.map((column: any) => {
+              return RenderInputs(column.FieldTypeKind, column.fieldName);
+              // return column.fieldRender;
+            })}
+            <button>test</button>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };

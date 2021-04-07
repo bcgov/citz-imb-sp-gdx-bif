@@ -1,11 +1,11 @@
-import { IColumn } from "@fluentui/react";
+import { IColumn } from '@fluentui/react';
 
-import { ISubmittedRequestItem } from "./ISubmittedRequestItem";
-import { testData } from "./testData";
-import React, { useEffect, useMemo, useState } from "react";
-import { GetSubmittedRequests } from "components/API/GET/GetSubmittedRequests";
-import { AddItemsToList } from "components/ApiCalls";
-import { useQuery, useQueryClient, useMutation } from "react-query";
+import { ISubmittedRequestItem } from './ISubmittedRequestItem';
+import { testData } from './testData';
+import React, { useEffect, useMemo, useState } from 'react';
+import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
+import { AddItemsToList } from 'components/ApiCalls';
+import { useQuery, useQueryClient, useMutation } from 'react-query';
 
 import {
   useTable,
@@ -14,16 +14,16 @@ import {
   useGlobalFilter,
   useAsyncDebounce,
   Row,
-} from "react-table";
-import { DetailsList } from "@fluentui/react";
-import { initializeIcons } from "@fluentui/react/lib/Icons";
-import { GetColumns } from "components/API/GET/GetColumns";
-import { tableSort } from "./tableSort";
-import { statusColumnFilter } from "./Filters/StatusFilter/statusColumnFilter";
-import { GlobalFilter } from "./Filters/GlobalFilter";
-import { StatusFilter } from "./Filters/StatusFilter/StatusFilter";
-import { FormDialog } from "components/IntakeForm/FormDialog";
-import { NavBar } from "./NavBar/NavBar";
+} from 'react-table';
+import { DetailsList } from '@fluentui/react';
+import { initializeIcons } from '@fluentui/react/lib/Icons';
+import { GetColumns } from 'components/API/GET/GetColumns';
+import { tableSort } from './tableSort';
+import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
+import { GlobalFilter } from './Filters/GlobalFilter';
+import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
+import { FormDialog } from 'components/IntakeForm/FormDialog';
+import { NavBar } from './NavBar/NavBar';
 //!because React-Table is not properly typed
 // import { QuerySuccessResult } from "react-query";
 // To intialize
@@ -40,7 +40,7 @@ initializeIcons(undefined, { disableWarnings: true });
 */
 
 export const SubmittedRequestsTable = () => {
-  const listName = "Submitted Requests";
+  const listName = 'Submitted Requests';
 
   //@ts-ignore //!because React-Table is not properly typed
   const query: any = useQuery(listName, GetSubmittedRequests);
@@ -89,20 +89,19 @@ export const SubmittedRequestsTable = () => {
       query.data.listInfo.Columns,
       query.data.listInfo.Fields.results
     );
-
     //we need to treat 'Status' column differently as we are going to filter on it
     //get the 'Status' column
-    let statusColumn = initialColumns.filter(
-      (column) => column.key === "Status"
+    let statusColumn: any = initialColumns.filter(
+      (column) => column.key === 'Status'
     )[0];
 
     //set the custom filter functionality on 'Status' column
     //@ts-ignore //!because React-Table is not properly typed
     statusColumn.filter = statusColumnFilter;
-
+    statusColumn.hideOnForm = true;
     //add the modified 'Status' column back in with the other columns
     const modifiedColumns = [
-      ...initialColumns.filter((column) => column.key !== "Status"),
+      ...initialColumns.filter((column) => column.key !== 'Status'),
       statusColumn,
     ];
 
@@ -132,7 +131,7 @@ export const SubmittedRequestsTable = () => {
   if (query.isError) return <div>{query.error}</div>;
 
   const addNewRequest = () => {
-    console.log("add new request");
+    console.log('add new request');
     addItemMutation.mutateAsync(testData);
   };
   return (

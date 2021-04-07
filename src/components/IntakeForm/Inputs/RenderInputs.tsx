@@ -1,12 +1,26 @@
 //https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-csom/ee540543(v=office.15)
-import { NumberField, PeoplePicker } from "./index";
-export const RenderInputs = (fieldType: any, fieldName: any) => {
+import { NumberField } from './NumberField';
+import { PeoplePicker } from './PeoplePicker';
+import { TextInput } from './TextInput';
+import { Field } from 'formik';
+
+import React from 'react';
+
+export const RenderInputs = (
+  fieldType: number,
+  fieldName: string,
+  name: string,
+  hideOnForm: boolean = false
+) => {
+  if (hideOnForm) {
+    return <Field name={fieldName} type='hidden' />;
+  }
   switch (fieldType) {
     case 2: //Text
       //example
       // <SingleLineTextField label={title} name={internalName} toolTip={description} required={required} />
 
-      return <PeoplePicker fieldName={fieldName} />;
+      return <TextInput fieldName={fieldName} title={name} />;
 
       break;
     case 3: //"Note"
@@ -14,7 +28,7 @@ export const RenderInputs = (fieldType: any, fieldName: any) => {
 
       break;
     case 9: //"Number"
-      return <NumberField fieldName={fieldName} />;
+      return <NumberField fieldName={fieldName} title={name} />;
 
       break;
     case 4: //"DateTime":
@@ -26,7 +40,7 @@ export const RenderInputs = (fieldType: any, fieldName: any) => {
 
       break;
     case 20: //"User":
-      return <div>User Field PlaceHolder</div>;
+      return <PeoplePicker fieldName={fieldName} title={name} />;
 
       break;
 

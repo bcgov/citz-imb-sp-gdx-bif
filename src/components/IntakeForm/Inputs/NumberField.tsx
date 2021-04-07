@@ -1,21 +1,35 @@
-import * as React from "react";
-import { Stack, IStackTokens, SpinButton, Label } from "@fluentui/react";
-
-const StackTokens: Partial<IStackTokens> = { childrenGap: 10 };
-const StackStyles = { root: { width: 400 } };
+import React, { FC } from "react";
+import { TextField } from "@fluentui/react";
+import { Field, ErrorMessage } from "formik";
 
 interface NumberFieldProps {
   fieldName: string;
+  title: string;
+  defaultValue?: string;
 }
 
-export const NumberField: React.FC<NumberFieldProps> = ({ fieldName }) => (
-  <SpinButton
-    defaultValue='0'
-    labelPosition={0}
-    label='test'
-    min={0}
-    step={1}
-    incrementButtonAriaLabel={"Increase value by 1"}
-    decrementButtonAriaLabel={"Decrease value by 1"}
-  />
-);
+export const NumberField: FC<NumberFieldProps> = ({
+  fieldName,
+  title,
+  defaultValue = "",
+}) => {
+  return (
+    <div className='NumberField'>
+      <Field
+        // required={required}
+        // type={type}
+        iconProps={{ iconName: "NumberField" }}
+        defaultValue={defaultValue}
+        variant='filled'
+        as={TextField}
+        autoComplete='off'
+        label={title}
+        fullWidth={true}
+        name={fieldName}
+        helperText={<ErrorMessage name={fieldName} />}
+      />
+    </div>
+  );
+};
+
+export default NumberField;

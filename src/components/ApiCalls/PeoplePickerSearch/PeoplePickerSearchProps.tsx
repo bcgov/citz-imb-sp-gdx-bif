@@ -1,5 +1,5 @@
 export interface PeoplePickerSearchProps {
-  pickerValue: string;
+  filterText: string;
   __metadata?: { type: string };
   AllowEmailAddresses?: boolean;
   AllowMultipleEntities?: boolean;

@@ -2,7 +2,7 @@ import { PeoplePickerSearchProps } from "./PeoplePickerSearchProps";
 import { RestCall } from "../../ApiCalls/RestCall/RestCall";
 
 export const PeoplePickerSearch = async ({
-  pickerValue,
+  filterText,
   __metadata = {
     type: "SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters",
   },
@@ -13,6 +13,7 @@ export const PeoplePickerSearch = async ({
   PrincipalSource = 1,
   PrincipalType = 1,
 }: PeoplePickerSearchProps) => {
+  console.log(`filterText2`, filterText);
   const options = {
     endPoint:
       "/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser",
@@ -26,7 +27,7 @@ export const PeoplePickerSearch = async ({
         MaximumEntitySuggestions,
         PrincipalSource,
         PrincipalType,
-        QueryString: pickerValue,
+        QueryString: filterText,
       },
     },
   };

@@ -2,10 +2,12 @@ import {
   IBasePickerSuggestionsProps,
   Label,
   NormalPeoplePicker,
+  FontIcon,
 } from '@fluentui/react';
 import { usePeoplePicker } from 'components/Hooks/usePeoplePicker';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 import * as React from 'react';
+
 // import { ContactIcon } from "@fluentui/react-icons";
 const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: 'Suggested People',
@@ -20,14 +22,18 @@ const suggestionProps: IBasePickerSuggestionsProps = {
 interface PeoplePickerProps {
   fieldName: string;
   title: string;
+  icon: string;
+  description: string;
+  required: boolean;
 }
-const iconProps = { iconName: 'Calendar' };
-export const PeoplePicker = ({ fieldName, title }: PeoplePickerProps) => {
-  const {
-    searchPeople,
-
-    setFormikValue,
-  } = usePeoplePicker();
+export const PeoplePicker = ({
+  fieldName,
+  title,
+  icon,
+  description,
+  required,
+}: PeoplePickerProps) => {
+  const { searchPeople, setFormikValue } = usePeoplePicker();
 
   return (
     <>
@@ -35,7 +41,19 @@ export const PeoplePicker = ({ fieldName, title }: PeoplePickerProps) => {
         {(fieldProps: any) => {
           return (
             <div>
-              <Label htmlFor={fieldName}>{title}</Label>
+              <div>
+                {required ? (
+                  <Label htmlFor={fieldName}>
+                    <FontIcon iconName={icon} />
+                    {title}*
+                  </Label>
+                ) : (
+                  <Label htmlFor={fieldName}>
+                    <FontIcon iconName={icon} />
+                    {title}
+                  </Label>
+                )}
+              </div>
               <NormalPeoplePicker
                 className='test'
                 id={fieldName}
@@ -61,6 +79,11 @@ export const PeoplePicker = ({ fieldName, title }: PeoplePickerProps) => {
                   return input;
                 }}
               />
+              <ErrorMessage name={fieldName}>
+                {(message: string) => {
+                  return <div>{message}</div>;
+                }}
+              </ErrorMessage>
             </div>
           );
         }}

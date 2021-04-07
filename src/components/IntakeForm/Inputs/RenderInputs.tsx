@@ -10,7 +10,9 @@ export const RenderInputs = (
   fieldType: number,
   fieldName: string,
   name: string,
-  hideOnForm: boolean = false
+  hideOnForm: boolean = false,
+  description: string,
+  required: boolean
 ) => {
   if (hideOnForm) {
     return <Field name={fieldName} type='hidden' />;
@@ -20,7 +22,15 @@ export const RenderInputs = (
       //example
       // <SingleLineTextField label={title} name={internalName} toolTip={description} required={required} />
 
-      return <TextInput fieldName={fieldName} title={name} />;
+      return (
+        <TextInput
+          fieldName={fieldName}
+          title={name}
+          icon={'TextBox'}
+          description={description}
+          required={required}
+        />
+      );
 
       break;
     case 3: //"Note"
@@ -28,7 +38,15 @@ export const RenderInputs = (
 
       break;
     case 9: //"Number"
-      return <NumberField fieldName={fieldName} title={name} />;
+      return (
+        <TextInput
+          fieldName={fieldName}
+          title={name}
+          icon={'NumberField'}
+          description={description}
+          required={required}
+        />
+      );
 
       break;
     case 4: //"DateTime":
@@ -40,7 +58,15 @@ export const RenderInputs = (
 
       break;
     case 20: //"User":
-      return <PeoplePicker fieldName={fieldName} title={name} />;
+      return (
+        <PeoplePicker
+          fieldName={fieldName}
+          title={name}
+          icon={'Contact'}
+          description={description}
+          required={required}
+        />
+      );
 
       break;
 

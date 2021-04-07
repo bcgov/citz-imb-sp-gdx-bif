@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
+import { formSchema } from './formSchema';
 import { RenderInputs } from './Inputs/RenderInputs';
 import {
   Stack,
@@ -10,11 +10,6 @@ import {
   PrimaryButton,
   DefaultButton,
 } from '@fluentui/react';
-
-const createProjSchema = Yup.object().shape({
-  //Example
-  //Title: Yup.string().required("Project Name is required"),
-});
 
 const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
 const columnProps: Partial<IStackProps> = {
@@ -31,7 +26,7 @@ export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
       onSubmit={(value: any) => {
         console.log(`value`, value);
       }}
-      validationSchema={createProjSchema}
+      validationSchema={formSchema(columns)}
     >
       {({
         setFieldValue,
@@ -52,7 +47,9 @@ export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
                       column.fieldTypeKind,
                       column.fieldName,
                       column.name,
-                      column.hideOnForm
+                      column.hideOnForm,
+                      column.description,
+                      column.required
                     );
                   }
                 })}
@@ -64,7 +61,9 @@ export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
                       column.fieldTypeKind,
                       column.fieldName,
                       column.name,
-                      column.hideOnForm
+                      column.hideOnForm,
+                      column.description,
+                      column.required
                     );
                   }
                 })}
@@ -74,7 +73,7 @@ export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
               <DefaultButton onClick={toggleHideDialog} text='Close' />
               <PrimaryButton
                 type='submit'
-                onClick={toggleHideDialog}
+                // onClick={toggleHideDialog}
                 text='Submit'
               />
             </DialogFooter>

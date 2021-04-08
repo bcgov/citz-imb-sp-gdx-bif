@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { formSchema } from './formSchema';
 import { RenderInputs } from './Inputs/RenderInputs';
@@ -20,9 +20,22 @@ const columnProps: Partial<IStackProps> = {
 const stackTokens = { childrenGap: 50 };
 
 export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
+  const [initialValues, setInitialValues] = useState(() => {
+    let tempInitialValues: any = {};
+    for (let i = 0; i < columns.length; i++) {
+      if (columns[i].fieldTypeKind === 20) {
+        tempInitialValues[columns[i].fieldName] = [];
+      } else {
+        tempInitialValues[columns[i].fieldName] = '';
+      }
+    }
+
+    return tempInitialValues;
+  });
+
   return (
     <Formik
-      initialValues={{ status: 'New' }}
+      initialValues={initialValues}
       onSubmit={(value: any) => {
         console.log(`value`, value);
       }}

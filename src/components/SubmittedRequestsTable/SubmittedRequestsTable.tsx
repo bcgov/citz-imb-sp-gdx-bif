@@ -95,14 +95,23 @@ export const SubmittedRequestsTable = () => {
       (column) => column.key === 'Status'
     )[0];
 
+    let authorColumn: any = initialColumns.filter(
+      (column) => column.key === 'Author'
+    )[0];
+
+    authorColumn.hideOnForm = true;
+
     //set the custom filter functionality on 'Status' column
     //@ts-ignore //!because React-Table is not properly typed
     statusColumn.filter = statusColumnFilter;
     statusColumn.hideOnForm = true;
     //add the modified 'Status' column back in with the other columns
     const modifiedColumns = [
-      ...initialColumns.filter((column) => column.key !== 'Status'),
+      ...initialColumns.filter(
+        (column) => column.key !== 'Status' && column.key !== 'Author'
+      ),
       statusColumn,
+      authorColumn,
     ];
 
     return modifiedColumns;

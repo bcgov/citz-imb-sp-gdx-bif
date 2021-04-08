@@ -4,6 +4,7 @@ import {
   NormalPeoplePicker,
   FontIcon,
 } from '@fluentui/react';
+import { DividerTall24Filled } from '@fluentui/react-icons';
 import { usePeoplePicker } from 'components/Hooks/usePeoplePicker';
 import { Field, ErrorMessage } from 'formik';
 import * as React from 'react';
@@ -78,12 +79,29 @@ export const PeoplePicker = ({
                 onInputChange={(input: any) => {
                   return input;
                 }}
-              />
-              <ErrorMessage name={fieldName}>
-                {(message: string) => {
-                  return <div>{message}</div>;
+                onBlur={() => {
+                  fieldProps.form.setFieldTouched(fieldName, true, true);
                 }}
-              </ErrorMessage>
+              />
+              <ErrorMessage
+                name={fieldName}
+                render={(msg) => {
+                  return (
+                    <p
+                      style={{
+                        fontSize: '12px',
+                        color: ' rgb(164, 38, 44)',
+                        margin: '0px',
+                        paddingTop: '5px',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {msg}
+                    </p>
+                  );
+                }}
+              />
             </div>
           );
         }}

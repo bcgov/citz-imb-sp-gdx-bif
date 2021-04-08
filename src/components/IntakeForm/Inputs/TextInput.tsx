@@ -43,7 +43,28 @@ export const TextInput: FC<TextInputProps> = ({
         }
         fullWidth={true}
         name={fieldName}
-        errorMessage={<ErrorMessage name={fieldName} />}
+        errorMessage={
+          <ErrorMessage
+            name={fieldName}
+            render={(msg) => {
+              return (
+                <p
+                  style={{
+                    minHeight: '16px',
+                    fontSize: '12px',
+                    color: ' rgb(164, 38, 44)',
+                    margin: '0px',
+                    paddingTop: '5px',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  {msg}
+                </p>
+              );
+            }}
+          />
+        }
       />
     </div>
   );

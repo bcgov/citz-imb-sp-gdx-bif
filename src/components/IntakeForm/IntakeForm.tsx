@@ -1,70 +1,98 @@
-import * as React from "react";
+import React, { useState } from 'react';
+import { Formik, Form, Field } from 'formik';
+import { formSchema } from './formSchema';
+import { RenderInputs } from './Inputs/RenderInputs';
 import {
-  Dialog,
-  DialogType,
+  Stack,
+  IStackProps,
+  IStackStyles,
   DialogFooter,
   PrimaryButton,
   DefaultButton,
-  ContextualMenu,
-} from "@fluentui/react";
-import { useId, useBoolean } from "@fluentui/react-hooks";
+} from '@fluentui/react';
 
-const dialogStyles = { main: { maxWidth: 450 } };
-const dragOptions = {
-  moveMenuItemText: "Move",
-  closeMenuItemText: "Close",
-  menu: ContextualMenu,
-  keepInBounds: true,
-};
-const dialogContentProps = {
-  type: DialogType.normal,
-  title: "New Intake",
-  closeButtonAriaLabel: "Close",
-  subText: "Do you want to send this message without a subject?",
+const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
+const columnProps: Partial<IStackProps> = {
+  tokens: { childrenGap: 15 },
+  styles: { root: { width: 300 } },
 };
 
-export const IntakeForm: React.FunctionComponent = () => {
-  const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
-  const [isDraggable] = useBoolean(false);
-  const labelId: string = useId("dialogLabel");
-  const subTextId: string = useId("subTextLabel");
+const stackTokens = { childrenGap: 50 };
 
-  const modalProps = React.useMemo(
-    () => ({
-      titleAriaId: labelId,
-      subtitleAriaId: subTextId,
-      isBlocking: false,
-      styles: dialogStyles,
-      dragOptions: isDraggable ? dragOptions : undefined,
-    }),
-    [isDraggable, labelId, subTextId]
-  );
+export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
+  const [initialValues, setInitialValues] = useState(() => {
+    let tempInitialValues: any = {};
+    for (let i = 0; i < columns.length; i++) {
+      if (columns[i].fieldTypeKind === 20) {
+        tempInitialValues[columns[i].fieldName] = [];
+      } else {
+        tempInitialValues[columns[i].fieldName] = '';
+      }
+    }
+
+    return tempInitialValues;
+  });
 
   return (
-    <>
-      <DefaultButton
-        secondaryText="Opens the Sample Dialog"
-        onClick={toggleHideDialog}
-        text="New +"
-      />
-      {/* <label id={labelId} className={screenReaderOnly}>
-        My sample label
-      </label>
-      <label id={subTextId} className={screenReaderOnly}>
-        My sample description
-      </label> */}
-
-      <Dialog
-        hidden={hideDialog}
-        onDismiss={toggleHideDialog}
-        dialogContentProps={dialogContentProps}
-        modalProps={modalProps}
-      >
-        <DialogFooter>
-          <DefaultButton onClick={toggleHideDialog} text="Close" />
-          <PrimaryButton onClick={toggleHideDialog} text="Submit" />
-        </DialogFooter>
-      </Dialog>
-    </>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(value: any) => {
+        console.log(`value`, value);
+      }}
+      validationSchema={formSchema(columns)}
+    >
+      {({
+        setFieldValue,
+        values,
+        errors,
+        touched,
+        setFieldTouched,
+        handleChange,
+        handleBlur,
+      }) => {
+        return (
+          <Form>
+            <Stack horizontal tokens={stackTokens} styles={stackStyles}>
+              <Stack {...columnProps}>
+                {columns.map((column: any, i: number) => {
+                  if (i % 2 === 0) {
+                    return RenderInputs(
+                      column.fieldTypeKind,
+                      column.fieldName,
+                      column.name,
+                      column.hideOnForm,
+                      column.description,
+                      column.required
+                    );
+                  }
+                })}
+              </Stack>
+              <Stack {...columnProps}>
+                {columns.map((column: any, i: number) => {
+                  if (i % 2 === 1) {
+                    return RenderInputs(
+                      column.fieldTypeKind,
+                      column.fieldName,
+                      column.name,
+                      column.hideOnForm,
+                      column.description,
+                      column.required
+                    );
+                  }
+                })}
+              </Stack>
+            </Stack>
+            <DialogFooter>
+              <DefaultButton onClick={toggleHideDialog} text='Close' />
+              <PrimaryButton
+                type='submit'
+                // onClick={toggleHideDialog}
+                text='Submit'
+              />
+            </DialogFooter>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };

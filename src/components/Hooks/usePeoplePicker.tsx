@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { RestCall } from "../ApiCalls/RestCall/RestCall";
-
+import { useState } from 'react';
+import { PeoplePickerSearch } from '../ApiCalls/PeoplePickerSearch/PeoplePickerSearch';
 export const usePeoplePicker = () => {
   const [searchResults, setSearchResults] = useState([]);
 
@@ -8,40 +7,44 @@ export const usePeoplePicker = () => {
     setSearchResults([]);
   };
 
-  const onChange = async (event: any) => {
-    if (event.currentTarget.value.length > 2) {
-      const options = {
-        endPoint:
-          "/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser",
-        method: "post",
-        body: {
-          queryParams: {
-            __metadata: {
-              type: "SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters",
-            },
-            AllowEmailAddresses: true,
-            AllowMultipleEntities: false,
-            AllUrlZones: false,
-            MaximumEntitySuggestions: 50,
-            PrincipalSource: 1,
-            PrincipalType: 1,
-            QueryString: event.currentTarget.value,
-            // Required: false,
-            // SharePointGroupID: null,
-            // UrlZone: null,
-            // UrlZoneSpecified: false,
-            // Web: null,
-            // WebApplicationID: null,
-          },
-        },
-        // headers:'',
-        // cache:''
-      };
-      
-      const results = await RestCall(options);
-      setSearchResults(JSON.parse(results.d.ClientPeoplePickerSearchUser));
+  const setFormikValue = (
+    pickerItems: Array<Object>,
+    fieldProps?: any,
+    fieldName?: string
+  ) => {
+    console.log(`pickerItems`, pickerItems);
+    setTimeout(() => {
+      fieldProps.form.setFieldValue(fieldName, pickerItems, true);
+      fieldProps.form.setFieldTouched(fieldName, true, true);
+      reset();
+    }, 100); //Time before execution
+  };
+
+  const searchPeople = async (filterText?: string) => {
+    //@ts-ignore
+    if (filterText.length > 2) {
+      //@ts-ignore
+      const results = await PeoplePickerSearch({ filterText });
+      // People picker user properties that are available
+      const users = results.map((result: any) => {
+        return { text: result.DisplayText, userId: result.EntityData.SPUserID };
+      });
+
+      return users;
     }
   };
 
-  return { onChange, searchResults, reset };
+  return { searchPeople, searchResults, reset, setFormikValue };
 };
+
+// Example data resturned:
+
+// Description: "i:0ǵ.t|bcgovidp|bf9add39be63420694fabcca01771a5a"
+// DisplayText: "Abraham, Adam PSSG:EX"
+// EntityData: {PrincipalType: "User", Title: "Senior Probation Officer", Email: "Adam.Abraham@gov.bc.ca", SPUserID: "1370", AccountName: "i:0ǵ.t|bcgovidp|bf9add39be63420694fabcca01771a5a", …}
+// EntityType: ""
+// IsResolved: false
+// Key: "i:0ǵ.t|bcgovidp|bf9add39be63420694fabcca01771a5a"
+// MultipleMatches: []
+// ProviderDisplayName: ""
+// ProviderName: ""

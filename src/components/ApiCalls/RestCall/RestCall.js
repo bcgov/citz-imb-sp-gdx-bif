@@ -1,25 +1,17 @@
 import { GetFormDigestValue } from '../GetFormDigestValue/GetFormDigestValue';
 import { DoFetch } from './DoFetch/DoFetch';
 
-export interface IRestCallProps {
-	endPoint: string;
-	method?: string;
-	body?: string | unknown;
-	headers?: unknown;
-	cache?: string;
-}
-
 export const RestCall = async ({
 	endPoint,
 	method = 'get',
 	body = '',
 	headers,
 	cache,
-}: IRestCallProps) => {
-	//!_spPageContextInfo is defined on SharePoint page, outside of project
+}) => {
+	// eslint-disable-next-line
 	const webAbsoluteUrl = _spPageContextInfo.webAbsoluteUrl;
 
-	const options: RequestInit = { method: method };
+	let options = { method: method };
 
 	if (typeof body !== 'string') {
 		options.body = JSON.stringify(body);
@@ -46,6 +38,7 @@ export const RestCall = async ({
 		}
 	}
 
+	let fetchResponse;
 	let formDigestValue;
 
 	switch (options.method.toLowerCase()) {
@@ -70,7 +63,7 @@ export const RestCall = async ({
 		default:
 	}
 
-	const fetchResponse = await DoFetch(webAbsoluteUrl, endPoint, options);
+	fetchResponse = await DoFetch(webAbsoluteUrl, endPoint, options);
 
 	return fetchResponse;
 };

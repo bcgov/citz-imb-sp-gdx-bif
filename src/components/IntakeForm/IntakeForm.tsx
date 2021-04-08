@@ -88,7 +88,7 @@ export const IntakeForm = ({ columns, toggleHideDialog, onSubmit }: any) => {
 						<DialogFooter>
 							<DefaultButton
 								onClick={toggleHideDialog}
-								text='Close'
+								text='Cancel'
 							/>
 							<PrimaryButton
 								type='submit'

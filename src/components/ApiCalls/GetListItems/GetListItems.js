@@ -1,13 +1,13 @@
 import { RestCall } from '../RestCall/RestCall';
 
-export interface IGetListItemsProps {
-	listName: string;
-	expand?: string;
-	filter?: string;
-	select?: string;
-	sort?: string;
-	sortDir?: string;
-}
+// export interface IGetListItemsProps {
+// 	listName: string;
+// 	expand?: string;
+// 	filter?: string;
+// 	select?: string;
+// 	sort?: string;
+// 	sortDir?: string;
+// }
 
 export const GetListItems = async ({
 	listName,
@@ -16,7 +16,7 @@ export const GetListItems = async ({
 	select,
 	sort = '',
 	sortDir = 'Asc',
-}: IGetListItemsProps) => {
+}) => {
 	let endPoint = `/_api/web/Lists/getByTitle('${listName}')/items`;
 
 	let endPointParameters = [];

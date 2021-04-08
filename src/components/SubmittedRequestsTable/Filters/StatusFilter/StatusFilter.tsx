@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Toggle, IColumn, Stack } from '@fluentui/react';
 
+//!because react-table is not typed
 interface StatusFilterTypes {
 	data: Array<any>;
 	columns: Array<IColumn>;
-	setFilter: Function;
+	setFilter: any;
 }
 
 interface statusOptionsTypes {
@@ -13,7 +14,7 @@ interface statusOptionsTypes {
 }
 
 export const StatusFilter = (props: StatusFilterTypes) => {
-	const { data, columns, setFilter } = props;
+	const { data, setFilter } = props;
 
 	const [statusOptions, setStatusOptions] = useState<statusOptionsTypes[]>(
 		[]
@@ -22,9 +23,9 @@ export const StatusFilter = (props: StatusFilterTypes) => {
 	useEffect(() => {
 		//get all the Status values being used in the data
 		if (data !== undefined) {
-			//@ts-ignore //!because React-Query is not properly typed
+			//!because React-Query is not properly typed
 			const TableStatusOptions = data.map(
-				//@ts-ignore //!because React-Query is not properly typed
+				//!because React-Query is not properly typed
 				(item) => item.Status
 			);
 
@@ -33,7 +34,7 @@ export const StatusFilter = (props: StatusFilterTypes) => {
 			const statusSet = [...new Set(TableStatusOptions)];
 
 			setStatusOptions((prevState) => {
-				let tempArray: statusOptionsTypes[] = [];
+				const tempArray: statusOptionsTypes[] = [];
 
 				for (let i = 0; i < statusSet.length; i++) {
 					const index = prevState.findIndex(
@@ -73,13 +74,11 @@ export const StatusFilter = (props: StatusFilterTypes) => {
 
 		//filter the data based on the checked statusOptions
 		setFilter('Status', filterValues);
-
-		return () => {};
 	}, [statusOptions]);
 
 	const handleFilterChange = (status: string, checked: boolean) => {
 		// update the button state to show that whether it is in effect
-		let newRequestStates = statusOptions.map((thisStatus) => {
+		const newRequestStates = statusOptions.map((thisStatus) => {
 			if (thisStatus.status === status)
 				return {
 					status,

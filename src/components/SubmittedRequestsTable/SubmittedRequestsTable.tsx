@@ -40,7 +40,7 @@ initializeIcons(undefined, { disableWarnings: true });
 export const SubmittedRequestsTable = () => {
 	const listName = 'Submitted Requests';
 
-	//@ts-ignore //!because React-Table is not properly typed
+	//!because React-Table is not properly typed
 	const query: any = useQuery(listName, GetSubmittedRequests);
 
 	const queryClient: any = useQueryClient();
@@ -57,9 +57,9 @@ export const SubmittedRequestsTable = () => {
 
 				const previousValues = queryClient.getQueryData(listName);
 
-				//@ts-ignore //!react-query is not typed
+				//!react-query is not typed
 				queryClient.setQueryData(listName, (oldValues) => {
-					let newValues = [...oldValues.items];
+					const newValues = [...oldValues.items];
 
 					newValues.push(newItem);
 					return { listInfo: oldValues.listInfo, items: newValues };
@@ -67,7 +67,7 @@ export const SubmittedRequestsTable = () => {
 
 				return { previousValues };
 			},
-			//@ts-ignore //!react-query is not typed
+			//!react-query is not typed
 			onError: (error, newItem: ISubmittedRequestItem, context) =>
 				queryClient.setQueryData(listName, context?.previousValues),
 			onSettled: async () =>
@@ -91,12 +91,12 @@ export const SubmittedRequestsTable = () => {
 
 		//we need to treat 'Status' column differently as we are going to filter on it
 		//get the 'Status' column
-		let statusColumn = initialColumns.filter(
+		const statusColumn = initialColumns.filter(
 			(column) => column.key === 'Status'
 		)[0];
 
 		//set the custom filter functionality on 'Status' column
-		//@ts-ignore //!because React-Table is not properly typed
+		//!because React-Table is not properly typed
 		statusColumn.filter = statusColumnFilter;
 
 		//add the modified 'Status' column back in with the other columns

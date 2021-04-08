@@ -38,7 +38,7 @@ interface RestCallProps {
 	url?: string
 	endPoint: string
 	method?: string
-	body?: string | object
+	body?: string | unknown
 	headers?: {
 		Accept?: string
 		'content-type'?: string
@@ -55,21 +55,18 @@ export const RestCall = async ({
 	method = 'get',
 	body = '',
 	headers,
-	cache,
 }: RestCallProps) => {
 	if (url === '') {
-		//@ts-ignore
 		if (typeof _spPageContextInfo === 'undefined') {
 			return Promise.reject(
 				'RestCall:: _spPageContextInfo is not defined'
 			)
 		} else {
-			//@ts-ignore
 			url = _spPageContextInfo.webAbsoluteUrl
 		}
 	}
 
-	let options: doFetchOptions = { method: method, headers: {} }
+	const options: doFetchOptions = { method: method, headers: {} }
 
 	if (typeof body !== 'string') {
 		options.body = JSON.stringify(body)

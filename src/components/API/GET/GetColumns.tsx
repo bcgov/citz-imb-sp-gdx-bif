@@ -1,5 +1,4 @@
 import { IColumn } from "@fluentui/react";
-import { Column } from "react-table";
 
 export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
   return viewColumns.map((column: string) => {
@@ -10,7 +9,7 @@ export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
       (field: { InternalName: string }) => field.InternalName === column
     )[0];
 
-    let newColumn: IColumn & any = {
+    const newColumn: IColumn & any = {
       key: viewField.InternalName,
       name: viewField.Title,
       fieldName: viewField.InternalName,

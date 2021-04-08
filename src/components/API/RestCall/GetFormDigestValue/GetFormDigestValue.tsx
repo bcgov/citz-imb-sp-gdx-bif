@@ -1,12 +1,10 @@
 export const GetContextWebInformation = async (baseurl = '') => {
 	if (baseurl === '') {
-		//@ts-ignore
 		if (typeof _spPageContextInfo === 'undefined') {
 			return Promise.reject(
 				'GetContextWebInformation:: _spPageContextInfo is not defined'
 			)
 		} else {
-			//@ts-ignore
 			baseurl = _spPageContextInfo.siteAbsoluteUrl
 		}
 	}
@@ -21,7 +19,7 @@ export const GetContextWebInformation = async (baseurl = '') => {
 
 	if (response.ok) {
 		const jsonResponse = response.json()
-		//@ts-ignore
+	
 		return jsonResponse.d.GetContextWebInformation
 	} else {
 		throw `GetContextWebInformation::${response.status} ${response.statusText}`

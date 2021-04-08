@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { RestCall } from "../ApiCalls/RestCall/RestCall";
 
 export const usePeoplePicker = () => {
@@ -37,7 +37,7 @@ export const usePeoplePicker = () => {
         // headers:'',
         // cache:''
       };
-      //@ts-ignore
+      
       const results = await RestCall(options);
       setSearchResults(JSON.parse(results.d.ClientPeoplePickerSearchUser));
     }

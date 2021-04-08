@@ -29,7 +29,7 @@ export const GetItems = async ({
 		endPoint = `/_api/web/Lists/getByTitle('${listName}')/items`
 	}
 
-	let endPointParameters = []
+	const endPointParameters = []
 	if (expand) endPointParameters.push(`$expand=${expand}`)
 	if (filter) endPointParameters.push(`$filter=${filter}`)
 	if (select) endPointParameters.push(`$select=${select}`)

@@ -1,6 +1,6 @@
 import { RestCall } from '../RestCall/RestCall';
 
-export const GetAssociatedGroups = async (baseurl) => {
+export const GetAssociatedGroups = async () => {
 	const AssociatedOwnerGroup = await RestCall({
 		endPoint: `/_api/Web/AssociatedOwnerGroup`,
 	});

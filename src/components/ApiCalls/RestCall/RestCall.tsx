@@ -4,8 +4,8 @@ import { DoFetch } from './DoFetch/DoFetch';
 export interface IRestCallProps {
 	endPoint: string;
 	method?: string;
-	body?: string | object;
-	headers?: object;
+	body?: string | unknown;
+	headers?: unknown;
 	cache?: string;
 }
 
@@ -16,10 +16,10 @@ export const RestCall = async ({
 	headers,
 	cache,
 }: IRestCallProps) => {
-	//@ts-ignore //!_spPageContextInfo is defined on SharePoint page, outside of project
+	//!_spPageContextInfo is defined on SharePoint page, outside of project
 	const webAbsoluteUrl = _spPageContextInfo.webAbsoluteUrl;
 
-	let options:RequestInit = { method: method };
+	const options: RequestInit = { method: method };
 
 	if (typeof body !== 'string') {
 		options.body = JSON.stringify(body);
@@ -46,7 +46,6 @@ export const RestCall = async ({
 		}
 	}
 
-	let fetchResponse;
 	let formDigestValue;
 
 	switch (options.method.toLowerCase()) {
@@ -71,7 +70,7 @@ export const RestCall = async ({
 		default:
 	}
 
-	fetchResponse = await DoFetch(webAbsoluteUrl, endPoint, options);
+	const fetchResponse = await DoFetch(webAbsoluteUrl, endPoint, options);
 
 	return fetchResponse;
 };

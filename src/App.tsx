@@ -23,7 +23,6 @@ export const App = () => {
 
 	useEffect(() => {
 		prefetch();
-		return () => {};
 	}, []);
 
   if(isLoading) return <div>loading App...</div>

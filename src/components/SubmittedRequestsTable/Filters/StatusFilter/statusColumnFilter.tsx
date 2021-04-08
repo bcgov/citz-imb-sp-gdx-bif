@@ -16,7 +16,7 @@ export const statusColumnFilter = (
 		//add in rows that match the filter value
 		filteredRows = [
 			...filteredRows,
-			//@ts-ignore //!because React-Table is not properly typed
+			//!because React-Table is not properly typed
 			...rows.filter((row) => row.values.Status === filterValue[i]),
 		];
 	}

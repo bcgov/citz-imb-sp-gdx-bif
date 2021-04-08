@@ -5,10 +5,8 @@ import { App } from './App'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(
-	//@ts-ignore
 	<React.StrictMode>
 		<App />
-		{/* @ts-ignore */}
 	</React.StrictMode>,
 	document.getElementById('root')
 )

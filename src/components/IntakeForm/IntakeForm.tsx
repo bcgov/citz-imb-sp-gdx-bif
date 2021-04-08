@@ -5,9 +5,6 @@ import {
   DialogFooter,
   PrimaryButton,
   DefaultButton,
-  hiddenContentStyle,
-  mergeStyles,
-  Toggle,
   ContextualMenu,
 } from "@fluentui/react";
 import { useId, useBoolean } from "@fluentui/react-hooks";
@@ -19,7 +16,6 @@ const dragOptions = {
   menu: ContextualMenu,
   keepInBounds: true,
 };
-const screenReaderOnly = mergeStyles(hiddenContentStyle);
 const dialogContentProps = {
   type: DialogType.normal,
   title: "New Intake",
@@ -29,7 +25,7 @@ const dialogContentProps = {
 
 export const IntakeForm: React.FunctionComponent = () => {
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
-  const [isDraggable, { toggle: toggleIsDraggable }] = useBoolean(false);
+  const [isDraggable] = useBoolean(false);
   const labelId: string = useId("dialogLabel");
   const subTextId: string = useId("subTextLabel");
 
@@ -51,12 +47,12 @@ export const IntakeForm: React.FunctionComponent = () => {
         onClick={toggleHideDialog}
         text="New +"
       />
-      <label id={labelId} className={screenReaderOnly}>
+      {/* <label id={labelId} className={screenReaderOnly}>
         My sample label
       </label>
       <label id={subTextId} className={screenReaderOnly}>
         My sample description
-      </label>
+      </label> */}
 
       <Dialog
         hidden={hideDialog}

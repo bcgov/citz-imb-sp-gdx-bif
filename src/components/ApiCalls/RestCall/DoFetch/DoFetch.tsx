@@ -1,7 +1,7 @@
 export const DoFetch = async (
 	url: string,
 	endPoint: string,
-	options?: object
+	options?: unknown
 ) => {
 	const response = await fetch(`${url}${endPoint}`, options);
 

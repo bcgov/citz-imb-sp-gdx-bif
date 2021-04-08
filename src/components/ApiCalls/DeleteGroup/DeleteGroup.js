@@ -1,18 +1,18 @@
 import { RestCall } from '../RestCall/RestCall';
 
 export const DeleteGroup = async ({ groupName, groupId }) => {
-	let endPoint;
+  let endPoint;
 
-	if (groupId) {
-		endPoint = `/_api/web/SiteGroups/removebyid('${groupId}')`;
-	} else {
-		endPoint = `/_api/web/SiteGroups/removebyloginname('${groupName}')`;
-	}
+  if (groupId) {
+    endPoint = `/_api/web/SiteGroups/removebyid('${groupId}')`;
+  } else {
+    endPoint = `/_api/web/SiteGroups/removebyloginname('${groupName}')`;
+  }
 
-	const response = await RestCall({
-		endPoint,
-		method: 'post',
-	});
+  const response = await RestCall({
+    endPoint,
+    method: 'post',
+  });
 
-	return response.d;
+  return response.d;
 };

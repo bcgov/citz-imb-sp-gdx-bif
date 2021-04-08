@@ -1,4 +1,4 @@
-import { SearchBox, IIconProps, ISearchBoxStyles } from "@fluentui/react";
+import { SearchBox, IIconProps, ISearchBoxStyles } from '@fluentui/react';
 
 //!because react-table is not typed
 interface GlobalFilterProps {
@@ -14,7 +14,7 @@ export const GlobalFilter = ({
   setGlobalFilter,
   useAsyncDebounce,
 }: GlobalFilterProps) => {
-  const filterIcon: IIconProps = { iconName: "Filter" };
+  const filterIcon: IIconProps = { iconName: 'Filter' };
 
   const count = preGlobalFilteredRows.length;
   //!because react-table is not typed
@@ -32,7 +32,7 @@ export const GlobalFilter = ({
           onChange(newValue);
         }}
         onKeyPress={(ev) => {
-          if (ev.code === "NumpadEnter" || ev.code === "Enter") {
+          if (ev.code === 'NumpadEnter' || ev.code === 'Enter') {
             ev.preventDefault();
             return false;
           }

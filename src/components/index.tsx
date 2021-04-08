@@ -1,5 +1,5 @@
-export { GetMinistryAcronyms } from "./API/GET/GetMinistryAcronyms";
-export { GetSubmittedRequests } from "./API/GET/GetSubmittedRequests";
+export { GetMinistryAcronyms } from './API/GET/GetMinistryAcronyms';
+export { GetSubmittedRequests } from './API/GET/GetSubmittedRequests';
 
 // Components
-export * from "components/SubmittedRequestsTable";
+export * from 'components/SubmittedRequestsTable';

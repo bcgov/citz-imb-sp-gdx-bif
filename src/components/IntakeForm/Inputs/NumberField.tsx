@@ -1,6 +1,6 @@
-import React, { FC } from "react";
-import { TextField } from "@fluentui/react";
-import { Field, ErrorMessage } from "formik";
+import React, { FC } from 'react';
+import { TextField } from '@fluentui/react';
+import { Field, ErrorMessage } from 'formik';
 
 interface NumberFieldProps {
   fieldName: string;
@@ -11,14 +11,14 @@ interface NumberFieldProps {
 export const NumberField: FC<NumberFieldProps> = ({
   fieldName,
   title,
-  defaultValue = "",
+  defaultValue = '',
 }) => {
   return (
     <div className='NumberField'>
       <Field
         // required={required}
         // type={type}
-        iconProps={{ iconName: "NumberField" }}
+        iconProps={{ iconName: 'NumberField' }}
         defaultValue={defaultValue}
         variant='filled'
         as={TextField}

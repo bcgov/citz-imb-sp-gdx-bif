@@ -1,1 +1,1 @@
-export * from "components/Hooks/usePeoplePicker";
+export * from 'components/Hooks/usePeoplePicker';

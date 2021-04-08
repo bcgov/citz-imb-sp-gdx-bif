@@ -1,10 +1,10 @@
-import { PeoplePickerSearchProps } from "./PeoplePickerSearchProps";
-import { RestCall } from "../../ApiCalls/RestCall/RestCall";
+import { PeoplePickerSearchProps } from './PeoplePickerSearchProps';
+import { RestCall } from '../../ApiCalls/RestCall/RestCall';
 
 export const PeoplePickerSearch = async ({
   filterText,
   __metadata = {
-    type: "SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters",
+    type: 'SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters',
   },
   AllowEmailAddresses = true,
   AllowMultipleEntities = false,
@@ -16,8 +16,8 @@ export const PeoplePickerSearch = async ({
   console.log(`filterText2`, filterText);
   const options = {
     endPoint:
-      "/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser",
-    method: "post",
+      '/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser',
+    method: 'post',
     body: {
       queryParams: {
         __metadata,

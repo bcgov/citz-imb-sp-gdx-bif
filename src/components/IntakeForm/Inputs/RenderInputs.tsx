@@ -10,7 +10,8 @@ export const RenderInputs = (
 	name: string,
 	hideOnForm: boolean = false,
 	description: string,
-	required: boolean
+	required: boolean,
+	AllowMultipleValues: boolean
 ) => {
 	if (hideOnForm) {
 		return <Field key={fieldName} name={fieldName} type='hidden' />;
@@ -66,6 +67,7 @@ export const RenderInputs = (
 					icon={'Contact'}
 					description={description}
 					required={required}
+					AllowMultipleValues={AllowMultipleValues}
 				/>
 			);
 

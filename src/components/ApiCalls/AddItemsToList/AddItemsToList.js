@@ -7,7 +7,6 @@ export const AddItemsToList = async ({ listName, items }) => {
 	if (!Array.isArray(items)) items = [items];
 
 	const list = await GetList({ listName });
-console.log('list :>> ', list);
 	endPoint = `/_api/web/Lists/getByTitle('${listName}')/items`;
 
 	let responses = [];

@@ -13,7 +13,6 @@ export const PeoplePickerSearch = async ({
   PrincipalSource = 1,
   PrincipalType = 1,
 }: PeoplePickerSearchProps) => {
-  console.log(`filterText2`, filterText);
   const options = {
     endPoint:
       "/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser",

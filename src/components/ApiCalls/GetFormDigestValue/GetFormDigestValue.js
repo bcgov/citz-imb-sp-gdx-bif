@@ -1,7 +1,7 @@
 import { GetContextWebInformation } from '../GetContextWebInformation/GetContextWebInformation';
 
 export const GetFormDigestValue = async () => {
-	const response = await GetContextWebInformation();
+  const response = await GetContextWebInformation();
 
-	return response.FormDigestValue;
+  return response.FormDigestValue;
 };

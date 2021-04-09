@@ -1,37 +1,80 @@
 //https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-csom/ee540543(v=office.15)
-import { NumberField, PeoplePicker } from "./index";
-export const RenderInputs = (fieldType: any, fieldName: any) => {
+import { Field } from 'formik';
+import React from 'react';
+import { PeoplePicker } from './PeoplePicker';
+import { TextInput } from './TextInput';
+
+export const RenderInputs = (
+  fieldType: number,
+  fieldName: string,
+  name: string,
+  hideOnForm = false,
+  description: string,
+  required: boolean,
+  AllowMultipleValues: boolean
+) => {
+  if (hideOnForm) {
+    return <Field key={fieldName} name={fieldName} type='hidden' />;
+  }
   switch (fieldType) {
     case 2: //Text
       //example
       // <SingleLineTextField label={title} name={internalName} toolTip={description} required={required} />
 
-      return <PeoplePicker fieldName={fieldName} />;
+      return (
+        <TextInput
+          key={fieldName}
+          fieldName={fieldName}
+          title={name}
+          icon={'TextBox'}
+          description={description}
+          required={required}
+        />
+      );
 
       break;
     case 3: //"Note"
-      return <div>Description Field PlaceHolder</div>;
+      return <div key={fieldName}>Description Field PlaceHolder</div>;
 
       break;
     case 9: //"Number"
-      return <NumberField fieldName={fieldName} />;
+      return (
+        <TextInput
+          key={fieldName}
+          fieldName={fieldName}
+          title={name}
+          icon={'NumberField'}
+          description={description}
+          required={required}
+        />
+      );
 
       break;
     case 4: //"DateTime":
-      return <div>Date Field PlaceHolder</div>;
+      return <div key={fieldName}>Date Field PlaceHolder</div>;
 
       break;
     case 15: //"Choice":
-      return <div>Choice Field PlaceHolder</div>;
+      return <div key={fieldName}>Choice Field PlaceHolder</div>;
 
       break;
     case 20: //"User":
-      return <div>User Field PlaceHolder</div>;
+      return (
+        <PeoplePicker
+          key={fieldName}
+          fieldName={fieldName}
+          title={name}
+          icon={'Contact'}
+          description={description}
+          required={required}
+          AllowMultipleValues={AllowMultipleValues}
+        />
+      );
 
       break;
 
     default:
-      return <div>default render</div>;
+      return <div key={fieldName}>default render</div>;
       break;
   }
 };

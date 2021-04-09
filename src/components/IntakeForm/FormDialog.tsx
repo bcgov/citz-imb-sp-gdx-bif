@@ -1,38 +1,23 @@
-import * as React from "react";
-import {
-  Dialog,
-  DialogType,
-  DialogFooter,
-  PrimaryButton,
-  DefaultButton,
-  hiddenContentStyle,
-  mergeStyles,
-  Toggle,
-  ContextualMenu,
-  IColumn,
-} from "@fluentui/react";
-import { useId, useBoolean } from "@fluentui/react-hooks";
-import { IntakeForm } from "./IntakeForm";
+import { Dialog, DialogType } from '@fluentui/react';
+import { useId } from '@fluentui/react-hooks';
+import * as React from 'react';
+import { IntakeForm } from './IntakeForm';
 const dialogStyles = { main: { maxWidth: 450 } };
-const dragOptions = {
-  moveMenuItemText: "Move",
-  closeMenuItemText: "Close",
-  menu: ContextualMenu,
-  keepInBounds: true,
-};
-const screenReaderOnly = mergeStyles(hiddenContentStyle);
 const dialogContentProps = {
   type: DialogType.normal,
-  title: "New Intake",
-  closeButtonAriaLabel: "Close",
-  subText: "Do you want to send this message without a subject?",
+  title: 'New Intake',
+  closeButtonAriaLabel: 'Close',
+  subText: 'Create new request',
 };
 
-export const FormDialog = ({ columns }: any) => {
-  const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
-  const [isDraggable, { toggle: toggleIsDraggable }] = useBoolean(false);
-  const labelId: string = useId("dialogLabel");
-  const subTextId: string = useId("subTextLabel");
+export const FormDialog = ({
+  columns,
+  hideDialog,
+  toggleHideDialog,
+  onSubmit,
+}: any) => {
+  const labelId: string = useId('dialogLabel');
+  const subTextId: string = useId('subTextLabel');
 
   const modalProps = React.useMemo(
     () => ({
@@ -40,40 +25,24 @@ export const FormDialog = ({ columns }: any) => {
       subtitleAriaId: subTextId,
       isBlocking: false,
       styles: dialogStyles,
-      dragOptions: isDraggable ? dragOptions : undefined,
     }),
-    [isDraggable, labelId, subTextId]
+    [labelId, subTextId]
   );
 
   return (
     <>
-      <DefaultButton
-        secondaryText='Opens the Sample Dialog'
-        onClick={toggleHideDialog}
-        text='New +'
-      />
-      <label id={labelId} className={screenReaderOnly}>
-        My sample label
-      </label>
-      <label id={subTextId} className={screenReaderOnly}>
-        My sample description
-      </label>
-
       <Dialog
         hidden={hideDialog}
         onDismiss={toggleHideDialog}
         dialogContentProps={dialogContentProps}
         modalProps={modalProps}
+        maxWidth={3000}
       >
-        <IntakeForm columns={columns} />
-        <DialogFooter>
-          <DefaultButton onClick={toggleHideDialog} text='Close' />
-          <PrimaryButton
-            type='submit'
-            onClick={toggleHideDialog}
-            text='Submit'
-          />
-        </DialogFooter>
+        <IntakeForm
+          columns={columns}
+          toggleHideDialog={toggleHideDialog}
+          onSubmit={onSubmit}
+        />
       </Dialog>
     </>
   );

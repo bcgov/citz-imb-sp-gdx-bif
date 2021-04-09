@@ -1,10 +1,10 @@
-import { PeoplePickerSearchProps } from "./PeoplePickerSearchProps";
-import { RestCall } from "../../ApiCalls/RestCall/RestCall";
+import { PeoplePickerSearchProps } from './PeoplePickerSearchProps';
+import { RestCall } from '../../ApiCalls/RestCall/RestCall';
 
 export const PeoplePickerSearch = async ({
-  pickerValue,
+  filterText,
   __metadata = {
-    type: "SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters",
+    type: 'SP.UI.ApplicationPages.ClientPeoplePickerQueryParameters',
   },
   AllowEmailAddresses = true,
   AllowMultipleEntities = false,
@@ -15,8 +15,8 @@ export const PeoplePickerSearch = async ({
 }: PeoplePickerSearchProps) => {
   const options = {
     endPoint:
-      "/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser",
-    method: "post",
+      '/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser',
+    method: 'post',
     body: {
       queryParams: {
         __metadata,
@@ -26,11 +26,10 @@ export const PeoplePickerSearch = async ({
         MaximumEntitySuggestions,
         PrincipalSource,
         PrincipalType,
-        QueryString: pickerValue,
+        QueryString: filterText,
       },
     },
   };
-  //@ts-ignore
   const results = await RestCall(options);
   return JSON.parse(results.d.ClientPeoplePickerSearchUser);
 };

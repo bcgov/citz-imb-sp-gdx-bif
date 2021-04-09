@@ -20,7 +20,7 @@ const columnProps: Partial<IStackProps> = {
 const stackTokens = { childrenGap: 50 };
 
 export const IntakeForm = ({ columns, toggleHideDialog, onSubmit }: any) => {
-  const [initialValues, setInitialValues] = useState(() => {
+  const [initialValues] = useState(() => {
     const tempInitialValues: any = {};
     for (let i = 0; i < columns.length; i++) {
       if (columns[i].fieldTypeKind === 20) {

@@ -6,6 +6,6 @@ interface INavBarProps {
   addNewRequest: () => void;
 }
 
-export const NavBar = ({ children, addNewRequest }: INavBarProps) => {
+export const NavBar = ({ children }: INavBarProps) => {
   return <Stack horizontal>{children}</Stack>;
 };

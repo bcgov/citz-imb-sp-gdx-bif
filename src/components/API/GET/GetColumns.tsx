@@ -13,7 +13,7 @@ export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
       return field.InternalName === column;
     })[0];
 
-    let newColumn: IColumn & any = {
+    const newColumn: IColumn & any = {
       // fieldRender: RenderInputs(viewField.FieldTypeKind),
       fieldTypeKind: viewField.FieldTypeKind,
       key: viewField.InternalName,

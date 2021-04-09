@@ -8,7 +8,7 @@ export const usePeoplePicker = () => {
   };
 
   const setFormikValue = (
-    pickerItems: Array<Object>,
+    pickerItems: Array<any>,
     fieldProps?: any,
     fieldName?: string
   ) => {
@@ -20,9 +20,7 @@ export const usePeoplePicker = () => {
   };
 
   const searchPeople = async (filterText?: string) => {
-    //@ts-ignore
     if (filterText.length > 2) {
-      //@ts-ignore
       const results = await PeoplePickerSearch({ filterText });
       // People picker user properties that are available
       const users = results.map((result: any) => {

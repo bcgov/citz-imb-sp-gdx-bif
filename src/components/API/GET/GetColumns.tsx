@@ -1,15 +1,20 @@
-import { IColumn } from "@fluentui/react";
+import { IColumn } from '@fluentui/react';
 
-export const GetColumns = (viewColumns: [], fields: []) => {
+export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
   return viewColumns.map((column: string) => {
     const viewField: {
       InternalName: string;
       Title: string;
-    } = fields.filter(
-      (field: { InternalName: string }) => field.InternalName === column
-    )[0];
+      FieldTypeKind: number;
+      Required: boolean;
+      Description: string;
+      AllowMultipleValues: boolean;
+    } = fields.filter((field: { InternalName: string }) => {
+      return field.InternalName === column;
+    })[0];
 
-    let newColumn = {
+    const newColumn: IColumn & any = {
+      fieldTypeKind: viewField.FieldTypeKind,
       key: viewField.InternalName,
       name: viewField.Title,
       fieldName: viewField.InternalName,
@@ -21,8 +26,10 @@ export const GetColumns = (viewColumns: [], fields: []) => {
       isSortedDesc: true,
       isSortedDescending: true,
       canFilter: true,
+      required: viewField.Required,
+      description: viewField.Description,
+      AllowMultipleValues: viewField.AllowMultipleValues,
     };
-
     return newColumn;
   });
 };

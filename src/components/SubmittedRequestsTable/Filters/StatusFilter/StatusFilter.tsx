@@ -1,73 +1,107 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { DefaultButton, IColumn } from '@fluentui/react';
-import { TableContext } from '../../Scott';
-import { SetFilter } from './SetFilter';
+import React, { useState, useEffect } from 'react';
+import { Toggle, IColumn, Stack } from '@fluentui/react';
 
+//!because react-table is not typed
 interface StatusFilterTypes {
-	query: any;
-	columns: Array<IColumn>;
+  data: Array<any>;
+  columns: Array<IColumn>;
+  setFilter: any;
 }
 
 interface statusOptionsTypes {
-	status?: string;
-	checked?: boolean;
+  status?: string;
+  checked?: boolean;
 }
 
-export const StatusFilter = ({ query, columns }: StatusFilterTypes) => {
-	const [statusOptions, setStatusOptions] = useState<statusOptionsTypes[]>(
-		[]
-	);
-	let tableContext: any = useContext(TableContext);
+export const StatusFilter = (props: StatusFilterTypes) => {
+  const { data, setFilter } = props;
 
-	useEffect(() => {
-		if (!query.isLoading && !query.isError) {
-			const TableStatusOptions: any = query.data.items.map(
-				(item: any) => item.Status
-			);
-			const statusSet: unknown[] = [...new Set(TableStatusOptions)];
-			const status: statusOptionsTypes[] = statusSet.map(
-				(status: any) => {
-					return { status, checked: true };
-				}
-			);
+  const [statusOptions, setStatusOptions] = useState<statusOptionsTypes[]>([]);
 
-			setStatusOptions(status);
-		}
-	}, [query.data?.items]);
+  useEffect(() => {
+    //get all the Status values being used in the data
+    if (data !== undefined) {
+      //!because React-Query is not properly typed
+      const TableStatusOptions = data.map(
+        //!because React-Query is not properly typed
+        (item) => item.Status
+      );
 
-	const handleFilterClick = (event: any) => {
-		let newRequestStates = statusOptions.map((thisStatus) => {
-			if (thisStatus.status === event.target.innerText)
-				return {
-					status: event.target.innerText,
-					checked: !thisStatus.checked,
-				};
-			return thisStatus;
-		});
+      // get rid of duplicate Status values
 
-		setStatusOptions(newRequestStates);
+      const statusSet = [...new Set(TableStatusOptions)];
 
-		SetFilter(event.target.innerText, columns);
-	};
+      setStatusOptions((prevState) => {
+        const tempArray: statusOptionsTypes[] = [];
 
-	return (
-		<>
-			{' '}
-			{statusOptions.map((statusContainer: any) => {
-				return (
-					<DefaultButton
-						key={statusContainer.status}
-						toggle
-						checked={statusContainer.checked}
-						text={statusContainer.status}
-						// iconProps={muted ? volume0Icon : volume3Icon}
-						onClick={handleFilterClick}
-						// allowDisabledFocus
-						// disabled={disabled}
-						// id={state}
-					/>
-				);
-			})}
-		</>
-	);
+        for (let i = 0; i < statusSet.length; i++) {
+          const index = prevState.findIndex(
+            (option) => option.status === statusSet[i]
+          );
+
+          if (index > -1) {
+            tempArray.push(prevState[index]);
+          } else {
+            if (statusSet[i] === 'Closed' || statusSet[i] === 'Rejected') {
+              tempArray.push({
+                status: statusSet[i],
+                checked: false,
+              });
+            } else {
+              tempArray.push({
+                status: statusSet[i],
+                checked: true,
+              });
+            }
+          }
+        }
+
+        return tempArray;
+      });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    //when the statusOptions change, get all the ones that are checked
+    const filterValues = statusOptions
+      .filter((option) => option.checked)
+      .map((option) => option.status);
+
+    //filter the data based on the checked statusOptions
+    setFilter('Status', filterValues);
+  }, [statusOptions]);
+
+  const handleFilterChange = (status: string, checked: boolean) => {
+    // update the button state to show that whether it is in effect
+    const newRequestStates = statusOptions.map((thisStatus) => {
+      if (thisStatus.status === status)
+        return {
+          status,
+          checked: checked,
+        };
+      return thisStatus;
+    });
+
+    setStatusOptions(newRequestStates);
+  };
+
+  return (
+    <Stack horizontal>
+      {statusOptions.map((statusContainer: any) => {
+        return (
+          <Toggle
+            key={statusContainer.status}
+            label={statusContainer.status}
+            checked={statusContainer.checked}
+            onText='On'
+            offText='Off'
+            onChange={(
+              event: React.MouseEvent<HTMLElement>,
+              checked?: boolean
+            ) => handleFilterChange(statusContainer.status, checked ?? false)}
+          />
+        );
+      })}
+    </Stack>
+  );
 };

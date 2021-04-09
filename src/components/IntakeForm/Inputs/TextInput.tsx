@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { TextField, FontIcon } from '@fluentui/react';
-import { test } from './testicons';
 import { Field, ErrorMessage } from 'formik';
 import * as ReactIcons from '@fluentui/react-icons';
 interface TextInputProps {

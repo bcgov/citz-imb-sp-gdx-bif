@@ -11,7 +11,7 @@ export const App = () => {
 
   const prefetch = async () => {
     await queryClient.prefetchQuery(
-      'Config', //@ts-ignore
+      'Config',
       () => GetListItems({ listName: 'Config' }),
       {
         staleTime: 30 * 1000, //30 minutes
@@ -23,7 +23,6 @@ export const App = () => {
 
   useEffect(() => {
     prefetch();
-    return () => {};
   }, []);
 
   if (isLoading) return <div>loading App...</div>;

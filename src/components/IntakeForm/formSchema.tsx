@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 export const formSchema = (columns: any) => {
   console.log(`columns`, columns);
-  let tempSchema: any = {};
+  const tempSchema: any = {};
   for (let i = 0; i < columns.length; i++) {
     if (columns[i].fieldTypeKind === 20) {
       if (columns[i].required) {

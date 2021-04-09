@@ -32,7 +32,7 @@ GetItemsProps) => {
     endPoint = `/_api/web/Lists/getByTitle('${listName}')/items`;
   }
 
-  let endPointParameters = [];
+  const endPointParameters = [];
   if (expand) endPointParameters.push(`$expand=${expand}`);
   if (filter) endPointParameters.push(`$filter=${filter}`);
   if (select) endPointParameters.push(`$select=${select}`);
@@ -45,8 +45,8 @@ GetItemsProps) => {
 
   const response = await RestCall({ url: baseurl, endPoint: endPoint });
 
-  const filteredData = response.d.results.map((listItem: Object) => {
-    let tempItem: any = { ...listItem };
+  const filteredData = response.d.results.map((listItem: any) => {
+    const tempItem: any = { ...listItem };
 
     Object.entries(listItem).forEach(([key, listItemProperty]) => {
       if (typeof listItemProperty === 'object') {

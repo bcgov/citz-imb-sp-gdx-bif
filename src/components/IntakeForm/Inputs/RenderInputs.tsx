@@ -1,5 +1,4 @@
 //https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-csom/ee540543(v=office.15)
-import { NumberField } from './NumberField';
 import { PeoplePicker } from './PeoplePicker';
 import { TextInput } from './TextInput';
 import { Field } from 'formik';
@@ -10,7 +9,7 @@ export const RenderInputs = (
   fieldType: number,
   fieldName: string,
   name: string,
-  hideOnForm: boolean = false,
+  hideOnForm = false,
   description: string,
   required: boolean
 ) => {

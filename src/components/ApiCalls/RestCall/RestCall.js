@@ -8,7 +8,6 @@ export const RestCall = async ({
   headers,
   cache,
 }) => {
-  // eslint-disable-next-line
   const webAbsoluteUrl = _spPageContextInfo.webAbsoluteUrl;
 
   let options = { method: method };

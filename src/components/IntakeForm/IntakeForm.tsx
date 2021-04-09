@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import { formSchema } from './formSchema';
 import { RenderInputs } from './Inputs/RenderInputs';
 import {
@@ -20,8 +20,8 @@ const columnProps: Partial<IStackProps> = {
 const stackTokens = { childrenGap: 50 };
 
 export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
-  const [initialValues, setInitialValues] = useState(() => {
-    let tempInitialValues: any = {};
+  const [initialValues] = useState(() => {
+    const tempInitialValues: any = {};
     for (let i = 0; i < columns.length; i++) {
       if (columns[i].fieldTypeKind === 20) {
         tempInitialValues[columns[i].fieldName] = [];
@@ -41,15 +41,7 @@ export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
       }}
       validationSchema={formSchema(columns)}
     >
-      {({
-        setFieldValue,
-        values,
-        errors,
-        touched,
-        setFieldTouched,
-        handleChange,
-        handleBlur,
-      }) => {
+      {() => {
         return (
           <Form>
             <Stack horizontal tokens={stackTokens} styles={stackStyles}>

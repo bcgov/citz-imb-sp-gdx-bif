@@ -1,29 +1,27 @@
-import { IColumn } from '@fluentui/react';
-
-import { ISubmittedRequestItem } from './ISubmittedRequestItem';
-import { testData } from './testData';
-import React, { useEffect, useMemo, useState } from 'react';
-import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
-import { AddItemsToList } from 'components/ApiCalls';
-import { useQuery, useQueryClient, useMutation } from 'react-query';
-
-import {
-  useTable,
-  useSortBy,
-  useFilters,
-  useGlobalFilter,
-  useAsyncDebounce,
-  Row,
-} from 'react-table';
-import { DetailsList } from '@fluentui/react';
+import { DetailsList, IColumn } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { GetColumns } from 'components/API/GET/GetColumns';
-import { tableSort } from './tableSort';
-import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
-import { GlobalFilter } from './Filters/GlobalFilter';
-import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
+import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
+import { AddItemsToList } from 'components/ApiCalls';
 import { FormDialog } from 'components/IntakeForm/FormDialog';
+import React, { useMemo } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {
+  Row,
+  useAsyncDebounce,
+  useFilters,
+  useGlobalFilter,
+  useSortBy,
+  useTable,
+} from 'react-table';
+import { GlobalFilter } from './Filters/GlobalFilter';
+import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
+import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
+import { ISubmittedRequestItem } from './ISubmittedRequestItem';
 import { NavBar } from './NavBar/NavBar';
+import { tableSort } from './tableSort';
+import { testData } from './testData';
+
 //!because React-Table is not properly typed
 // import { QuerySuccessResult } from "react-query";
 // To intialize
@@ -42,7 +40,7 @@ initializeIcons(undefined, { disableWarnings: true });
 export const SubmittedRequestsTable = () => {
   const listName = 'Submitted Requests';
 
-  //@ts-ignore //!because React-Table is not properly typed
+  //!because React-Table is not properly typed
   const query: any = useQuery(listName, GetSubmittedRequests);
 
   const queryClient: any = useQueryClient();
@@ -59,9 +57,9 @@ export const SubmittedRequestsTable = () => {
 
         const previousValues = queryClient.getQueryData(listName);
 
-        //@ts-ignore //!react-query is not typed
+        //!react-query is not typed
         queryClient.setQueryData(listName, (oldValues) => {
-          let newValues = [...oldValues.items];
+          const newValues = [...oldValues.items];
 
           newValues.push(newItem);
           return { listInfo: oldValues.listInfo, items: newValues };
@@ -69,7 +67,7 @@ export const SubmittedRequestsTable = () => {
 
         return { previousValues };
       },
-      //@ts-ignore //!react-query is not typed
+      //!react-query is not typed
       onError: (error, newItem: ISubmittedRequestItem, context) =>
         queryClient.setQueryData(listName, context?.previousValues),
       onSettled: async () => await queryClient.invalidateQueries(listName),
@@ -91,18 +89,18 @@ export const SubmittedRequestsTable = () => {
     );
     //we need to treat 'Status' column differently as we are going to filter on it
     //get the 'Status' column
-    let statusColumn: any = initialColumns.filter(
+    const statusColumn: any = initialColumns.filter(
       (column) => column.key === 'Status'
     )[0];
 
-    let authorColumn: any = initialColumns.filter(
+    const authorColumn: any = initialColumns.filter(
       (column) => column.key === 'Author'
     )[0];
 
     authorColumn.hideOnForm = true;
 
     //set the custom filter functionality on 'Status' column
-    //@ts-ignore //!because React-Table is not properly typed
+    //!because React-Table is not properly typed
     statusColumn.filter = statusColumnFilter;
     statusColumn.hideOnForm = true;
     //add the modified 'Status' column back in with the other columns

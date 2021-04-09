@@ -4,7 +4,6 @@ import {
   NormalPeoplePicker,
   FontIcon,
 } from '@fluentui/react';
-import { DividerTall24Filled } from '@fluentui/react-icons';
 import { usePeoplePicker } from 'components/Hooks/usePeoplePicker';
 import { Field, ErrorMessage } from 'formik';
 import * as React from 'react';
@@ -31,7 +30,6 @@ export const PeoplePicker = ({
   fieldName,
   title,
   icon,
-  description,
   required,
 }: PeoplePickerProps) => {
   const { searchPeople, setFormikValue } = usePeoplePicker();
@@ -62,12 +60,7 @@ export const PeoplePicker = ({
                   setFormikValue(pickerItems, fieldProps, fieldName);
                 }}
                 title='test'
-                // @ts-ignore
-                onResolveSuggestions={(
-                  filterText: any,
-                  currentPersonas: any,
-                  limitResults: any
-                ) => {
+                onResolveSuggestions={(filterText: any) => {
                   return searchPeople(filterText);
                 }}
                 pickerSuggestionsProps={suggestionProps}

@@ -16,8 +16,6 @@ export const NumberField: FC<NumberFieldProps> = ({
   return (
     <div className='NumberField'>
       <Field
-        // required={required}
-        // type={type}
         iconProps={{ iconName: 'NumberField' }}
         defaultValue={defaultValue}
         variant='filled'

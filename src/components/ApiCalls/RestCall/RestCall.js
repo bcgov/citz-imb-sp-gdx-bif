@@ -30,8 +30,6 @@ export const RestCall = async ({
     options.cache = cache;
   } else {
     if (method === 'get') {
-      //options.cache = 'reload'
-      //options.headers['If-Match'] = "*"
       options.headers['Cache-Control'] = 'no-cache';
       options.headers['Pragma'] = 'no-cache';
     }

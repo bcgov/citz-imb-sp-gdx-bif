@@ -14,7 +14,6 @@ export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
     })[0];
 
     const newColumn: IColumn & any = {
-      // fieldRender: RenderInputs(viewField.FieldTypeKind),
       fieldTypeKind: viewField.FieldTypeKind,
       key: viewField.InternalName,
       name: viewField.Title,

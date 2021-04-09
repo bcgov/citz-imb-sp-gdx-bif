@@ -19,9 +19,7 @@ export const GetItems = async ({
   filter = '',
   sort = '',
   sortDir = 'Asc',
-}: //   expand = "Author,Approver,PrimaryContact,CASExpAuth,OtherContact,FinContact",
-//   select = "Title,Ministry,Division,ClientName,ClientNumber,CASClient,CASResp,CASServ,CASSToB,CASProj,Status,Author/Title,PrimaryContact/Title,Approver/Title,CASExpAuth/Title,OtherContact/Title,FinContact/Title",
-GetItemsProps) => {
+}: GetItemsProps) => {
   if (!listName && !listGUID) throw 'GetItems requires listGUID or listName';
 
   let endPoint = '';

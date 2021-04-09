@@ -46,7 +46,6 @@ export const ChangeGroupOwner = ({
   }
 
   return new Promise((resolve, reject) => {
-    //clientContext.load(group)
     group.set_owner(ownerGroup);
     group.update();
     clientContext.executeQueryAsync(

@@ -8,7 +8,6 @@ import { usePeoplePicker } from 'components/Hooks/usePeoplePicker';
 import { Field, ErrorMessage } from 'formik';
 import * as React from 'react';
 
-// import { ContactIcon } from "@fluentui/react-icons";
 const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: 'Suggested People',
   mostRecentlyUsedHeaderText: 'Suggested Contacts',

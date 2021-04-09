@@ -1,14 +1,5 @@
 import { RestCall } from '../RestCall/RestCall';
 
-// export interface IGetListItemsProps {
-// 	listName: string;
-// 	expand?: string;
-// 	filter?: string;
-// 	select?: string;
-// 	sort?: string;
-// 	sortDir?: string;
-// }
-
 export const GetListItems = async ({
   listName,
   expand,

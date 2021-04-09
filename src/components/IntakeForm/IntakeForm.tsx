@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Formik, Form } from 'formik';
-import { formSchema } from './formSchema';
-import { RenderInputs } from './Inputs/RenderInputs';
 import {
-  Stack,
+  DefaultButton,
+  DialogFooter,
   IStackProps,
   IStackStyles,
-  DialogFooter,
   PrimaryButton,
-  DefaultButton,
+  Stack,
 } from '@fluentui/react';
+import { Form, Formik } from 'formik';
+import React, { useState } from 'react';
+import { formSchema } from './formSchema';
+import { RenderInputs } from './Inputs/RenderInputs';
 
 const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
 const columnProps: Partial<IStackProps> = {
@@ -19,8 +19,8 @@ const columnProps: Partial<IStackProps> = {
 
 const stackTokens = { childrenGap: 50 };
 
-export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
-  const [initialValues] = useState(() => {
+export const IntakeForm = ({ columns, toggleHideDialog, onSubmit }: any) => {
+  const [initialValues, setInitialValues] = useState(() => {
     const tempInitialValues: any = {};
     for (let i = 0; i < columns.length; i++) {
       if (columns[i].fieldTypeKind === 20) {
@@ -30,15 +30,14 @@ export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
       }
     }
 
+    tempInitialValues.Status = 'New';
     return tempInitialValues;
   });
 
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(value: any) => {
-        console.log(`value`, value);
-      }}
+      onSubmit={(values: any) => onSubmit(values)}
       validationSchema={formSchema(columns)}
     >
       {() => {
@@ -54,7 +53,8 @@ export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
                       column.name,
                       column.hideOnForm,
                       column.description,
-                      column.required
+                      column.required,
+                      column.AllowMultipleValues ?? false
                     );
                   }
                 })}
@@ -68,19 +68,16 @@ export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
                       column.name,
                       column.hideOnForm,
                       column.description,
-                      column.required
+                      column.required,
+                      column.AllowMultipleValues ?? false
                     );
                   }
                 })}
               </Stack>
             </Stack>
             <DialogFooter>
-              <DefaultButton onClick={toggleHideDialog} text='Close' />
-              <PrimaryButton
-                type='submit'
-                // onClick={toggleHideDialog}
-                text='Submit'
-              />
+              <DefaultButton onClick={toggleHideDialog} text='Cancel' />
+              <PrimaryButton type='submit' text='Submit' />
             </DialogFooter>
           </Form>
         );

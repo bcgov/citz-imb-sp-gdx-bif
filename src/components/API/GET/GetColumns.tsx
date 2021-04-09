@@ -8,10 +8,12 @@ export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
       FieldTypeKind: number;
       Required: boolean;
       Description: string;
-    } = fields.filter(
-      (field: { InternalName: string }) => field.InternalName === column
-    )[0];
-    const newColumn: IColumn & any = {
+      AllowMultipleValues: boolean;
+    } = fields.filter((field: { InternalName: string }) => {
+      return field.InternalName === column;
+    })[0];
+
+    let newColumn: IColumn & any = {
       // fieldRender: RenderInputs(viewField.FieldTypeKind),
       fieldTypeKind: viewField.FieldTypeKind,
       key: viewField.InternalName,
@@ -27,6 +29,7 @@ export const GetColumns = (viewColumns: [], fields: []): IColumn[] => {
       canFilter: true,
       required: viewField.Required,
       description: viewField.Description,
+      AllowMultipleValues: viewField.AllowMultipleValues,
     };
     return newColumn;
   });

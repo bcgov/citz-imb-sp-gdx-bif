@@ -25,12 +25,14 @@ interface PeoplePickerProps {
   icon: string;
   description: string;
   required: boolean;
+  AllowMultipleValues: boolean;
 }
 export const PeoplePicker = ({
   fieldName,
   title,
   icon,
   required,
+  AllowMultipleValues,
 }: PeoplePickerProps) => {
   const { searchPeople, setFormikValue } = usePeoplePicker();
 
@@ -59,6 +61,7 @@ export const PeoplePicker = ({
                 onChange={(pickerItems: any) => {
                   setFormikValue(pickerItems, fieldProps, fieldName);
                 }}
+                itemLimit={AllowMultipleValues ? undefined : 1}
                 title='test'
                 onResolveSuggestions={(filterText: any) => {
                   return searchPeople(filterText);
@@ -78,7 +81,7 @@ export const PeoplePicker = ({
               />
               <ErrorMessage
                 name={fieldName}
-                render={(msg) => {
+                render={(msg: any) => {
                   return (
                     <p
                       style={{

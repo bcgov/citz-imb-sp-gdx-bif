@@ -1,9 +1,8 @@
 //https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-csom/ee540543(v=office.15)
+import { Field } from 'formik';
+import React from 'react';
 import { PeoplePicker } from './PeoplePicker';
 import { TextInput } from './TextInput';
-import { Field } from 'formik';
-
-import React from 'react';
 
 export const RenderInputs = (
   fieldType: number,
@@ -11,10 +10,11 @@ export const RenderInputs = (
   name: string,
   hideOnForm = false,
   description: string,
-  required: boolean
+  required: boolean,
+  AllowMultipleValues: boolean
 ) => {
   if (hideOnForm) {
-    return <Field name={fieldName} type='hidden' />;
+    return <Field key={fieldName} name={fieldName} type='hidden' />;
   }
   switch (fieldType) {
     case 2: //Text
@@ -23,6 +23,7 @@ export const RenderInputs = (
 
       return (
         <TextInput
+          key={fieldName}
           fieldName={fieldName}
           title={name}
           icon={'TextBox'}
@@ -33,12 +34,13 @@ export const RenderInputs = (
 
       break;
     case 3: //"Note"
-      return <div>Description Field PlaceHolder</div>;
+      return <div key={fieldName}>Description Field PlaceHolder</div>;
 
       break;
     case 9: //"Number"
       return (
         <TextInput
+          key={fieldName}
           fieldName={fieldName}
           title={name}
           icon={'NumberField'}
@@ -49,28 +51,30 @@ export const RenderInputs = (
 
       break;
     case 4: //"DateTime":
-      return <div>Date Field PlaceHolder</div>;
+      return <div key={fieldName}>Date Field PlaceHolder</div>;
 
       break;
     case 15: //"Choice":
-      return <div>Choice Field PlaceHolder</div>;
+      return <div key={fieldName}>Choice Field PlaceHolder</div>;
 
       break;
     case 20: //"User":
       return (
         <PeoplePicker
+          key={fieldName}
           fieldName={fieldName}
           title={name}
           icon={'Contact'}
           description={description}
           required={required}
+          AllowMultipleValues={AllowMultipleValues}
         />
       );
 
       break;
 
     default:
-      return <div>default render</div>;
+      return <div key={fieldName}>default render</div>;
       break;
   }
 };

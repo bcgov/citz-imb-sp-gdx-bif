@@ -1,7 +1,6 @@
+import { FontIcon, TextField } from '@fluentui/react';
+import { ErrorMessage, Field } from 'formik';
 import React, { FC } from 'react';
-import { TextField, FontIcon } from '@fluentui/react';
-import { Field, ErrorMessage } from 'formik';
-import * as ReactIcons from '@fluentui/react-icons';
 interface TextInputProps {
   fieldName: string;
   title: string;
@@ -10,7 +9,7 @@ interface TextInputProps {
   description: string;
   required: boolean;
 }
-console.log(`ReactIcons`, ReactIcons);
+
 export const TextInput: FC<TextInputProps> = ({
   fieldName,
   title,
@@ -21,13 +20,9 @@ export const TextInput: FC<TextInputProps> = ({
   return (
     <div className='TextInput'>
       <Field
-        // required={required}
-        // type={type}
-
         defaultValue={defaultValue}
         variant='filled'
         as={TextField}
-        // iconProps={{ iconName: 'TextBox' }}
         autoComplete='off'
         label={
           required ? (
@@ -45,7 +40,7 @@ export const TextInput: FC<TextInputProps> = ({
         errorMessage={
           <ErrorMessage
             name={fieldName}
-            render={(msg) => {
+            render={(msg: any) => {
               return (
                 <p
                   style={{

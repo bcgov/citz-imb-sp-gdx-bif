@@ -1,4 +1,11 @@
-import { DetailsList, IColumn } from '@fluentui/react';
+import {
+  CommandBar,
+  DetailsList,
+  IColumn,
+  ICommandBarItemProps,
+  Stack,
+} from '@fluentui/react';
+import { useBoolean } from '@fluentui/react-hooks';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { GetColumns } from 'components/API/GET/GetColumns';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
@@ -18,9 +25,7 @@ import { GlobalFilter } from './Filters/GlobalFilter';
 import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
 import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
 import { ISubmittedRequestItem } from './ISubmittedRequestItem';
-import { NavBar } from './NavBar/NavBar';
 import { tableSort } from './tableSort';
-import { testData } from './testData';
 
 //!because React-Table is not properly typed
 // import { QuerySuccessResult } from "react-query";
@@ -39,6 +44,8 @@ initializeIcons(undefined, { disableWarnings: true });
 
 export const SubmittedRequestsTable = () => {
   const listName = 'Submitted Requests';
+
+  const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
 
   //!because React-Table is not properly typed
   const query: any = useQuery(listName, GetSubmittedRequests);
@@ -133,36 +140,92 @@ export const SubmittedRequestsTable = () => {
     tableSort(ev, column, tableInstance);
   };
 
+  const getNextClientNumber = (): number => {
+    //TODO: logic to get next client number (GDXBIF-13)
+    return 777;
+  };
+
   if (query.isLoading) return <div>loading...</div>;
 
   if (query.isError) return <div>{query.error}</div>;
 
-  const addNewRequest = () => {
-    console.log('add new request');
-    addItemMutation.mutateAsync(testData);
+  const onSubmit = (value: any): void => {
+    const nextClientNumber = getNextClientNumber();
+
+    const newItem: ISubmittedRequestItem = {
+      Title: `${value.Ministry}-${nextClientNumber}`,
+      Ministry: value.Ministry,
+      Division: value.Division,
+      ClientName: value.ClientName,
+      ClientNumber: nextClientNumber,
+      CASClient: value.CASClient,
+      CASResp: value.CASResp,
+      CASServ: value.CASServ,
+      CASSToB: value.CASSToB,
+      CASProj: value.CASProj,
+      Status: value.Status,
+      ApproverId: {
+        results: value.Approver.map((user: any) => user.userId),
+      },
+      PrimaryContactId: value.PrimaryContact[0].userId,
+      FinContactId: {
+        results: value.Approver.map((user: any) => user.userId),
+      },
+      CASExpAuthId: value.CASExpAuth[0].userId,
+      OtherContactId: {
+        results: value.Approver.map((user: any) => user.userId),
+      },
+    };
+
+    toggleHideDialog();
+    addItemMutation.mutateAsync(newItem);
   };
+
+  const commandItems: ICommandBarItemProps[] = [
+    {
+      key: 'newItem',
+      text: 'New',
+      cacheKey: 'myCacheKey', // changing this key will invalidate this item's cache
+      iconProps: { iconName: 'Add' },
+      onClick: toggleHideDialog,
+    },
+  ];
+
   return (
     <>
-      <NavBar addNewRequest={addNewRequest}>
-        <FormDialog columns={tableInstance.columns} />
-        <GlobalFilter
-          preGlobalFilteredRows={tableInstance.preGlobalFilteredRows}
-          globalFilter={tableInstance.state.globalFilter}
-          setGlobalFilter={tableInstance.setGlobalFilter}
-          useAsyncDebounce={useAsyncDebounce}
+      <Stack
+        horizontal
+        horizontalAlign={'space-between'}
+        verticalAlign={'center'}
+      >
+        <CommandBar
+          items={commandItems}
+          ariaLabel='Use left and right arrow keys to navigate between commands'
         />
         <StatusFilter
           data={tableInstance.data}
           columns={tableInstance.columns}
           setFilter={tableInstance.setFilter}
         />
-      </NavBar>
+        <GlobalFilter
+          preGlobalFilteredRows={tableInstance.preGlobalFilteredRows}
+          globalFilter={tableInstance.state.globalFilter}
+          setGlobalFilter={tableInstance.setGlobalFilter}
+          useAsyncDebounce={useAsyncDebounce}
+        />
+      </Stack>
       <DetailsList
         items={tableInstance.sortedRows.map((row: Row) => row.values)}
         columns={tableInstance.columns}
         onColumnHeaderClick={handleColumnClick}
         selectionMode={0}
         checkboxVisibility={2}
+      />
+      <FormDialog
+        columns={tableInstance.columns}
+        toggleHideDialog={toggleHideDialog}
+        hideDialog={hideDialog}
+        onSubmit={onSubmit}
       />
     </>
   );

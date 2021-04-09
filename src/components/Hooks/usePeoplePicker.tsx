@@ -12,7 +12,6 @@ export const usePeoplePicker = () => {
     fieldProps?: any,
     fieldName?: string
   ) => {
-    console.log(`pickerItems`, pickerItems);
     setTimeout(() => {
       fieldProps.form.setFieldValue(fieldName, pickerItems, true);
       fieldProps.form.setFieldTouched(fieldName, true, true);

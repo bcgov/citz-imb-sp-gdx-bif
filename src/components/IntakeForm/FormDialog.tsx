@@ -1,19 +1,8 @@
+import { Dialog, DialogType } from '@fluentui/react';
+import { useId } from '@fluentui/react-hooks';
 import * as React from 'react';
-import {
-  Dialog,
-  DialogType,
-  DefaultButton,
-  ContextualMenu,
-} from '@fluentui/react';
-import { useId, useBoolean } from '@fluentui/react-hooks';
 import { IntakeForm } from './IntakeForm';
 const dialogStyles = { main: { maxWidth: 450 } };
-const dragOptions = {
-  moveMenuItemText: 'Move',
-  closeMenuItemText: 'Close',
-  menu: ContextualMenu,
-  keepInBounds: true,
-};
 const dialogContentProps = {
   type: DialogType.normal,
   title: 'New Intake',
@@ -21,9 +10,12 @@ const dialogContentProps = {
   subText: 'Create new request',
 };
 
-export const FormDialog = ({ columns }: any) => {
-  const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
-  const [isDraggable] = useBoolean(false);
+export const FormDialog = ({
+  columns,
+  hideDialog,
+  toggleHideDialog,
+  onSubmit,
+}: any) => {
   const labelId: string = useId('dialogLabel');
   const subTextId: string = useId('subTextLabel');
 
@@ -33,18 +25,12 @@ export const FormDialog = ({ columns }: any) => {
       subtitleAriaId: subTextId,
       isBlocking: false,
       styles: dialogStyles,
-      dragOptions: isDraggable ? dragOptions : undefined,
     }),
-    [isDraggable, labelId, subTextId]
+    [labelId, subTextId]
   );
 
   return (
     <>
-      <DefaultButton
-        secondaryText='Opens the Sample Dialog'
-        onClick={toggleHideDialog}
-        text='New +'
-      />
       <Dialog
         hidden={hideDialog}
         onDismiss={toggleHideDialog}
@@ -52,7 +38,11 @@ export const FormDialog = ({ columns }: any) => {
         modalProps={modalProps}
         maxWidth={3000}
       >
-        <IntakeForm columns={columns} toggleHideDialog={toggleHideDialog} />
+        <IntakeForm
+          columns={columns}
+          toggleHideDialog={toggleHideDialog}
+          onSubmit={onSubmit}
+        />
       </Dialog>
     </>
   );

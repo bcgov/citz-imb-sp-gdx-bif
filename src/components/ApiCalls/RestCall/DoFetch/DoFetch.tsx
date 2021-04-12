@@ -1,7 +1,7 @@
 export const DoFetch = async (
   url: string,
   endPoint: string,
-  options?: unknown
+  options?: RequestInit
 ) => {
   const response = await fetch(`${url}${endPoint}`, options);
 

@@ -1,4 +1,5 @@
 import { RestCall } from '../RestCall/RestCall';
+import { IAPICallProps } from 'components/ApiCalls/Interfaces';
 
 export const GetListItems = async ({
   listName,
@@ -7,7 +8,7 @@ export const GetListItems = async ({
   select,
   sort = '',
   sortDir = 'Asc',
-}) => {
+}: IAPICallProps) => {
   let endPoint = `/_api/web/Lists/getByTitle('${listName}')/items`;
 
   const endPointParameters = [];

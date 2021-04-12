@@ -1,12 +1,11 @@
 import {
+  FontIcon,
   IBasePickerSuggestionsProps,
   Label,
   NormalPeoplePicker,
-  FontIcon,
 } from '@fluentui/react';
 import { usePeoplePicker } from 'components/Hooks/usePeoplePicker';
-import { Field, ErrorMessage } from 'formik';
-import * as React from 'react';
+import { ErrorMessage, Field } from 'formik';
 
 const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: 'Suggested People',
@@ -56,12 +55,12 @@ export const PeoplePicker = ({
               </div>
               <NormalPeoplePicker
                 className='test'
-                id={fieldName}
+                // id={fieldName}
                 onChange={(pickerItems: any) => {
                   setFormikValue(pickerItems, fieldProps, fieldName);
                 }}
                 itemLimit={AllowMultipleValues ? undefined : 1}
-                title='test'
+                // title='test'
                 onResolveSuggestions={(filterText: any) => {
                   return searchPeople(filterText);
                 }}

@@ -1,8 +1,14 @@
 import { RestCall } from '../RestCall/RestCall';
+import { IAPICallProps } from 'components/ApiCalls/Interfaces';
 
-export const GetList = async ({ listName, expand, filter, select }) => {
+export const GetList = async ({
+  listName,
+  expand,
+  filter,
+  select,
+}: IAPICallProps) => {
   let endPoint = `/_api/web/Lists/getByTitle('${listName}')`;
-  let endPointParameters = [];
+  const endPointParameters: string[] = [];
 
   if (expand) endPointParameters.push(`$expand=${expand}`);
   if (filter) endPointParameters.push(`$filter=${filter}`);

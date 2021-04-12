@@ -9,7 +9,7 @@ import { useBoolean } from '@fluentui/react-hooks';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { GetColumns } from 'components/API/GET/GetColumns';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
-import { AddItemsToList } from 'components/ApiCalls';
+import { AddItemsToList } from 'components/APICalls';
 import { FormDialog } from 'components/IntakeForm/FormDialog';
 import React, { useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';

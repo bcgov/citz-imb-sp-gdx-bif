@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PeoplePickerSearch } from 'components/ApiCalls';
+import { PeoplePickerSearch } from 'components/APICalls';
 export const usePeoplePicker = () => {
   const [searchResults, setSearchResults] = useState([]);
 

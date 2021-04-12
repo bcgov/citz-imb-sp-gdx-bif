@@ -1,5 +1,5 @@
 import { PeoplePickerSearchProps } from './PeoplePickerSearchProps';
-import { RestCall } from '../../ApiCalls/RestCall/RestCall';
+import { RestCall } from 'components/APICalls/RestCall/RestCall';
 
 export const PeoplePickerSearch = async ({
   filterText,

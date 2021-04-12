@@ -9,7 +9,7 @@ import { useBoolean } from '@fluentui/react-hooks';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { GetColumns } from 'components/API/GET/GetColumns';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
-import { AddItemsToList } from 'components/APICalls';
+import { AddItemsToList } from 'components/ApiCalls';
 import { FormDialog } from 'components/IntakeForm/FormDialog';
 import React, { useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -65,7 +65,7 @@ export const SubmittedRequestsTable = () => {
         const previousValues = queryClient.getQueryData(listName);
 
         //!react-query is not typed
-        queryClient.setQueryData(listName, (oldValues) => {
+        queryClient.setQueryData(listName, (oldValues:any) => {
           const newValues = [...oldValues.items];
 
           newValues.push(newItem);

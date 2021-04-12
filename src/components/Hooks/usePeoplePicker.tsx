@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PeoplePickerSearch } from 'components/APICalls';
+import { PeoplePickerSearch } from 'components/ApiCalls';
 export const usePeoplePicker = () => {
   const [searchResults, setSearchResults] = useState([]);
 
@@ -20,7 +20,7 @@ export const usePeoplePicker = () => {
   };
 
   const searchPeople = async (filterText?: string) => {
-    if (filterText.length > 2) {
+    if (filterText && filterText.length > 2) {
       const results = await PeoplePickerSearch({ filterText });
       // People picker user properties that are available
       const users = results.map((result: any) => {

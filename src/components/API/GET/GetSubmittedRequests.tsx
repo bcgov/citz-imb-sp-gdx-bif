@@ -1,5 +1,4 @@
-import { GetList } from './GetList';
-import { GetItems } from './GetItems';
+import { GetListItems, GetList } from 'components/ApiCalls';
 
 export const GetSubmittedRequests = async () => {
   const listName = 'Submitted Requests';
@@ -12,7 +11,7 @@ export const GetSubmittedRequests = async () => {
     ...listInfo,
     Columns: listInfo.DefaultView.ViewFields.Items.results,
   };
-  const items = await GetItems({ listName });
+  const items = await GetListItems({ listName });
 
   return { listInfo: newListInfo, items };
 };

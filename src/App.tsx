@@ -1,5 +1,5 @@
 import { SubmittedRequestsTable } from 'components';
-import { GetListItems } from 'components/APICalls';
+import { GetListItems } from 'components/ApiCalls';
 import React, { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';

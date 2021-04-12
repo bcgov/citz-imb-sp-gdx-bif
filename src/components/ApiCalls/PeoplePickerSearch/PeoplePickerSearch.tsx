@@ -1,5 +1,6 @@
 import { PeoplePickerSearchProps } from './PeoplePickerSearchProps';
-import { RestCall } from 'components/APICalls/RestCall/RestCall';
+import { RestCall } from '../RestCall/RestCall';
+import { IRestCall } from 'components/ApiCalls/Interfaces';
 
 export const PeoplePickerSearch = async ({
   filterText,
@@ -13,7 +14,7 @@ export const PeoplePickerSearch = async ({
   PrincipalSource = 1,
   PrincipalType = 1,
 }: PeoplePickerSearchProps) => {
-  const options = {
+  const options: IRestCall = {
     endPoint:
       '/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser',
     method: 'post',

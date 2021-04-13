@@ -7,8 +7,8 @@ export const useNotification = () => {
   const sendRequestForApprovalEmail = async (): Promise<void> => {
     console.log('sendRequestForApprovalEmail');
 
-    const user = await GetUser(6);
-    console.log('user :>> ', user.LoginName);
+    const user = await GetUser(10);
+    console.log('user :>> ', user);
     const notification = config.filter(
       (item: any) => item.Key === 'EAEmailNotification'
     )[0];
@@ -17,8 +17,8 @@ export const useNotification = () => {
       to: user.LoginName,
       subject: 'Hello',
       body: 'There',
-      cc: ['stoews@idir'],
-      bcc: ['Scott.Toews@gov.bc.ca'],
+      // cc: ['stoews@idir'],
+      // bcc: ['Scott.Toews@gov.bc.ca'],
     });
 
     console.log('notification :>> ', notification);

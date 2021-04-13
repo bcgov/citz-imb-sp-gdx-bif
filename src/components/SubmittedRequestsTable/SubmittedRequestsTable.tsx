@@ -65,7 +65,7 @@ export const SubmittedRequestsTable = () => {
         const previousValues = queryClient.getQueryData(listName);
 
         //!react-query is not typed
-        queryClient.setQueryData(listName, (oldValues:any) => {
+        queryClient.setQueryData(listName, (oldValues: any) => {
           const newValues = [...oldValues.items];
 
           newValues.push(newItem);

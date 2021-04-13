@@ -26,7 +26,7 @@ import { statusColumnFilter } from './Filters/StatusFilter/statusColumnFilter';
 import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
 import { ISubmittedRequestItem } from './ISubmittedRequestItem';
 import { tableSort } from './tableSort';
-
+import { getNextClientNumber } from './getNextClientNumber';
 //!because React-Table is not properly typed
 // import { QuerySuccessResult } from "react-query";
 // To intialize
@@ -138,11 +138,6 @@ export const SubmittedRequestsTable = () => {
   // When a user clicks a column sort by it
   const handleColumnClick = (ev: any, column: any) => {
     tableSort(ev, column, tableInstance);
-  };
-
-  const getNextClientNumber = (): number => {
-    //TODO: logic to get next client number (GDXBIF-13)
-    return 777;
   };
 
   if (query.isLoading) return <div>loading...</div>;

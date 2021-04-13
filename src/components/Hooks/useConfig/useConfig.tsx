@@ -8,7 +8,7 @@ export const useConfig = () => {
 
   const config = useMemo(() => {
     if (query === undefined) return [];
-    return query;
+    return query as [];
   }, [query]);
 
   return config;

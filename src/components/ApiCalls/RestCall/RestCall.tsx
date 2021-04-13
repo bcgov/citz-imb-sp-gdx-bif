@@ -9,6 +9,7 @@ export const RestCall = async ({
   headers,
   cache,
 }: IRestCall) => {
+  console.log('endPoint, body :>> ', endPoint, body);
   const webAbsoluteUrl = _spPageContextInfo.webAbsoluteUrl;
 
   if (!headers)

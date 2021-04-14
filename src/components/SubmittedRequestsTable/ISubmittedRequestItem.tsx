@@ -3,7 +3,7 @@ export interface ISubmittedRequestItem {
   Ministry: string;
   Division: string;
   ClientName: string;
-  ClientNumber?: number;
+  ClientNumber?: Promise<number>;
   CASClient: number;
   CASResp: number;
   CASServ: number;

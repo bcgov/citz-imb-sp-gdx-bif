@@ -23,8 +23,6 @@ export const GetSubmittedRequests = async () => {
     select,
   });
 
-  console.log('items :>> ', items);
-
   const filteredData = items.map((listItem: any) => {
     const tempItem: any = { ...listItem };
 

@@ -1,18 +1,27 @@
 import { RestCall } from '../RestCall/RestCall';
 
+interface ISendEmailProps {
+  to: any;
+  subject: string;
+  body: string;
+  from?: any;
+  cc?: any;
+  bcc?: any;
+}
+
 export const SendEmail = async ({
   to,
+  subject,
+  body,
   from,
   cc = [],
   bcc = [],
-  subject,
-  body,
-}) => {
+}: ISendEmailProps) => {
   const endPoint = '/_api/SP.Utilities.Utility.SendEmail';
 
   if (!Array.isArray(to)) to = [to];
 
-  const restBody = {
+  const restBody:any = {
     properties: {
       __metadata: {
         type: 'SP.Utilities.EmailProperties',

@@ -10,6 +10,7 @@ import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { GetColumns } from 'components/API/GET/GetColumns';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
 import { AddItemsToList } from 'components/ApiCalls';
+import { useNotification } from 'components/Hooks';
 import { FormDialog } from 'components/IntakeForm/FormDialog';
 import React, { useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -47,7 +48,9 @@ export const SubmittedRequestsTable = () => {
 
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
 
-  //!because React-Table is not properly typed
+  const { sendRequestForApprovalEmail } = useNotification();
+
+  //!because React-query is not properly typed
   const query: any = useQuery(listName, GetSubmittedRequests);
 
   const queryClient: any = useQueryClient();
@@ -173,7 +176,15 @@ export const SubmittedRequestsTable = () => {
     };
 
     toggleHideDialog();
-    addItemMutation.mutateAsync(newItem);
+    addItemMutation.mutateAsync(newItem, {
+      onSuccess: () => {
+        sendRequestForApprovalEmail(newItem.CASExpAuthId);
+      },
+    });
+  };
+
+  const sendEmail = () => {
+    sendRequestForApprovalEmail(6);
   };
 
   const commandItems: ICommandBarItemProps[] = [
@@ -183,6 +194,13 @@ export const SubmittedRequestsTable = () => {
       cacheKey: 'myCacheKey', // changing this key will invalidate this item's cache
       iconProps: { iconName: 'Add' },
       onClick: toggleHideDialog,
+    },
+    {
+      key: 'sendEmail',
+      text: 'Send Email',
+      cacheKey: 'myemailCacheKey', // changing this key will invalidate this item's cache
+      iconProps: { iconName: 'Add' },
+      onClick: sendEmail,
     },
   ];
 

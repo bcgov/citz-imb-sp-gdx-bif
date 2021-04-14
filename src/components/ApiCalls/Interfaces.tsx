@@ -13,4 +13,5 @@ export interface IRestCall {
   body?: BodyInit | any;
   headers?: HeadersInit;
   cache?: RequestCache;
+  noReturn?: boolean;
 }

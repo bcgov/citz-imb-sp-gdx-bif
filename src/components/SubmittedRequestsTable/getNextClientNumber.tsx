@@ -1,7 +1,7 @@
 import { GetListItems } from 'components/ApiCalls';
 
 export const getNextClientNumber = async () => {
-  const listName = 'Submitted Requests';
+  const listName = 'Client Accounts';
 
   const listItems = await GetListItems({ listName });
 

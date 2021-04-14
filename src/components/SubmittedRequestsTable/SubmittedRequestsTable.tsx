@@ -178,11 +178,15 @@ export const SubmittedRequestsTable = () => {
     };
 
     toggleHideDialog();
-    addItemMutation.mutateAsync(newItem);
+    addItemMutation.mutateAsync(newItem, {
+      onSuccess: () => {
+        sendRequestForApprovalEmail(newItem.CASExpAuthId);
+      },
+    });
   };
 
   const sendEmail = () => {
-    sendRequestForApprovalEmail();
+    sendRequestForApprovalEmail(6);
   };
 
   const commandItems: ICommandBarItemProps[] = [

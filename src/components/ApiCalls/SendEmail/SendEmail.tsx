@@ -47,6 +47,6 @@ export const SendEmail = async ({
     method: 'post',
     body: restBody,
   });
-console.log('response :>> ', response);
+
   return response.d;
 };

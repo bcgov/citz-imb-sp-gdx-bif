@@ -8,6 +8,7 @@ export const RestCall = async ({
   body,
   headers,
   cache,
+  noReturn = false,
 }: IRestCall) => {
   const webAbsoluteUrl = _spPageContextInfo.webAbsoluteUrl;
 
@@ -64,7 +65,7 @@ export const RestCall = async ({
 
   if (cache) options.cache = cache;
 
-  const fetchResponse = await DoFetch(webAbsoluteUrl, endPoint, options);
+  const fetchResponse = await DoFetch(webAbsoluteUrl, endPoint, options, noReturn);
 
   return fetchResponse;
 };

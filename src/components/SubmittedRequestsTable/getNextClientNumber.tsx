@@ -9,5 +9,5 @@ export const getNextClientNumber = async () => {
     return item.ClientNumber;
   });
 
-  return Math.max(...clientNumbers);
+  return Math.max(...clientNumbers) + 1;
 };

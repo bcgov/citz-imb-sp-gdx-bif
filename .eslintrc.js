@@ -31,6 +31,7 @@ module.exports = {
         'ts-expect-error': 'allow-with-description',
       },
     ],
+    'react/display-name': ['warn'],
     'react/prop-types': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',

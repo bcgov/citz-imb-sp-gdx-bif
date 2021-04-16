@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { GetColumns } from 'components/API/GET/GetColumns';
-// import { IColumn } from '@fluentui/react';
+import { GetColumns } from '../../API/GET/GetColumns';
+import { IColumn, ActionButton } from '@fluentui/react';
 import { statusColumnFilter } from '../Filters';
 
-export const Columns = (query: any) => {
+export const Columns = (query: any, toggleHideDialog: any) => {
   return useMemo(() => {
     if (query.isLoading || query.isError) return [];
 
@@ -35,6 +35,31 @@ export const Columns = (query: any) => {
       statusColumn,
       authorColumn,
     ];
+
+    modifiedColumns.push({
+      accessor: 'editColumn',
+      id: 'editColumn',
+      onRender: (item?: any, index?: number, column?: IColumn) => {
+        return (
+          <ActionButton
+            onClick={() => {
+              console.log(`item`, item, index, column);
+              toggleHideDialog();
+            }}
+            iconProps={{ iconName: 'EntryView' }}
+          />
+        );
+      },
+      key: 'editColumn',
+      name: 'editColumn',
+      minWidth: 100,
+      maxWidth: 100,
+      canSort: false,
+      isSorted: false,
+      isSortedDesc: false,
+      isSortedDescending: false,
+      canFilter: false,
+    });
     return modifiedColumns;
   }, [query.isLoading, query.isError, query.data]);
 };

@@ -25,7 +25,10 @@ export const SubmittedRequests = () => {
   //!because React-query is not properly typed
   const query: any = useQuery('Submitted Requests', GetSubmittedRequests);
 
-  const tableInstance = TableInstance(Columns(query), Data(query));
+  const tableInstance = TableInstance(
+    Columns(query, toggleHideDialog),
+    Data(query)
+  );
   if (query.isLoading) return <div>loading...</div>;
 
   if (query.isError) return <div>{query.error}</div>;

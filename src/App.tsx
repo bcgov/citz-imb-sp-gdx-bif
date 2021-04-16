@@ -1,4 +1,4 @@
-import { SubmittedRequestsTable } from 'components';
+import { SubmittedRequests } from 'components';
 import { GetListItems, GetCurrentUser } from 'components/ApiCalls';
 import React, { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -39,7 +39,7 @@ export const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SubmittedRequestsTable />
+      <SubmittedRequests />
 
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

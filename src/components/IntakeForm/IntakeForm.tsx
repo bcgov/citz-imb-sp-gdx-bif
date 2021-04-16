@@ -7,9 +7,10 @@ import {
   Stack,
 } from '@fluentui/react';
 import { Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { formSchema } from './formSchema';
 import { RenderInputs } from './Inputs/RenderInputs';
+import { OnSubmit } from '../SubmittedRequestsTable';
 
 const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
 const columnProps: Partial<IStackProps> = {
@@ -19,7 +20,7 @@ const columnProps: Partial<IStackProps> = {
 
 const stackTokens = { childrenGap: 50 };
 
-export const IntakeForm = ({ columns, toggleHideDialog, onSubmit }: any) => {
+export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
   const [initialValues] = useState(() => {
     const tempInitialValues: any = {};
     for (let i = 0; i < columns.length; i++) {
@@ -37,7 +38,7 @@ export const IntakeForm = ({ columns, toggleHideDialog, onSubmit }: any) => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values: any) => onSubmit(values)}
+      onSubmit={(values: any) => OnSubmit(values, toggleHideDialog)}
       validationSchema={formSchema(columns)}
     >
       {() => {

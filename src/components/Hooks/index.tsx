@@ -1,2 +1,2 @@
-export * from 'components/Hooks/useNotifications/useNotification';
-export * from 'components/Hooks/usePeoplePicker';
+export * from './useNotification/useNotification';
+export * from './usePeoplePicker/usePeoplePicker';

@@ -6,24 +6,21 @@ interface NumberFieldProps {
   fieldName: string;
   title: string;
   defaultValue?: string;
+  status: string;
 }
 
-export const NumberField: FC<NumberFieldProps> = ({
-  fieldName,
-  title,
-  defaultValue = '',
-}) => {
+export const NumberField: FC<NumberFieldProps> = ({ fieldName, title }) => {
   return (
     <div className='NumberField'>
       <Field
         iconProps={{ iconName: 'NumberField' }}
-        defaultValue={defaultValue}
         variant='filled'
         as={TextField}
         autoComplete='off'
         label={title}
         fullWidth={true}
         name={fieldName}
+        disabled={status === 'Submitted' ? true : false}
         helperText={<ErrorMessage name={fieldName} />}
       />
     </div>

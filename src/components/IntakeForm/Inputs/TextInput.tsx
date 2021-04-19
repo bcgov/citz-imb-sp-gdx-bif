@@ -8,6 +8,7 @@ interface TextInputProps {
   icon: string;
   description: string;
   required: boolean;
+  status: string;
 }
 
 export const TextInput: FC<TextInputProps> = ({
@@ -16,7 +17,9 @@ export const TextInput: FC<TextInputProps> = ({
   defaultValue = '',
   icon,
   required,
+  status,
 }) => {
+  console.log('status', status);
   return (
     <div className='TextInput'>
       <Field
@@ -24,6 +27,7 @@ export const TextInput: FC<TextInputProps> = ({
         variant='filled'
         as={TextField}
         autoComplete='off'
+        disabled={status === 'Submitted' ? true : false}
         label={
           required ? (
             <div>

@@ -20,28 +20,20 @@ const columnProps: Partial<IStackProps> = {
 
 const stackTokens = { childrenGap: 50 };
 
-export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
-  const [initialValues] = useState(() => {
-    const tempInitialValues: any = {};
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].fieldTypeKind === 20) {
-        tempInitialValues[columns[i].fieldName] = [];
-      } else {
-        tempInitialValues[columns[i].fieldName] = '';
-      }
-    }
-
-    tempInitialValues.Status = 'New';
-    return tempInitialValues;
-  });
-
+export const IntakeForm = ({
+  columns,
+  toggleHideDialog,
+  initialValues,
+}: any) => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values: any) => OnSubmit(values, toggleHideDialog)}
+      onSubmit={(values: any) => {
+        //OnSubmit(values, toggleHideDialog)
+      }}
       validationSchema={formSchema(columns)}
     >
-      {() => {
+      {(form) => {
         return (
           <Form>
             <Stack horizontal tokens={stackTokens} styles={stackStyles}>
@@ -55,7 +47,8 @@ export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
                       column.hideOnForm,
                       column.description,
                       column.required,
-                      column.AllowMultipleValues ?? false
+                      column.AllowMultipleValues ?? false,
+                      initialValues.Status
                     );
                   }
                 })}
@@ -70,14 +63,21 @@ export const IntakeForm = ({ columns, toggleHideDialog }: any) => {
                       column.hideOnForm,
                       column.description,
                       column.required,
-                      column.AllowMultipleValues ?? false
+                      column.AllowMultipleValues ?? false,
+                      initialValues.Status
                     );
                   }
                 })}
               </Stack>
             </Stack>
             <DialogFooter>
-              <DefaultButton onClick={toggleHideDialog} text='Cancel' />
+              <DefaultButton
+                onClick={() => {
+                  console.log(form);
+                  toggleHideDialog(), form.resetForm();
+                }}
+                text='Cancel'
+              />
               <PrimaryButton type='submit' text='Submit' />
             </DialogFooter>
           </Form>

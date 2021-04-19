@@ -24,6 +24,7 @@ interface PeoplePickerProps {
   description: string;
   required: boolean;
   AllowMultipleValues: boolean;
+  status: string;
 }
 export const PeoplePicker = ({
   fieldName,
@@ -36,7 +37,7 @@ export const PeoplePicker = ({
 
   return (
     <>
-      <Field name={fieldName}>
+      <Field name={fieldName} disabled={status === 'Submitted' ? true : false}>
         {(fieldProps: any) => {
           return (
             <div>
@@ -76,6 +77,7 @@ export const PeoplePicker = ({
                 onBlur={() => {
                   fieldProps.form.setFieldTouched(fieldName, true, true);
                 }}
+                // defaultSelectedItems={[]}
               />
               <ErrorMessage
                 name={fieldName}

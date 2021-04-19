@@ -3,7 +3,11 @@ import { GetColumns } from '../../API/GET/GetColumns';
 import { IColumn, ActionButton } from '@fluentui/react';
 import { statusColumnFilter } from '../Filters';
 
-export const Columns = (query: any, toggleHideDialog: any) => {
+export const Columns = (
+  query: any,
+  toggleHideDialog?: any,
+  setInitialValues?: any
+) => {
   return useMemo(() => {
     if (query.isLoading || query.isError) return [];
 
@@ -43,7 +47,7 @@ export const Columns = (query: any, toggleHideDialog: any) => {
         return (
           <ActionButton
             onClick={() => {
-              console.log(`item`, item, index, column);
+              setInitialValues(item);
               toggleHideDialog();
             }}
             iconProps={{ iconName: 'EntryView' }}

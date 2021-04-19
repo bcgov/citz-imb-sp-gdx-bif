@@ -11,8 +11,10 @@ export const RenderInputs = (
   hideOnForm = false,
   description: string,
   required: boolean,
-  AllowMultipleValues: boolean
+  AllowMultipleValues: boolean,
+  Status: string
 ) => {
+  console.log('status', Status);
   if (hideOnForm) {
     return <Field key={fieldName} name={fieldName} type='hidden' />;
   }
@@ -29,6 +31,7 @@ export const RenderInputs = (
           icon={'TextBox'}
           description={description}
           required={required}
+          status={Status}
         />
       );
 
@@ -46,6 +49,7 @@ export const RenderInputs = (
           icon={'NumberField'}
           description={description}
           required={required}
+          status={Status}
         />
       );
 
@@ -68,13 +72,13 @@ export const RenderInputs = (
           description={description}
           required={required}
           AllowMultipleValues={AllowMultipleValues}
+          status={Status}
         />
       );
 
       break;
 
     default:
-      return <div key={fieldName}>default render</div>;
       break;
   }
 };

@@ -23,7 +23,7 @@ initializeIcons(undefined, { disableWarnings: true });
 
 export const SubmittedRequestsTable = ({
   TableInstance,
-  toggleHideDialog,
+  handleNewForm,
 }: any) => {
   // When a user clicks a column sort by it
   const handleColumnClick = (ev: any, column: any) => {
@@ -38,7 +38,7 @@ export const SubmittedRequestsTable = ({
       >
         <div style={{ minWidth: '110px' }}>
           <CommandBar
-            items={commandItems(toggleHideDialog)}
+            items={commandItems(handleNewForm)}
             ariaLabel='Use left and right arrow keys to navigate between commands'
           />
         </div>

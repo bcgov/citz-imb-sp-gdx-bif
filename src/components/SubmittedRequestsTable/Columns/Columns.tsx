@@ -43,10 +43,14 @@ export const Columns = (
     modifiedColumns.push({
       accessor: 'editColumn',
       id: 'editColumn',
-      onRender: (item?: any, index?: number, column?: IColumn) => {
+      onRender: (item?: any, index?: number, column?: IColumn | any) => {
         return (
           <ActionButton
             onClick={() => {
+              item.id = column?.filteredRows[index ?? 0].original.Id;
+              item.CASExpAuthId =
+                column?.filteredRows[index ?? 0].original.CASExpAuthId;
+
               setInitialValues(item);
               toggleHideDialog();
             }}
@@ -63,6 +67,7 @@ export const Columns = (
       isSortedDesc: false,
       isSortedDescending: false,
       canFilter: false,
+      hideOnForm: true,
     });
     return modifiedColumns;
   }, [query.isLoading, query.isError, query.data]);

@@ -19,12 +19,10 @@ export const TextInput: FC<TextInputProps> = ({
   required,
   status,
 }) => {
-  console.log('status', status);
   return (
     <div className='TextInput'>
       <Field
         defaultValue={defaultValue}
-        variant='filled'
         as={TextField}
         autoComplete='off'
         disabled={status === 'Submitted' ? true : false}
@@ -41,28 +39,26 @@ export const TextInput: FC<TextInputProps> = ({
         }
         fullWidth={true}
         name={fieldName}
-        errorMessage={
-          <ErrorMessage
-            name={fieldName}
-            render={(msg: any) => {
-              return (
-                <p
-                  style={{
-                    minHeight: '16px',
-                    fontSize: '12px',
-                    color: ' rgb(164, 38, 44)',
-                    margin: '0px',
-                    paddingTop: '5px',
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  {msg}
-                </p>
-              );
-            }}
-          />
-        }
+      />
+      <ErrorMessage
+        name={fieldName}
+        render={(msg: any) => {
+          return (
+            <p
+              style={{
+                minHeight: '16px',
+                fontSize: '12px',
+                color: ' rgb(164, 38, 44)',
+                margin: '0px',
+                paddingTop: '5px',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              {msg}
+            </p>
+          );
+        }}
       />
     </div>
   );

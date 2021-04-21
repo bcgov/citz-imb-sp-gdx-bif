@@ -6,6 +6,8 @@ import { useBoolean } from '@fluentui/react-hooks';
 import { useQuery } from 'react-query';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
 import { Columns, Data, TableInstance } from '../SubmittedRequestsTable';
+import { Loader } from '../Loader';
+import { formProperties } from '@fluentui/utilities';
 //!because React-Table is not properly typed
 // import { QuerySuccessResult } from "react-query";
 
@@ -25,27 +27,31 @@ export const SubmittedRequests = () => {
   //!because React-query is not properly typed
   const query: any = useQuery('Submitted Requests', GetSubmittedRequests);
 
-  const [initialValues, setInitialValues] = useState({});
+  const [initialValues, setInitialValues] = useState<any>({});
 
   const tableInstance = TableInstance(
     Columns(query, toggleHideDialog, setInitialValues),
     Data(query)
   );
-  useEffect(() => {
-    setInitialValues(() => {
-      const tempInitialValues: any = {};
-      for (let i = 0; i < tableInstance.columns.length; i++) {
-        if (tableInstance.columns[i].fieldTypeKind === 20) {
-          tempInitialValues[tableInstance.columns[i].fieldName] = [];
-        } else {
-          tempInitialValues[tableInstance.columns[i].fieldName] = '';
-        }
-      }
 
-      tempInitialValues.Status = 'New';
-      return tempInitialValues;
-    });
-  }, []);
+  const resetInitialValues = () => {
+    const tempInitialValues: any = {};
+    for (let i = 0; i < tableInstance.columns.length; i++) {
+      if (tableInstance.columns[i].fieldTypeKind === 20) {
+        tempInitialValues[tableInstance.columns[i].fieldName] = [];
+      } else {
+        tempInitialValues[tableInstance.columns[i].fieldName] = '';
+      }
+    }
+
+    tempInitialValues.Status = 'New';
+    return tempInitialValues;
+  };
+
+  const handleNewForm = () => {
+    setInitialValues(resetInitialValues());
+    toggleHideDialog();
+  };
 
   if (query.isLoading) return <div>loading...</div>;
 
@@ -54,7 +60,7 @@ export const SubmittedRequests = () => {
     <>
       <SubmittedRequestsTable
         TableInstance={tableInstance}
-        toggleHideDialog={toggleHideDialog}
+        handleNewForm={handleNewForm}
       />
       <FormDialog
         toggleHideDialog={toggleHideDialog}
@@ -66,7 +72,9 @@ export const SubmittedRequests = () => {
             initialValues={initialValues}
           />
         }
+        status={initialValues.Status}
       />
+      <Loader />
     </>
   );
 };

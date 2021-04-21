@@ -1,14 +1,21 @@
 import { Dialog, DialogType } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
 import * as React from 'react';
-const dialogContentProps = {
-  type: DialogType.normal,
-  title: 'New Intake',
-  closeButtonAriaLabel: 'Close',
-  subText: 'Create new request',
-};
 
-export const FormDialog = ({ hideDialog, toggleHideDialog, content }: any) => {
+export const FormDialog = ({
+  hideDialog,
+  toggleHideDialog,
+  content,
+  status,
+}: any) => {
+  const dialogContentProps = {
+    type: DialogType.normal,
+    title: status === 'New' ? 'New' : 'Approval',
+    closeButtonAriaLabel: 'Close',
+    subText:
+      status === 'New' ? 'Create a new entry' : 'Approve or Decline submision',
+  };
+
   const labelId: string = useId('dialogLabel');
   const subTextId: string = useId('subTextLabel');
 

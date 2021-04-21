@@ -1,17 +1,16 @@
 import {
-  DefaultButton,
   DialogFooter,
   IStackProps,
   IStackStyles,
-  PrimaryButton,
   Stack,
 } from '@fluentui/react';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { formSchema } from './formSchema';
-import { RenderInputs } from './Inputs/RenderInputs';
+import { RenderInputs } from './RenderInputs';
 import { OnSubmit } from '../SubmittedRequestsTable';
-
+import { Render } from './Render';
+import { FormButtons } from './FormButtons';
 const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
 const columnProps: Partial<IStackProps> = {
   tokens: { childrenGap: 15 },
@@ -25,22 +24,73 @@ export const IntakeForm = ({
   toggleHideDialog,
   initialValues,
 }: any) => {
+  const definedColumns = columns.filter(
+    (item: any) => item.fieldName !== undefined
+  );
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{
+        Ministry: 'test',
+        Division: 'test',
+        ClientName: 'test',
+        ClientNumber: 7,
+        CASClient: 1,
+        CASResp: 7,
+        CASServ: 8,
+        CASSToB: 7,
+        CASProj: 8,
+        Approver: [
+          {
+            text: 'Spiteri, Adam C CITZ:EX',
+            userId: 5,
+          },
+        ],
+        PrimaryContact: [
+          {
+            text: 'Spiteri, Adam C CITZ:EX',
+            userId: 5,
+          },
+        ],
+        CASExpAuth: [
+          {
+            text: 'Spiteri, Adam C CITZ:EX',
+            userId: 5,
+          },
+        ],
+        OtherContact: [
+          {
+            text: 'Spiteri, Adam C CITZ:EX',
+            userId: 5,
+          },
+        ],
+        FinContact: [
+          {
+            text: 'Spiteri, Adam C CITZ:EX',
+            userId: 5,
+          },
+        ],
+        Status: 'New',
+        Author: [],
+        undefined: '',
+      }} //!change back to initialValues
       onSubmit={(values: any) => {
-        //OnSubmit(values, toggleHideDialog)
+        console.log(`values`, values);
+        OnSubmit(values, toggleHideDialog);
+
+        // sendRequestForApprovalEmail(values.CASExpAuthId);
       }}
-      validationSchema={formSchema(columns)}
+      validationSchema={formSchema(
+        initialValues.Status === 'Submitted' ? [] : columns
+      )}
     >
       {(form) => {
         return (
           <Form>
             <Stack horizontal tokens={stackTokens} styles={stackStyles}>
               <Stack {...columnProps}>
-                {columns.map((column: any, i: number) => {
+                {definedColumns.map((column: any, i: number) => {
                   if (i % 2 === 0) {
-                    return RenderInputs(
+                    return Render(
                       column.fieldTypeKind,
                       column.fieldName,
                       column.name,
@@ -48,15 +98,15 @@ export const IntakeForm = ({
                       column.description,
                       column.required,
                       column.AllowMultipleValues ?? false,
-                      initialValues.Status
+                      initialValues
                     );
                   }
                 })}
               </Stack>
               <Stack {...columnProps}>
-                {columns.map((column: any, i: number) => {
+                {definedColumns.map((column: any, i: number) => {
                   if (i % 2 === 1) {
-                    return RenderInputs(
+                    return Render(
                       column.fieldTypeKind,
                       column.fieldName,
                       column.name,
@@ -64,21 +114,16 @@ export const IntakeForm = ({
                       column.description,
                       column.required,
                       column.AllowMultipleValues ?? false,
-                      initialValues.Status
+                      initialValues
                     );
                   }
                 })}
               </Stack>
             </Stack>
             <DialogFooter>
-              <DefaultButton
-                onClick={() => {
-                  console.log(form);
-                  toggleHideDialog(), form.resetForm();
-                }}
-                text='Cancel'
-              />
-              <PrimaryButton type='submit' text='Submit' />
+              <Stack {...columnProps} horizontal>
+                {FormButtons(toggleHideDialog, initialValues.Status)}
+              </Stack>
             </DialogFooter>
           </Form>
         );

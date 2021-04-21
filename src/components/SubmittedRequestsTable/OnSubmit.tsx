@@ -1,41 +1,51 @@
-import { getNextClientNumber , AddItemMutation } from './TableFunctions';
+import { getNextClientNumber } from './TableFunctions';
 import { ISubmittedRequestItem } from './Interfaces';
+import { creationNotification } from '../Notifications';
+import { AddItemsToList } from 'components/ApiCalls';
 
-import { useNotification } from '../Hooks';
+export const OnSubmit = async (formValues: any, toggleHideDialog: any) => {
+  const nextClientNumber = await getNextClientNumber();
 
-export const OnSubmit = (value: any, toggleHideDialog: any): void => {
-  const { sendRequestForApprovalEmail } = useNotification();
-  const nextClientNumber = getNextClientNumber();
-
-  const newItem: ISubmittedRequestItem = {
-    Title: `${value.Ministry}-${nextClientNumber}`,
-    Ministry: value.Ministry,
-    Division: value.Division,
-    ClientName: value.ClientName,
+  const newItem: any = {
+    Title: `${formValues.Ministry}-${nextClientNumber}`,
+    Ministry: formValues.Ministry,
+    Division: formValues.Division,
+    ClientName: formValues.ClientName,
     ClientNumber: nextClientNumber,
-    CASClient: value.CASClient,
-    CASResp: value.CASResp,
-    CASServ: value.CASServ,
-    CASSToB: value.CASSToB,
-    CASProj: value.CASProj,
-    Status: value.Status,
+    CASClient: formValues.CASClient,
+    CASResp: formValues.CASResp,
+    CASServ: formValues.CASServ,
+    CASSToB: formValues.CASSToB,
+    CASProj: formValues.CASProj,
+    Status: formValues.Status,
     ApproverId: {
-      results: value.Approver.map((user: any) => user.userId),
+      results: formValues.Approver.map((user: any) => user.userId),
     },
-    PrimaryContactId: value.PrimaryContact[0].userId,
+    PrimaryContactId: formValues.PrimaryContact[0].userId,
     FinContactId: {
-      results: value.Approver.map((user: any) => user.userId),
+      results: formValues.Approver.map((user: any) => user.userId),
     },
-    CASExpAuthId: value.CASExpAuth[0].userId,
+    CASExpAuthId: formValues.CASExpAuth[0].userId,
     OtherContactId: {
-      results: value.Approver.map((user: any) => user.userId),
+      results: formValues.Approver.map((user: any) => user.userId),
     },
   };
 
   toggleHideDialog();
-  AddItemMutation().mutateAsync(newItem, {
-    onSuccess: () => {
-      sendRequestForApprovalEmail(newItem.CASExpAuthId);
-    },
-  });
+  const listName = 'Submitted Requests';
+  if (formValues.Status === 'New') {
+    try {
+      Promise.all([
+        AddItemsToList({
+          listName,
+          items: newItem,
+        }),
+      ]).then(() => {
+        creationNotification(formValues.CASExpAuth[0].userId);
+      });
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  } else if (formValues.Status === 'Submitted') {
+  }
 };

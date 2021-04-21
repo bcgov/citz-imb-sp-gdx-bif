@@ -15,7 +15,7 @@ export const GetSubmittedRequests = async () => {
   const expand =
     'Approver,PrimaryContact,CASExpAuth,OtherContact,FinContact,Author';
   const select =
-    'Title,Ministry,Division,ClientName,ClientNumber,CASClient,CASResp,CASServ,CASSToB,CASProj,Status,PrimaryContact/Title,PrimaryContactId,Approver/Title,ApproverId,CASExpAuth/Title,CASExpAuthId,OtherContact/Title,OtherContactId,FinContact/Title,FinContactId,Author/Title,AuthorId';
+    'Id,Title,Ministry,Division,ClientName,ClientNumber,CASClient,CASResp,CASServ,CASSToB,CASProj,Status,PrimaryContact/Title,PrimaryContactId,Approver/Title,ApproverId,CASExpAuth/Title,CASExpAuthId,OtherContact/Title,OtherContactId,FinContact/Title,FinContactId,Author/Title,AuthorId';
 
   const items = await GetListItems({
     listName,

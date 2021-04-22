@@ -30,12 +30,10 @@ export const IntakeForm = ({
   );
   return (
     <Formik
-      initialValues={initialValues} //!change back to initialValues
+      initialValues={initialValues}
       onSubmit={async (values: any) => {
-        console.log(`values`, values);
         await OnSubmit(values, toggleHideDialog);
         clientQuery.invalidateQueries();
-        // sendRequestForApprovalEmail(values.CASExpAuthId);
       }}
       validationSchema={formSchema(
         initialValues.Status === 'Submitted' ? [] : columns

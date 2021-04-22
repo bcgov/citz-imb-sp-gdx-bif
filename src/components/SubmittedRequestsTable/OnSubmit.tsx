@@ -7,9 +7,7 @@ export const OnSubmit = async (formValues: any, toggleHideDialog: any) => {
   toggleHideDialog();
   const listName = 'Submitted Requests';
   if (formValues.Status === 'New') {
-    console.log('getting in', formValues);
     const nextClientNumber = await getNextClientNumber();
-    console.log(`nextClientNumber`, nextClientNumber);
     const newItem: any = {
       Title: `${formValues.Ministry}-${nextClientNumber}`,
       Ministry: formValues.Ministry,
@@ -33,7 +31,6 @@ export const OnSubmit = async (formValues: any, toggleHideDialog: any) => {
         results: formValues.Approver.map((user: any) => user.userId),
       },
     };
-    console.log(`newItem`, newItem);
 
     try {
       Promise.all([

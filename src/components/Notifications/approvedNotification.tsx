@@ -2,7 +2,6 @@ import { SendEmail, GetUser } from 'components/ApiCalls';
 import { IreplacementPair } from '../Interfaces';
 import { GetListItems, GetCurrentUser } from '../ApiCalls';
 
-console.log(`_spPageContextInfo`, _spPageContextInfo);
 export const approvedNotification = async (expenseAuthorityId: number) => {
   interface IreplacementPair {
     searchValue: string;
@@ -44,8 +43,6 @@ export const approvedNotification = async (expenseAuthorityId: number) => {
       }
     }
   };
-
-  console.log(`cc`, currentUser);
 
   await SendEmail({
     to: sendTo.LoginName,

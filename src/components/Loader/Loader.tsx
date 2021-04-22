@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ProgressIndicator } from '@fluentui/react';
-
-export const Loader: React.FunctionComponent = () => (
-  <ProgressIndicator label='Example title' description='Example description' />
+import { ILoader } from '../Interfaces';
+export const Loader: React.FC<ILoader> = (label?, description?) => (
+  <ProgressIndicator label={label} description={description} />
 );

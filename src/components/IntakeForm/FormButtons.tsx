@@ -29,7 +29,8 @@ export const FormButtons = (toggleHideDialog: any, status: string) => {
         </Stack.Item>
         <Stack.Item align='end'>
           <DefaultButton type='submit' text='Reject' />
-
+        </Stack.Item>
+        <Stack.Item align='end'>
           <PrimaryButton type='submit' text='Approve' />
         </Stack.Item>
       </>

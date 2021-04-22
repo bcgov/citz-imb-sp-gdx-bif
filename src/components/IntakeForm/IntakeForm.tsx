@@ -23,60 +23,18 @@ export const IntakeForm = ({
   columns,
   toggleHideDialog,
   initialValues,
+  clientQuery,
 }: any) => {
   const definedColumns = columns.filter(
     (item: any) => item.fieldName !== undefined
   );
   return (
     <Formik
-      initialValues={{
-        Ministry: 'test',
-        Division: 'test',
-        ClientName: 'test',
-        ClientNumber: 7,
-        CASClient: 1,
-        CASResp: 7,
-        CASServ: 8,
-        CASSToB: 7,
-        CASProj: 8,
-        Approver: [
-          {
-            text: 'Spiteri, Adam C CITZ:EX',
-            userId: 5,
-          },
-        ],
-        PrimaryContact: [
-          {
-            text: 'Spiteri, Adam C CITZ:EX',
-            userId: 5,
-          },
-        ],
-        CASExpAuth: [
-          {
-            text: 'Spiteri, Adam C CITZ:EX',
-            userId: 5,
-          },
-        ],
-        OtherContact: [
-          {
-            text: 'Spiteri, Adam C CITZ:EX',
-            userId: 5,
-          },
-        ],
-        FinContact: [
-          {
-            text: 'Spiteri, Adam C CITZ:EX',
-            userId: 5,
-          },
-        ],
-        Status: 'New',
-        Author: [],
-        undefined: '',
-      }} //!change back to initialValues
-      onSubmit={(values: any) => {
+      initialValues={initialValues} //!change back to initialValues
+      onSubmit={async (values: any) => {
         console.log(`values`, values);
-        OnSubmit(values, toggleHideDialog);
-
+        await OnSubmit(values, toggleHideDialog);
+        clientQuery.invalidateQueries();
         // sendRequestForApprovalEmail(values.CASExpAuthId);
       }}
       validationSchema={formSchema(

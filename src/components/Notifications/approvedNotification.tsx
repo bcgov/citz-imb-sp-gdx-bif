@@ -3,7 +3,7 @@ import { IreplacementPair } from '../Interfaces';
 import { GetListItems, GetCurrentUser } from '../ApiCalls';
 
 console.log(`_spPageContextInfo`, _spPageContextInfo);
-export const creationNotification = async (expenseAuthorityId: number) => {
+export const approvedNotification = async (expenseAuthorityId: number) => {
   interface IreplacementPair {
     searchValue: string;
     replacementValue: string;
@@ -25,7 +25,7 @@ export const creationNotification = async (expenseAuthorityId: number) => {
   const body: any = () => {
     let tempBody;
     for (let i = 0; i < allNotifications.length; i++) {
-      if (allNotifications[i].key === 'ExpenseAuthority') {
+      if (allNotifications[i].key === 'GDXApproved') {
         tempBody = allNotifications[i].body.replace(
           /\[SubmitterDisplayName\]|\[SiteLink\]/gi,
           function (matched: any) {
@@ -39,7 +39,7 @@ export const creationNotification = async (expenseAuthorityId: number) => {
 
   const subject = () => {
     for (let i = 0; i < allNotifications.length; i++) {
-      if (allNotifications[i].key === 'ExpenseAuthority') {
+      if (allNotifications[i].key === 'GDXApproved') {
         return allNotifications[i].subject;
       }
     }

@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState } from 'react';
 import { SubmittedRequestsTable } from 'components/SubmittedRequestsTable';
 import { FormDialog } from 'components/FormDialog';
 import { IntakeForm } from 'components/IntakeForm';
 import { useBoolean } from '@fluentui/react-hooks';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
 import { Columns, Data, TableInstance } from '../SubmittedRequestsTable';
-import { Loader } from '../Loader';
-import { formProperties } from '@fluentui/utilities';
+import { ProgressIndicator } from '@fluentui/react';
+
 //!because React-Table is not properly typed
 // import { QuerySuccessResult } from "react-query";
 
@@ -26,7 +26,7 @@ export const SubmittedRequests = () => {
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
   //!because React-query is not properly typed
   const query: any = useQuery('Submitted Requests', GetSubmittedRequests);
-
+  const clientQuery: any = useQueryClient();
   const [initialValues, setInitialValues] = useState<any>({});
 
   const tableInstance = TableInstance(
@@ -53,7 +53,13 @@ export const SubmittedRequests = () => {
     toggleHideDialog();
   };
 
-  if (query.isLoading) return <div>loading...</div>;
+  if (query.isLoading)
+    return (
+      <ProgressIndicator
+        label={'Getting Data'}
+        description={'Please Wait...'}
+      />
+    );
 
   if (query.isError) return <div>{query.error}</div>;
   return (
@@ -66,15 +72,17 @@ export const SubmittedRequests = () => {
         toggleHideDialog={toggleHideDialog}
         hideDialog={hideDialog}
         content={
-          <IntakeForm
-            columns={tableInstance.columns}
-            toggleHideDialog={toggleHideDialog}
-            initialValues={initialValues}
-          />
+          <>
+            <IntakeForm
+              columns={tableInstance.columns}
+              toggleHideDialog={toggleHideDialog}
+              initialValues={initialValues}
+              clientQuery={clientQuery}
+            />
+          </>
         }
         status={initialValues.Status}
       />
-      <Loader />
     </>
   );
 };

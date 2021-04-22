@@ -13,7 +13,7 @@ export const FormDialog = ({
     title: status === 'New' ? 'New' : 'Approval',
     closeButtonAriaLabel: 'Close',
     subText:
-      status === 'New' ? 'Create a new entry' : 'Approve or Decline submision',
+      status === 'New' ? 'Create a new entry' : 'Approve or Decline submission',
   };
 
   const labelId: string = useId('dialogLabel');

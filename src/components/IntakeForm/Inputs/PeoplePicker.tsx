@@ -4,7 +4,7 @@ import {
   Label,
   NormalPeoplePicker,
 } from '@fluentui/react';
-import { usePeoplePicker } from 'components/Hooks/usePeoplePicker';
+import { usePeoplePicker } from 'components/Hooks';
 import { ErrorMessage, Field } from 'formik';
 
 const suggestionProps: IBasePickerSuggestionsProps = {
@@ -24,6 +24,7 @@ interface PeoplePickerProps {
   description: string;
   required: boolean;
   AllowMultipleValues: boolean;
+  status: string;
 }
 export const PeoplePicker = ({
   fieldName,
@@ -36,7 +37,7 @@ export const PeoplePicker = ({
 
   return (
     <>
-      <Field name={fieldName}>
+      <Field name={fieldName} disabled={status === 'Submitted' ? true : false}>
         {(fieldProps: any) => {
           return (
             <div>
@@ -55,12 +56,10 @@ export const PeoplePicker = ({
               </div>
               <NormalPeoplePicker
                 className='test'
-                // id={fieldName}
                 onChange={(pickerItems: any) => {
                   setFormikValue(pickerItems, fieldProps, fieldName);
                 }}
                 itemLimit={AllowMultipleValues ? undefined : 1}
-                // title='test'
                 onResolveSuggestions={(filterText: any) => {
                   return searchPeople(filterText);
                 }}

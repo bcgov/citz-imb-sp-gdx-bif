@@ -22,7 +22,7 @@ module.exports = {
   ],
   rules: {
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-unused-vars': ['warn'],
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/ban-ts-comment': [
@@ -31,6 +31,7 @@ module.exports = {
         'ts-expect-error': 'allow-with-description',
       },
     ],
+    'react/display-name': ['warn'],
     'react/prop-types': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',

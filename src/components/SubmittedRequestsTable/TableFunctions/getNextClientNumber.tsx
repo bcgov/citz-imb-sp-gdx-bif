@@ -6,7 +6,7 @@ export const getNextClientNumber = async () => {
   const listItems = await GetListItems({ listName });
 
   const clientNumbers: Array<number> = listItems.map((item: any) => {
-    return item.ClientNumber;
+    return parseInt(item.Title);
   });
 
   return Math.max(...clientNumbers) + 1;

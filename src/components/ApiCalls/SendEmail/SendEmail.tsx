@@ -3,7 +3,7 @@ import { RestCall } from '../RestCall/RestCall';
 interface ISendEmailProps {
   to: any;
   subject: string;
-  body: string;
+  body: any;
   from?: any;
   cc?: any;
   bcc?: any;
@@ -21,7 +21,7 @@ export const SendEmail = async ({
 
   if (!Array.isArray(to)) to = [to];
 
-  const restBody:any = {
+  const restBody: any = {
     properties: {
       __metadata: {
         type: 'SP.Utilities.EmailProperties',
@@ -36,6 +36,19 @@ export const SendEmail = async ({
       },
       BCC: {
         results: bcc,
+      },
+      AdditionalHeaders: {
+        __metadata: { type: 'Collection(SP.KeyValue)' },
+        results: [
+          {
+            __metadata: {
+              type: 'SP.KeyValue',
+            },
+            Key: 'content-type',
+            Value: 'text/html',
+            ValueType: 'Edm.String',
+          },
+        ],
       },
     },
   };

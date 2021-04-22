@@ -1,8 +1,9 @@
-import { SubmittedRequestsTable } from 'components';
-import { GetListItems } from 'components/ApiCalls';
+import { SubmittedRequests } from 'components';
+import { GetListItems, GetCurrentUser } from 'components/ApiCalls';
 import React, { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { ProgressIndicator } from '@fluentui/react';
 
 const queryClient = new QueryClient();
 
@@ -11,13 +12,23 @@ export const App = () => {
 
   const prefetch = async () => {
     await queryClient.prefetchQuery(
-      'Config',
-      () => GetListItems({ listName: 'Config' }),
+      'Email Details',
+      () =>
+        GetListItems({
+          listName: 'Email Details',
+          select:
+            'Title,Key,Subject,Body,ContactUserId,ContactUser,ContactUser/Title',
+          expand: 'ContactUser',
+        }),
       {
-        staleTime: 30 * 1000, //30 minutes
-        cacheTime: 30 * 1000, //30 minutes
+        staleTime: 30 * 60 * 1000, //30 minutes
+        cacheTime: 30 * 60 * 1000, //30 minutes
       }
     );
+    await queryClient.prefetchQuery('CurrentUser', () => GetCurrentUser(), {
+      staleTime: 30 * 60 * 1000, //30 minutes
+      cacheTime: 30 * 60 * 1000, //30 minutes
+    });
     setIsLoading(false);
   };
 
@@ -25,11 +36,14 @@ export const App = () => {
     prefetch();
   }, []);
 
-  if (isLoading) return <div>loading App...</div>;
+  if (isLoading)
+    return (
+      <ProgressIndicator label={'loading App'} description={'Please Wait...'} />
+    );
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SubmittedRequestsTable />
+      <SubmittedRequests />
 
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

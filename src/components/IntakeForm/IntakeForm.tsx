@@ -1,16 +1,16 @@
 import {
-  DefaultButton,
   DialogFooter,
   IStackProps,
   IStackStyles,
-  PrimaryButton,
   Stack,
 } from '@fluentui/react';
 import { Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { formSchema } from './formSchema';
-import { RenderInputs } from './Inputs/RenderInputs';
-
+import { RenderInputs } from './RenderInputs';
+import { OnSubmit } from '../SubmittedRequestsTable';
+import { Render } from './Render';
+import { FormButtons } from './FormButtons';
 const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
 const columnProps: Partial<IStackProps> = {
   tokens: { childrenGap: 15 },
@@ -19,65 +19,67 @@ const columnProps: Partial<IStackProps> = {
 
 const stackTokens = { childrenGap: 50 };
 
-export const IntakeForm = ({ columns, toggleHideDialog, onSubmit }: any) => {
-  const [initialValues] = useState(() => {
-    const tempInitialValues: any = {};
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].fieldTypeKind === 20) {
-        tempInitialValues[columns[i].fieldName] = [];
-      } else {
-        tempInitialValues[columns[i].fieldName] = '';
-      }
-    }
-
-    tempInitialValues.Status = 'New';
-    return tempInitialValues;
-  });
-
+export const IntakeForm = ({
+  columns,
+  toggleHideDialog,
+  initialValues,
+  clientQuery,
+}: any) => {
+  const definedColumns = columns.filter(
+    (item: any) => item.fieldName !== undefined
+  );
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values: any) => onSubmit(values)}
-      validationSchema={formSchema(columns)}
+      onSubmit={async (values: any) => {
+        await OnSubmit(values, toggleHideDialog);
+        clientQuery.invalidateQueries();
+      }}
+      validationSchema={formSchema(
+        initialValues.Status === 'Submitted' ? [] : columns
+      )}
     >
-      {() => {
+      {(form) => {
         return (
           <Form>
             <Stack horizontal tokens={stackTokens} styles={stackStyles}>
               <Stack {...columnProps}>
-                {columns.map((column: any, i: number) => {
+                {definedColumns.map((column: any, i: number) => {
                   if (i % 2 === 0) {
-                    return RenderInputs(
+                    return Render(
                       column.fieldTypeKind,
                       column.fieldName,
                       column.name,
                       column.hideOnForm,
                       column.description,
                       column.required,
-                      column.AllowMultipleValues ?? false
+                      column.AllowMultipleValues ?? false,
+                      initialValues
                     );
                   }
                 })}
               </Stack>
               <Stack {...columnProps}>
-                {columns.map((column: any, i: number) => {
+                {definedColumns.map((column: any, i: number) => {
                   if (i % 2 === 1) {
-                    return RenderInputs(
+                    return Render(
                       column.fieldTypeKind,
                       column.fieldName,
                       column.name,
                       column.hideOnForm,
                       column.description,
                       column.required,
-                      column.AllowMultipleValues ?? false
+                      column.AllowMultipleValues ?? false,
+                      initialValues
                     );
                   }
                 })}
               </Stack>
             </Stack>
             <DialogFooter>
-              <DefaultButton onClick={toggleHideDialog} text='Cancel' />
-              <PrimaryButton type='submit' text='Submit' />
+              <Stack {...columnProps} horizontal>
+                {FormButtons(toggleHideDialog, initialValues.Status)}
+              </Stack>
             </DialogFooter>
           </Form>
         );

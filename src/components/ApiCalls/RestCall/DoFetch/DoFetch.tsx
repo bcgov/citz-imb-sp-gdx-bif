@@ -1,11 +1,13 @@
 export const DoFetch = async (
   url: string,
   endPoint: string,
-  options?: unknown
+  options?: RequestInit,
+  doNotReturnResponse = false
 ) => {
   const response = await fetch(`${url}${endPoint}`, options);
 
   if (response.ok) {
+    if (doNotReturnResponse) return null;
     if (response.status === 204) {
       //no content
       return;

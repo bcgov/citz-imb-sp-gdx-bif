@@ -3,7 +3,6 @@ import { SearchBox, IIconProps, ISearchBoxStyles } from '@fluentui/react';
 //!because react-table is not typed
 interface GlobalFilterProps {
   preGlobalFilteredRows: any[];
-  // globalFilter: string;
   setGlobalFilter: any;
   useAsyncDebounce: any;
 }

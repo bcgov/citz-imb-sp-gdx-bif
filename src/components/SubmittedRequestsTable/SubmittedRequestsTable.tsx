@@ -5,8 +5,6 @@ import { GlobalFilter } from './Filters/GlobalFilter';
 import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
 import { commandItems } from './NavBar/commandItems/commandItems';
 import { tableSort } from './TableFunctions/tableSort';
-//!because React-Table is not properly typed
-// import { QuerySuccessResult } from "react-query";
 
 // To intialize
 initializeIcons(undefined, { disableWarnings: true });
@@ -49,7 +47,6 @@ export const SubmittedRequestsTable = ({
         />
         <GlobalFilter
           preGlobalFilteredRows={TableInstance.preGlobalFilteredRows}
-          // globalFilter={TableInstance.state.globalFilter}
           setGlobalFilter={TableInstance.setGlobalFilter}
           useAsyncDebounce={useAsyncDebounce}
         />

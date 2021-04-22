@@ -56,12 +56,10 @@ export const PeoplePicker = ({
               </div>
               <NormalPeoplePicker
                 className='test'
-                // id={fieldName}
                 onChange={(pickerItems: any) => {
                   setFormikValue(pickerItems, fieldProps, fieldName);
                 }}
                 itemLimit={AllowMultipleValues ? undefined : 1}
-                // title='test'
                 onResolveSuggestions={(filterText: any) => {
                   return searchPeople(filterText);
                 }}
@@ -77,7 +75,6 @@ export const PeoplePicker = ({
                 onBlur={() => {
                   fieldProps.form.setFieldTouched(fieldName, true, true);
                 }}
-                // defaultSelectedItems={[]}
               />
               <ErrorMessage
                 name={fieldName}

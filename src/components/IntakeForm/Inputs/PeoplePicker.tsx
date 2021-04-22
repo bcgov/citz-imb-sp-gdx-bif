@@ -4,7 +4,7 @@ import {
   Label,
   NormalPeoplePicker,
 } from '@fluentui/react';
-import { usePeoplePicker } from 'components/Hooks/usePeoplePicker/usePeoplePicker';
+import { usePeoplePicker } from 'components/Hooks';
 import { ErrorMessage, Field } from 'formik';
 
 const suggestionProps: IBasePickerSuggestionsProps = {

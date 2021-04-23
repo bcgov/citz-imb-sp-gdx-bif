@@ -1,7 +1,11 @@
 import { RestCall } from '../RestCall/RestCall';
-
-export const AddUsersToGroup = async ({ groupId, groupName, loginNames }) => {
-  let endPoint;
+import { IAddUsersToGroup } from '../../Interfaces';
+export const AddUsersToGroup = async ({
+  groupId,
+  groupName,
+  loginNames,
+}: IAddUsersToGroup) => {
+  let endPoint: string;
 
   if (!Array.isArray(loginNames)) loginNames = [loginNames];
 
@@ -11,7 +15,7 @@ export const AddUsersToGroup = async ({ groupId, groupName, loginNames }) => {
     endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users`;
   }
 
-  const responses = [];
+  const responses: any = [];
 
   loginNames.forEach(async (loginName) => {
     const response = await RestCall({
@@ -27,6 +31,6 @@ export const AddUsersToGroup = async ({ groupId, groupName, loginNames }) => {
 
     responses.push(response);
   });
-
+  console.log(`responses`, responses);
   return responses;
 };

@@ -8,7 +8,7 @@ import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { formSchema } from './formSchema';
 import { RenderInputs } from './RenderInputs';
-import { OnSubmit } from '../SubmittedRequestsTable';
+import { OnSubmit } from './OnSubmit';
 import { Render } from './Render';
 import { FormButtons } from './FormButtons';
 const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };

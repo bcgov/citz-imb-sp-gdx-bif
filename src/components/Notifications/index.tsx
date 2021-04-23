@@ -1,2 +1,3 @@
 export { creationNotification } from './creationNotification';
-export { approvedNotification } from './approvedNotification';
+export { sendNotification } from './sendNotification';
+export { getNotificationContent } from './getNotificationContent';

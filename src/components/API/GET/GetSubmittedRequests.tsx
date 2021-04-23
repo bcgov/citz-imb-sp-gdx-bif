@@ -15,7 +15,7 @@ export const GetSubmittedRequests = async () => {
   const expand =
     'Approver,PrimaryContact,CASExpAuth,OtherContact,FinContact,Author';
   const select =
-    'Id,Title,Ministry,Division,ClientName,ClientNumber,CASClient,CASResp,CASServ,CASSToB,CASProj,Status,PrimaryContact/Title,PrimaryContactId,Approver/Title,ApproverId,CASExpAuth/Title,CASExpAuthId,OtherContact/Title,OtherContactId,FinContact/Title,FinContactId,Author/Title,AuthorId';
+    'Id,Title,Ministry,Division,ClientName,ClientNumber,CASClient,CASResp,CASServ,CASSToB,CASProj,Status,PrimaryContact/Title,PrimaryContact/Name,PrimaryContact/Id,Approver/Title,Approver/Name,Approver/Id,CASExpAuth/Title,CASExpAuth/Name,CASExpAuth/Id,OtherContact/Title,OtherContact/Name,OtherContact/Id,FinContact/Title,FinContact/Name,FinContact/Id,Author/Title,Author/Name,Author/Id';
 
   const items = await GetListItems({
     listName,
@@ -37,16 +37,23 @@ export const GetSubmittedRequests = async () => {
                 return person.Title;
               })
               .join('; ');
+            //@ts-expect-error a previous if statement ensures results is a property
+            tempItem[key + 'Name'] = listItemProperty.results
+              .map((person: { Name: string }) => {
+                return person.Name;
+              })
+              .join('; ');
           }
           //@ts-expect-error a previous if statement ensures it's an object
         } else if (listItemProperty.Title) {
           //@ts-expect-error a previous if statement ensures Title is a property
           tempItem[key] = listItemProperty.Title;
+          //@ts-expect-error a previous if statement ensures Title is a property
+          tempItem[key + 'Name'] = listItemProperty.Name;
         }
       }
     });
     return tempItem;
   });
-
   return { listInfo: newListInfo, items: filteredData };
 };

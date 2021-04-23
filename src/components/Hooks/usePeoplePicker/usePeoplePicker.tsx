@@ -34,7 +34,7 @@ export const usePeoplePicker = () => {
   return { searchPeople, searchResults, reset, setFormikValue };
 };
 
-// Example data resturned:
+// Example data returned:
 
 // Description: "i:0ǵ.t|bcgovidp|bf9add39be63420694fabcca01771a5a"
 // DisplayText: "Abraham, Adam PSSG:EX"

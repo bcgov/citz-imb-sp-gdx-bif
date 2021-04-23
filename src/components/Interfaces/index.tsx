@@ -32,3 +32,15 @@ export interface IAddItemsToList {
   items: any;
   ListItemEntityTypeFullName?: string;
 }
+
+// API Calls
+export interface IAddUsersToGroup {
+  groupId: number;
+  groupName?: string;
+  loginNames: Array<string>;
+}
+
+export interface IGetGroupMembers {
+  groupId: number;
+  groupName?: string;
+}

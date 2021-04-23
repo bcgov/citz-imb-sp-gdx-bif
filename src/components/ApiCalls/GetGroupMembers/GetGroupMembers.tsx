@@ -1,6 +1,9 @@
 import { RestCall } from '../RestCall/RestCall';
-
-export const GetGroupMembers = async ({ groupId, groupName }) => {
+import { IGetGroupMembers } from '../../Interfaces';
+export const GetGroupMembers = async ({
+  groupId,
+  groupName,
+}: IGetGroupMembers) => {
   let endPoint;
 
   if (!groupId) {

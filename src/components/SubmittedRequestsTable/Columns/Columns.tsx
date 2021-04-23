@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { GetColumns } from '../../API/GET/GetColumns';
 import { IColumn, ActionButton } from '@fluentui/react';
 import { statusColumnFilter } from '../Filters';
-
+import { EditColumn } from './EditColumn';
 export const Columns = (
   query: any,
   toggleHideDialog?: any,
@@ -44,18 +44,12 @@ export const Columns = (
       accessor: 'editColumn',
       id: 'editColumn',
       onRender: (item?: any, index?: number, column?: IColumn | any) => {
-        return (
-          <ActionButton
-            onClick={() => {
-              item.id = column?.filteredRows[index ?? 0].original.Id;
-              item.CASExpAuthId =
-                column?.filteredRows[index ?? 0].original.CASExpAuthId;
-
-              setInitialValues(item);
-              toggleHideDialog();
-            }}
-            iconProps={{ iconName: 'EntryView' }}
-          />
+        return EditColumn(
+          toggleHideDialog,
+          setInitialValues,
+          item,
+          column,
+          index
         );
       },
       key: 'editColumn',

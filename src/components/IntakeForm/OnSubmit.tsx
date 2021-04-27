@@ -5,85 +5,55 @@ import {
   getNotificationContent,
   sendNotification,
 } from '../Notifications';
-import { AddItemsToList, AddUsersToGroup } from 'components/ApiCalls';
-import { CreateGroup, GetGroupMembers, GetListItems } from '../ApiCalls';
+import {
+  CreateGroup,
+  GetGroupMembers,
+  GetListItems,
+  AddItemsToList,
+  AddUsersToGroup,
+} from '../ApiCalls';
+import { newRequest, newClientAccount, newClientTeam } from './ListItemBodies';
 
 export const OnSubmit = async (formValues: any, toggleHideDialog: any) => {
   toggleHideDialog();
-  const listName = 'Submitted Requests';
   const nextClientNumber = await getNextClientNumber();
-  if (formValues.Status === 'New') {
-    const newItem: any = {
-      Title: `${formValues.Ministry}-${nextClientNumber}`,
-      Ministry: formValues.Ministry,
-      Division: formValues.Division,
-      ClientName: formValues.ClientName,
-      ClientNumber: nextClientNumber,
-      CASClient: formValues.CASClient,
-      CASResp: formValues.CASResp,
-      CASServ: formValues.CASServ,
-      CASSToB: formValues.CASSToB,
-      CASProj: formValues.CASProj,
-      ApproverId: {
-        results: formValues.Approver.map((user: any) => user.userId),
-      },
-      PrimaryContactId: formValues.PrimaryContact[0].userId,
-      FinContactId: {
-        results: formValues.FinContact.map((user: any) => user.userId),
-      },
-      CASExpAuthId: formValues.CASExpAuth[0].userId,
-      OtherContactId: {
-        results: formValues.Approver.map((user: any) => user.userId),
-      },
-    };
+  const allNotifications = await getNotificationContent();
 
+  if (formValues.Status === 'New') {
     try {
-      Promise.all([
-        AddItemsToList({
-          listName,
-          items: newItem,
-        }),
-      ]).then(() => {
-        creationNotification(formValues.CASExpAuth[0].userId);
+      AddItemsToList({
+        listName: 'Submitted Requests',
+        items: newRequest(formValues, nextClientNumber),
       });
+      sendNotification(formValues);
     } catch (error) {
       console.log(`error`, error);
     }
   } else if (formValues.Status === 'Submitted') {
+    console.log(`formValues`, formValues);
     try {
-      Promise.all([
-        // const createGroupResponse = await CreateGroup({
-        //   groupName: `GDX Service Billing - ${nextClientNumber}`,
-        // });
-      ])
-        .then(() => {
-          // await AddUsersToGroup({
-          //   groupId: createGroupResponse.Id,
-          //   loginNames: formValues.TeamNames,
-          // });
-        })
-        .then(async () => {
-          const allNotifications = await getNotificationContent();
-          console.log(`allNotifications`, allNotifications);
-          // Promise.all([
-          //   sendNotification(formValues)
-          //   sendNotification(formValues)
-          // ])
-          console.log(`formValues`, formValues);
-        });
+      const createGroupResponse = await CreateGroup({
+        groupName: `GDX Service Billing - ${nextClientNumber}`,
+      });
+      await AddUsersToGroup({
+        groupId: createGroupResponse.Id,
+        loginNames: formValues.TeamNames,
+      });
+      //Add to Client Accounts List
+      AddItemsToList({
+        listName: 'Client Accounts',
+        items: newClientAccount(formValues, nextClientNumber),
+      });
+      //Add to Client Teams List
+      AddItemsToList({
+        listName: 'Client Teams',
+        items: newClientTeam(formValues),
+      });
+
+      sendNotification(formValues); //team notification
+      // sendNotification(formValues); //GDX notification
     } catch (error) {
       console.log(`error`, error);
     }
-
-    // const createGroupResponse = await CreateGroup({
-    //   groupName: `GDX Service Billing - ${nextClientNumber}`,
-    // });
-    // await AddUsersToGroup({
-    //   groupId: createGroupResponse.Id,
-    //   loginNames: formValues.TeamNames,
-    // });
-    // console.log(`createGroupResponse`, createGroupResponse);
-    //GDX Service Billing Owners
-    // approvedNotifications(formValues.TeamNames);
   }
 };

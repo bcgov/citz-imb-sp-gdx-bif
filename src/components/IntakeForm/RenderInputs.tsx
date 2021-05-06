@@ -1,8 +1,7 @@
 //https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-csom/ee540543(v=office.15)
 import { Field } from 'formik';
 import React from 'react';
-import { PeoplePicker , TextInput } from './Inputs';
-
+import { PeoplePicker, TextInput } from './Inputs';
 
 export const RenderInputs = (
   fieldType: number,
@@ -15,7 +14,8 @@ export const RenderInputs = (
   Status: string
 ) => {
   if (hideOnForm) {
-    return <Field key={fieldName} name={fieldName} type='hidden' />;
+    // return <Field key={fieldName} name={fieldName} type='hidden' />;
+    return;
   }
   switch (fieldType) {
     case 2: //Text
@@ -67,7 +67,6 @@ export const RenderInputs = (
           key={fieldName}
           fieldName={fieldName}
           title={name}
-          icon={'Contact'}
           description={description}
           required={required}
           AllowMultipleValues={AllowMultipleValues}

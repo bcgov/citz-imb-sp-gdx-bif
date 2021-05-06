@@ -1,3 +1,4 @@
 export { newClientAccount } from './newClientAccount';
-export { newRequest } from './newRequest';
+export { formatNewRequest } from './formatNewRequest';
 export { newClientTeam } from './newClientTeam';
+export { updateRequest } from './updateRequest';

@@ -31,6 +31,5 @@ export const AddUsersToGroup = async ({
 
     responses.push(response);
   });
-  console.log(`responses`, responses);
   return responses;
 };

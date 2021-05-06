@@ -38,6 +38,7 @@ export const SubmittedRequestsTable = ({
           <CommandBar
             items={commandItems(handleNewForm)}
             ariaLabel='Use left and right arrow keys to navigate between commands'
+            onReduceData={() => undefined}
           />
         </div>
         <StatusFilter

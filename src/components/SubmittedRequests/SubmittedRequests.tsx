@@ -28,7 +28,7 @@ export const SubmittedRequests = () => {
   const query: any = useQuery('Submitted Requests', GetSubmittedRequests);
   const clientQuery: any = useQueryClient();
   const [initialValues, setInitialValues] = useState<any>({});
-
+  const [showLoader, setShowLoader] = useState(false);
   const tableInstance = TableInstance(
     Columns(query, toggleHideDialog, setInitialValues),
     Data(query)
@@ -78,10 +78,12 @@ export const SubmittedRequests = () => {
               toggleHideDialog={toggleHideDialog}
               initialValues={initialValues}
               clientQuery={clientQuery}
+              setShowLoader={setShowLoader}
             />
           </>
         }
         status={initialValues.Status}
+        showLoader={showLoader}
       />
     </>
   );

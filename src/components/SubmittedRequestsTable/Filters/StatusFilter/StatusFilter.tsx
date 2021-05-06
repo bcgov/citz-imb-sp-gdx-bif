@@ -90,6 +90,7 @@ export const StatusFilter = (props: StatusFilterTypes) => {
       {statusOptions.map((statusContainer: any) => {
         return (
           <Toggle
+            style={{ fontSize: '6px' }}
             key={statusContainer.status}
             label={statusContainer.status}
             checked={statusContainer.checked}

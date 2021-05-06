@@ -1,12 +1,12 @@
 export const newClientTeam = (formValues: any) => {
   return {
-    Title: formValues.ClientName,
-    PrimaryContactId: formValues.PrimaryContact[0].userId,
+    Title: formValues.Title,
+    PrimaryContactId: formValues.PrimaryContactId,
     ApproverId: {
-      results: formValues.Approver.map((user: any) => user.userId),
+      results: formValues.ApproverId.map((id: any) => id),
     },
-    FinContact: {
-      results: formValues.Approver.map((user: any) => user.userId),
+    FinContactId: {
+      results: formValues.FinContactId.map((id: any) => id),
     },
   };
 };

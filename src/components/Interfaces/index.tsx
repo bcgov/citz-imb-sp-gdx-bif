@@ -4,8 +4,9 @@ export interface IreplacementPair {
 }
 
 export interface ILoader {
-  description: string;
-  label: string;
+  description?: React.ReactNode | string;
+  label?: React.ReactNode | string;
+  styles: any;
 }
 
 // API Calls
@@ -18,4 +19,16 @@ export interface IAddUsersToGroup {
 export interface IGetGroupMembers {
   groupId: number;
   groupName?: string;
+}
+
+export interface IUpdateListItem {
+  listName?: string;
+  listGUID?: string;
+  items: any;
+}
+
+export interface IAddItemsToList {
+  listName: string;
+  items: any;
+  ListItemEntityTypeFullName?: string;
 }

@@ -1,9 +1,8 @@
-export const newRequest = (formValues: any, nextClientNumber: any) => {
+export const formatNewRequest = (formValues: any, nextClientNumber: any) => {
   return {
-    Title: `${formValues.Ministry}-${nextClientNumber}`,
+    Title: `${formValues.Ministry}-${formValues.Division}`,
     Ministry: formValues.Ministry,
     Division: formValues.Division,
-    ClientName: formValues.ClientName,
     ClientNumber: nextClientNumber,
     CASClient: formValues.CASClient,
     CASResp: formValues.CASResp,
@@ -21,5 +20,6 @@ export const newRequest = (formValues: any, nextClientNumber: any) => {
     OtherContactId: {
       results: formValues.Approver.map((user: any) => user.userId),
     },
+    ClientTeamName: `${formValues.Ministry}-${formValues.ClientTeamName}`,
   };
 };

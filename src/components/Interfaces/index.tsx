@@ -44,3 +44,15 @@ export interface IGetGroupMembers {
   groupId: number;
   groupName?: string;
 }
+
+export interface IUpdateListItem {
+  listName?: string;
+  listGUID?: string;
+  items: any;
+}
+
+export interface IAddItemsToList {
+  listName: string;
+  items: any;
+  ListItemEntityTypeFullName?: string;
+}

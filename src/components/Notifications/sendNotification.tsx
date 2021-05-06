@@ -47,8 +47,6 @@ export const sendNotification = async (
     }
   };
 
-  console.log(`body`, body);
-
   await SendEmail({
     to: [
       'i:0ǵ.t|bcgovidp|fc2ed940df8a443db9eab7c8769b9840',

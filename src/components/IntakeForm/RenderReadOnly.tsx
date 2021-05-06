@@ -8,13 +8,20 @@ export const RenderReadOnly = (
   fieldValue: any,
   fieldName: string
 ) => {
-  if (hideOnForm) {
-    return <Field key={fieldName} name={fieldName} type='hidden' />;
+  if (fieldName === undefined) {
+    return;
   } else {
     return (
       <div>
         <Label>{name}</Label>
-        <TextField borderless disabled value={fieldValue} />
+        <TextField
+          borderless
+          disabled
+          value={fieldValue}
+          autoAdjustHeight
+          multiline
+          resizable={false}
+        />
       </div>
     );
   }

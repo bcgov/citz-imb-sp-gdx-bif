@@ -1,5 +1,6 @@
 import { FontIcon, TextField } from '@fluentui/react';
 import { ErrorMessage, Field } from 'formik';
+import { getFieldMinimumLength } from '../FormSchema/getFieldMinimumLength';
 import React, { FC } from 'react';
 interface TextInputProps {
   fieldName: string;
@@ -26,6 +27,8 @@ export const TextInput: FC<TextInputProps> = ({
         as={TextField}
         autoComplete='off'
         disabled={status === 'Submitted' ? true : false}
+        maxLength={getFieldMinimumLength(fieldName)}
+        style={{ border: 'none' }}
         label={
           required ? (
             <div>
@@ -42,6 +45,7 @@ export const TextInput: FC<TextInputProps> = ({
       />
       <ErrorMessage
         name={fieldName}
+        component='div'
         render={(msg: any) => {
           return (
             <p

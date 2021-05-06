@@ -11,36 +11,31 @@ export const Columns = (
   return useMemo(() => {
     if (query.isLoading || query.isError) return [];
 
-    const initialColumns = GetColumns(
+    const initialColumns: any = GetColumns(
       query.data.listInfo.Columns,
       query.data.listInfo.Fields.results
     );
-    //we need to treat 'Status' column differently as we are going to filter on it
-    //get the 'Status' column
-    const statusColumn: any = initialColumns.filter(
-      (column) => column.key === 'Status'
-    )[0];
 
-    const authorColumn: any = initialColumns.filter(
-      (column) => column.key === 'Author'
-    )[0];
+    for (let i = 0; i < initialColumns.length; i++) {
+      switch (initialColumns[i].key) {
+        case 'Status':
+          initialColumns[i].hideOnForm = true;
+          initialColumns[i].filter = statusColumnFilter;
 
-    authorColumn.hideOnForm = true;
+          break;
+        case 'Author':
+          initialColumns[i].hideOnForm = true;
 
-    //set the custom filter functionality on 'Status' column
-    //!because React-Table is not properly typed
-    statusColumn.filter = statusColumnFilter;
-    statusColumn.hideOnForm = true;
-    //add the modified 'Status' column back in with the other columns
-    const modifiedColumns = [
-      ...initialColumns.filter(
-        (column) => column.key !== 'Status' && column.key !== 'Author'
-      ),
-      statusColumn,
-      authorColumn,
-    ];
+          break;
+        case 'Title':
+          initialColumns[i].hideOnForm = true;
 
-    modifiedColumns.push({
+          break;
+        default:
+      }
+    }
+
+    initialColumns.push({
       accessor: 'editColumn',
       id: 'editColumn',
       onRender: (item?: any, index?: number, column?: IColumn | any) => {
@@ -63,6 +58,7 @@ export const Columns = (
       canFilter: false,
       hideOnForm: true,
     });
-    return modifiedColumns;
+
+    return initialColumns;
   }, [query.isLoading, query.isError, query.data]);
 };

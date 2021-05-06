@@ -1,11 +1,19 @@
-export const newClientAccount = (formValues: any, nextClientNumber: any) => {
+export const newClientAccount = (
+  formValues: any,
+  nextClientNumber: any,
+  clientTeamLookupId: number,
+  createGroupResponseId: number
+) => {
   return {
-    Name: formValues.ClientName,
-    Title: nextClientNumber,
+    Name: formValues.ClientTeamName,
+    Title: nextClientNumber.toString(),
     Client: formValues.CASClient,
+    Client_x0020_TeamId: clientTeamLookupId,
     Responsibility_x0020_Centre: formValues.CASResp,
     Service_x0020_Line: formValues.CASServ,
     Project: formValues.CASProj,
-    Expense_x0020_Authority_x0020_Na: formValues.CASExpAuth[0].userId,
+    STOB: formValues.CASSToB,
+    Expense_x0020_Authority_x0020_Na: formValues.CASExpAuth,
+    permissionGroupId: createGroupResponseId,
   };
 };

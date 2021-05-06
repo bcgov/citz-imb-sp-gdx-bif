@@ -22,6 +22,15 @@ export const EditColumn = (
           column?.filteredRows[index ?? 0].original.OtherContactName;
         item.PrimaryContactName =
           column?.filteredRows[index ?? 0].original.PrimaryContactName;
+        item.ApproverId = column?.filteredRows[index ?? 0].original.ApproverId;
+        item.CASExpAuthId =
+          column?.filteredRows[index ?? 0].original.CASExpAuthId;
+        item.FinContactId =
+          column?.filteredRows[index ?? 0].original.FinContactId;
+        item.OtherContactId =
+          column?.filteredRows[index ?? 0].original.OtherContactId;
+        item.PrimaryContactId =
+          column?.filteredRows[index ?? 0].original.PrimaryContactId;
         item.TeamNames = [].concat(
           item.ApproverName.split('; '),
           item.CASExpAuthName.split('; '),
@@ -29,8 +38,6 @@ export const EditColumn = (
           item.OtherContactName.split('; '),
           item.PrimaryContactName.split('; ')
         );
-        console.log(`item`, item);
-        console.log(`column`, column);
         setInitialValues(item);
         toggleHideDialog();
       }}

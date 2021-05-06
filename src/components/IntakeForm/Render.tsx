@@ -11,24 +11,27 @@ export const Render = (
   AllowMultipleValues: boolean,
   initialValues: any
 ): any => {
-  if (initialValues.Status === 'New') {
-    return RenderInputs(
-      fieldType,
-      fieldName,
-      name,
-      hideOnForm,
-      description,
-      required,
-      AllowMultipleValues,
-      initialValues.Status
-    );
-  } else if (initialValues.Status === 'Submitted') {
-    return RenderReadOnly(
-      name,
-      hideOnForm,
-      description,
-      initialValues[fieldName],
-      fieldName
-    );
+  switch (initialValues.Status) {
+    case 'New':
+      return RenderInputs(
+        fieldType,
+        fieldName,
+        name,
+        hideOnForm,
+        description,
+        required,
+        AllowMultipleValues,
+        initialValues.Status
+      );
+    case 'Submitted':
+    case 'Approved':
+    case 'Rejected':
+      return RenderReadOnly(
+        name,
+        hideOnForm,
+        description,
+        initialValues[fieldName],
+        fieldName
+      );
   }
 };

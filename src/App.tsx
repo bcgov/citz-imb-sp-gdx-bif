@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ProgressIndicator } from '@fluentui/react';
-
+import './app.css';
 const queryClient = new QueryClient();
 
 export const App = () => {

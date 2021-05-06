@@ -20,7 +20,6 @@ const suggestionProps: IBasePickerSuggestionsProps = {
 interface PeoplePickerProps {
   fieldName: string;
   title: string;
-  icon: string;
   description: string;
   required: boolean;
   AllowMultipleValues: boolean;
@@ -29,7 +28,6 @@ interface PeoplePickerProps {
 export const PeoplePicker = ({
   fieldName,
   title,
-  icon,
   required,
   AllowMultipleValues,
 }: PeoplePickerProps) => {
@@ -43,13 +41,25 @@ export const PeoplePicker = ({
             <div>
               <div>
                 {required ? (
+                  AllowMultipleValues ? (
+                    <Label htmlFor={fieldName}>
+                      <FontIcon iconName={'People'} />
+                      {title}*
+                    </Label>
+                  ) : (
+                    <Label htmlFor={fieldName}>
+                      <FontIcon iconName={'Contact'} />
+                      {title}*
+                    </Label>
+                  )
+                ) : AllowMultipleValues ? (
                   <Label htmlFor={fieldName}>
-                    <FontIcon iconName={icon} />
-                    {title}*
+                    <FontIcon iconName={'People'} />
+                    {title}
                   </Label>
                 ) : (
                   <Label htmlFor={fieldName}>
-                    <FontIcon iconName={icon} />
+                    <FontIcon iconName={'Contact'} />
                     {title}
                   </Label>
                 )}
@@ -65,9 +75,6 @@ export const PeoplePicker = ({
                 }}
                 pickerSuggestionsProps={suggestionProps}
                 key={'normal'}
-                onValidateInput={(input: any) => {
-                  return input;
-                }}
                 removeButtonAriaLabel={'Remove'}
                 onInputChange={(input: any) => {
                   return input;

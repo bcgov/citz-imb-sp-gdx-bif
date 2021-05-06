@@ -1,10 +1,11 @@
 export interface IAPICallProps {
-  listName: string;
+  listName?: string;
   expand?: string;
   filter?: string;
   select?: string;
   sort?: string;
   sortDir?: string;
+  listGUID?: string;
 }
 
 export interface IRestCall {

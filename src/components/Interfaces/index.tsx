@@ -32,3 +32,8 @@ export interface IAddItemsToList {
   items: any;
   ListItemEntityTypeFullName?: string;
 }
+export interface userToEmail {
+  account: string;
+  test: string;
+  userId: string;
+}

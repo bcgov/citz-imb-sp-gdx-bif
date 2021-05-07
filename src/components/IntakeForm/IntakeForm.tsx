@@ -41,22 +41,17 @@ export const IntakeForm = ({
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={async (values: any, formikBag: any) => {
-        setShowLoader(true);
+      onSubmit={async (values: any) => {
+        console.log(`values`, values);
+        // setShowLoader(true);
         await OnSubmit(
           values,
           toggleHideDialog,
           clientQuery.queryCache.queries[2].state.data.listInfo
             .ListItemEntityTypeFullName
         );
-        clientQuery.invalidateQueries();
-
-        clientQuery.invalidateQueries();
-        clientQuery.invalidateQueries();
-        clientQuery.invalidateQueries();
-        clientQuery.invalidateQueries();
-        clientQuery.invalidateQueries();
-        setShowLoader(false);
+        // clientQuery.invalidateQueries();
+        // setShowLoader(false);
       }}
       validationSchema={formSchema(
         initialValues.Status === 'Submitted' ? [] : columns

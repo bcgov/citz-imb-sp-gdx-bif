@@ -24,7 +24,11 @@ export const usePeoplePicker = () => {
       const results = await PeoplePickerSearch({ filterText });
       // People picker user properties that are available
       const users = results.map((result: any) => {
-        return { text: result.DisplayText, userId: result.EntityData.SPUserID };
+        return {
+          text: result.DisplayText,
+          userId: result.EntityData.SPUserID,
+          account: result.Key,
+        };
       });
 
       return users;

@@ -1,6 +1,6 @@
 import { getNextClientNumber } from '../../SubmittedRequestsTable/TableFunctions';
 import { ISubmittedRequestItem } from '../../SubmittedRequestsTable/Interfaces';
-
+import { userToEmail } from '../../Interfaces';
 import { getNotificationContent, sendNotification } from '../../Notifications';
 import {
   CreateGroup,
@@ -25,12 +25,22 @@ export const OnSubmit = async (
   switch (formValues.Status) {
     case 'New':
       try {
-        AddItemsToList({
-          listName: 'Submitted Requests',
-          items: formatNewRequest(formValues, nextClientNumber),
-          ListItemEntityTypeFullName,
+        // AddItemsToList({
+        //   listName: 'Submitted Requests',
+        //   items: formatNewRequest(formValues, nextClientNumber),
+        //   ListItemEntityTypeFullName,
+        // });
+        sendNotification({
+          formValues,
+          notificationKey: 'ExpenseAuthority',
+          nextClientNumber,
+          toField: () => {
+            return formValues.CASExpAuth.map((user: userToEmail) => {
+              return user.account;
+            });
+          },
+          ccField: [],
         });
-        sendNotification(formValues, 'ExpenseAuthority', nextClientNumber);
       } catch (error) {}
       break;
 
@@ -62,8 +72,28 @@ export const OnSubmit = async (
           listName: 'Submitted Requests',
           items: updateRequest(formValues, 'Approved'),
         });
-        sendNotification(formValues, 'TeamWelcome'); //team notification
-        sendNotification(formValues, 'GDXApproved'); //GDX notification
+        sendNotification({
+          formValues,
+          notificationKey: 'TeamWelcome',
+          toField: () => {
+            return [
+              ...formValues.CASExpAuth,
+              ...formValues.Approver,
+              ...formValues.FinContact,
+              ...formValues.OtherContact,
+              ...formValues.PrimaryContact,
+            ].map((user: userToEmail) => {
+              return user.account;
+            });
+          },
+        }); //team notification
+        sendNotification({
+          formValues,
+          notificationKey: 'GDXApproved',
+          toField: () => {
+            return ['i:0ǵ.t|bcgovidp|fc9f8c4adca2445f80e247555906c873'];
+          },
+        }); //GDX notification
       } catch (error) {
         console.log(`error`, error);
       }

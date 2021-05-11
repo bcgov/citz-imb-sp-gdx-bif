@@ -17,7 +17,7 @@ export interface IAddUsersToGroup {
 }
 
 export interface IGetGroupMembers {
-  groupId: number;
+  groupId?: number;
   groupName?: string;
 }
 
@@ -34,6 +34,6 @@ export interface IAddItemsToList {
 }
 export interface userToEmail {
   account: string;
-  test: string;
+  text: string;
   userId: string;
 }

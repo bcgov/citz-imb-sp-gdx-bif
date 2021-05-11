@@ -6,19 +6,20 @@ export const sendNotification = async ({
   formValues,
   notificationKey,
   toField,
-  ccField,
+  ccField = () => [],
   nextClientNumber,
 }: any) => {
   const currentUser: any = await GetCurrentUser();
+  console.log(`formValues`, formValues);
   const standardReplacementPairs: any = {
     '[SubmitterDisplayName]': currentUser.Title, //!replace with submitter variable
     '[SiteLink]': `<a href='${_spPageContextInfo.webAbsoluteUrl}'>${_spPageContextInfo.webTitle}</a>`,
-    '[ExpenseAuthority]': <b>{formValues.CASExpAuth}</b>,
-    '[ClientAccountName]': <b>{formValues.ClientName}</b>,
-    '[ClientAccountNumber]': nextClientNumber,
-    '[PrimaryContact]': <b>{formValues.PrimaryContact}</b>,
-    '[Approvers]': <b>{formValues.Approver}</b>,
-    '[FinancialContacts]': <b>{formValues.FinContact}</b>,
+    '[ExpenseAuthority]': formValues.CASExpAuth,
+    '[ClientAccountName]': formValues.ClientTeamName,
+    '[ClientAccountNumber]': formValues.ClientNumber,
+    '[PrimaryContact]': formValues.PrimaryContact,
+    '[Approvers]': formValues.Approver,
+    '[FinancialContacts]': formValues.FinContact,
   };
   const allNotifications: any = await GetListItems({
     listName: 'NotificationsConfig',
@@ -44,10 +45,10 @@ export const sendNotification = async ({
       }
     }
   };
-  await SendEmail({
-    to: [...toField(), currentUser.LoginName], //!needs to be updated
-    subject: subject(),
-    body: body(),
-    cc: ccField(),
-  });
+  // await SendEmail({
+  //   to: [...toField(), currentUser.LoginName], //!needs to be updated
+  //   subject: subject(),
+  //   body: body(),
+  //   cc: ccField(),
+  // });
 };

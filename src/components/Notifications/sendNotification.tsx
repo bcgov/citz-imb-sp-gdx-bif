@@ -45,10 +45,10 @@ export const sendNotification = async ({
       }
     }
   };
-  // await SendEmail({
-  //   to: [...toField(), currentUser.LoginName], //!needs to be updated
-  //   subject: subject(),
-  //   body: body(),
-  //   cc: ccField(),
-  // });
+  await SendEmail({
+    to: [...toField(), currentUser.LoginName], //!needs to be updated
+    subject: subject(),
+    body: body(),
+    cc: ccField(),
+  });
 };

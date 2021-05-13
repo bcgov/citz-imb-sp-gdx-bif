@@ -35,7 +35,7 @@ export const Columns = (
       }
     }
 
-    initialColumns.push({
+    initialColumns.unshift({
       accessor: 'editColumn',
       id: 'editColumn',
       onRender: (item?: any, index?: number, column?: IColumn | any) => {

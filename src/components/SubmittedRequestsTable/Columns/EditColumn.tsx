@@ -10,6 +10,7 @@ export const EditColumn = (
 ) => {
   return (
     <ActionButton
+      styles={{ root: { margin: '-13px 0px 0 23px' } }}
       onClick={() => {
         item.id = column?.filteredRows[index ?? 0].original.Id;
         item.ApproverName =

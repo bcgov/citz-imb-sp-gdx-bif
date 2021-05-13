@@ -9,22 +9,27 @@ import { formSchema } from './FormSchema/formSchema';
 import { OnSubmit } from './SubmitFunctions/OnSubmit';
 import { Render } from './Render';
 import { FormButtons } from './FormButtons';
+import { useQueryClient } from 'react-query';
+import _ from 'lodash';
+
 const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
 const columnProps: Partial<IStackProps> = {
   tokens: { childrenGap: 15 },
   styles: { root: { width: 300 } },
 };
-import _ from 'lodash';
+
 const stackTokens = { childrenGap: 50 };
 
 export const IntakeForm = ({
   columns,
   toggleHideDialog,
   initialValues,
-  clientQuery,
+
   setShowLoader,
   columnsPerRow = 2,
 }: any) => {
+  const clientQuery: any = useQueryClient();
+
   const definedColumns = columns.filter(
     (item: any) => item.fieldName !== undefined
   );

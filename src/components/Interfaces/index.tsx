@@ -37,3 +37,9 @@ export interface userToEmail {
   text: string;
   userId: string;
 }
+
+export interface IChangeGroupOwner {
+  baseurl?: string;
+  groupIdentifier: string | number;
+  ownerIdentifier: string | number;
+}

@@ -26,7 +26,6 @@ export const SubmittedRequests = () => {
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
   //!because React-query is not properly typed
   const query: any = useQuery('Submitted Requests', GetSubmittedRequests);
-  const clientQuery: any = useQueryClient();
   const [initialValues, setInitialValues] = useState<any>({});
   const [showLoader, setShowLoader] = useState(false);
   const tableInstance = TableInstance(
@@ -77,7 +76,6 @@ export const SubmittedRequests = () => {
               columns={tableInstance.columns}
               toggleHideDialog={toggleHideDialog}
               initialValues={initialValues}
-              clientQuery={clientQuery}
               setShowLoader={setShowLoader}
             />
           </>

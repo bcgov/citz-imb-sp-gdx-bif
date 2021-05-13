@@ -2,12 +2,14 @@ import { getNextClientNumber } from '../../SubmittedRequestsTable/TableFunctions
 import { ISubmittedRequestItem } from '../../SubmittedRequestsTable/Interfaces';
 import { userToEmail } from '../../Interfaces';
 import { getNotificationContent, sendNotification } from '../../Notifications';
+import { MessageBar, MessageBarType } from '@fluentui/react';
 import {
   GetGroupMembers,
   CreateGroup,
   AddItemsToList,
   AddUsersToGroup,
   UpdateListItem,
+  ChangeGroupOwner,
 } from '../../ApiCalls';
 
 import {
@@ -34,6 +36,7 @@ export const OnSubmit = async (
           items: formatNewRequest(formValues, nextClientNumber),
           ListItemEntityTypeFullName,
         });
+
         sendNotification({
           formValues,
           notificationKey: 'ExpenseAuthority',
@@ -52,15 +55,24 @@ export const OnSubmit = async (
       try {
         const createGroupResponse = await CreateGroup({
           groupName: `GDX Service Billing - ${nextClientNumber}`,
+          allowMembersEditMembership: true,
         });
-        await AddUsersToGroup({
+
+        AddUsersToGroup({
           groupId: createGroupResponse.Id,
           loginNames: formValues.TeamNames,
         });
+
+        ChangeGroupOwner({
+          groupIdentifier: createGroupResponse.Id,
+          ownerIdentifier: 'GDX Service Billing Owners',
+        });
+
         const newClientTeamResp = await AddItemsToList({
           listName: 'Client Teams',
           items: newClientTeam(formValues),
         });
+
         //Add to Client Accounts List
         AddItemsToList({
           listName: 'Client Accounts',
@@ -76,6 +88,7 @@ export const OnSubmit = async (
           listName: 'Submitted Requests',
           items: updateRequest(formValues, 'Approved'),
         });
+
         sendNotification({
           formValues,
           notificationKey: 'TeamWelcome',
@@ -85,6 +98,7 @@ export const OnSubmit = async (
                 formValues.TeamNames.indexOf(item) === index
             ),
         });
+
         //team notification
         sendNotification({
           formValues,

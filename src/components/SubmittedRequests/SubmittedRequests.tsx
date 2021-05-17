@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SubmittedRequestsTable } from 'components/SubmittedRequestsTable';
 import { FormDialog } from 'components/FormDialog';
 import { IntakeForm } from 'components/IntakeForm';
@@ -7,7 +7,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { GetSubmittedRequests } from 'components/API/GET/GetSubmittedRequests';
 import { Columns, Data, TableInstance } from '../SubmittedRequestsTable';
 import { ProgressIndicator } from '@fluentui/react';
-
+import { Reauthenticator } from '../Reauthenticator';
 //!because React-Table is not properly typed
 // import { QuerySuccessResult } from "react-query";
 
@@ -28,10 +28,30 @@ export const SubmittedRequests = () => {
   const query: any = useQuery('Submitted Requests', GetSubmittedRequests);
   const [initialValues, setInitialValues] = useState<any>({});
   const [showLoader, setShowLoader] = useState(false);
+
   const tableInstance = TableInstance(
     Columns(query, toggleHideDialog, setInitialValues),
     Data(query)
   );
+
+  useEffect(() => {
+    if (!query.isLoading && !query.isError) {
+      const GDXBIFID = new URLSearchParams(window.location.search).get(
+        'GDXBIFID'
+      );
+
+      if (GDXBIFID) {
+        const item = query.data?.items.filter(
+          (item: Record<string, unknown>) => {
+            return item.Id === parseInt(GDXBIFID);
+          }
+        )[0];
+
+        setInitialValues(item);
+        toggleHideDialog();
+      }
+    }
+  }, [query.isLoading, query.isError]);
 
   const resetInitialValues = () => {
     const tempInitialValues: any = {};
@@ -60,7 +80,7 @@ export const SubmittedRequests = () => {
       />
     );
 
-  if (query.isError) return <div>{query.error}</div>;
+  if (query.isError) return <Reauthenticator />;
   return (
     <>
       <SubmittedRequestsTable

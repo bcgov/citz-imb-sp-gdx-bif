@@ -12,11 +12,10 @@ export const sendNotification = async ({
   const currentUser: any = await GetCurrentUser();
   console.log(`formValues`, formValues);
   const standardReplacementPairs: any = {
-    '[SubmitterDisplayName]': currentUser.Title, //!replace with submitter variable
-    '[SiteLink]': `<a href='${_spPageContextInfo.webAbsoluteUrl}'>${_spPageContextInfo.webTitle}</a>`,
+    '[SiteLink]': `<a href='${_spPageContextInfo.webAbsoluteUrl}?GDXBIFID=${formValues.id}'>${_spPageContextInfo.webTitle}</a>`,
+    '[SubmitterDisplayName]': currentUser.Title,
     '[ExpenseAuthority]': formValues.CASExpAuth,
     '[ClientAccountName]': formValues.ClientTeamName,
-    '[ClientAccountNumber]': formValues.ClientNumber,
     '[PrimaryContact]': formValues.PrimaryContact,
     '[Approvers]': formValues.Approver,
     '[FinancialContacts]': formValues.FinContact,
@@ -29,9 +28,12 @@ export const sendNotification = async ({
     for (let i = 0; i < allNotifications.length; i++) {
       if (allNotifications[i].key === notificationKey) {
         tempBody = allNotifications[i].body.replace(
-          /\[SubmitterDisplayName\]|\[ExpenseAuthority\]|\[FinancialContacts\]|\[ClientAccountName\]|\[ClientAccountNumber\]|\[PrimaryContact\]|\[Approvers\]|\[SiteLink\]/gi,
-          function (matched: any) {
-            return standardReplacementPairs[matched];
+          /\[SiteLink\]|\[SubmitterDisplayName\]|\[ExpenseAuthority\]|\[FinancialContacts\]|\[ClientAccountName\]|\[ClientAccountNumber\]|\[PrimaryContact\]|\[Approvers\]/gi,
+          (matched: any) => {
+            console.log(`matched`, matched);
+            const temp = standardReplacementPairs[matched];
+            console.log(`temp`, temp);
+            return temp;
           }
         );
       }
@@ -45,6 +47,7 @@ export const sendNotification = async ({
       }
     }
   };
+  body();
   await SendEmail({
     to: [...toField(), currentUser.LoginName], //!needs to be updated
     subject: subject(),

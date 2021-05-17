@@ -6,13 +6,19 @@ export const dialogStyles = (status: string) => {
       return {
         main: {
           background: 'white',
+          borderRadius: '10px',
         },
       };
 
     case 'Submitted':
       return {
         main: {
-          background: '#bae1ff',
+          background:
+            'linear-gradient(135deg, rgb(233 245 255), rgb(0 120 212))',
+          borderRadius: '10px',
+        },
+        header: {
+          Font: { color: 'red' },
         },
       };
 
@@ -20,6 +26,7 @@ export const dialogStyles = (status: string) => {
       return {
         main: {
           background: '#baffc9',
+          borderRadius: '10px',
         },
       };
 
@@ -27,6 +34,7 @@ export const dialogStyles = (status: string) => {
       return {
         main: {
           background: '#ffb3ba',
+          borderRadius: '10px',
         },
       };
   }

@@ -28,6 +28,7 @@ export const IntakeForm = ({
   setShowLoader,
   columnsPerRow = 2,
 }: any) => {
+  console.log(`initialValues`, initialValues);
   const clientQuery: any = useQueryClient();
 
   const definedColumns = columns.filter(

@@ -89,6 +89,7 @@ export const OnSubmit = async (
           items: updateRequest(formValues, 'Approved'),
         });
 
+        // team notification
         sendNotification({
           formValues,
           notificationKey: 'TeamWelcome',
@@ -98,8 +99,7 @@ export const OnSubmit = async (
                 formValues.TeamNames.indexOf(item) === index
             ),
         });
-
-        //team notification
+        //GDX notification
         sendNotification({
           formValues,
           notificationKey: 'GDXApproved',
@@ -108,7 +108,7 @@ export const OnSubmit = async (
               return member.LoginName;
             });
           },
-        }); //GDX notification
+        });
       } catch (error) {
         console.log(`error`, error);
       }

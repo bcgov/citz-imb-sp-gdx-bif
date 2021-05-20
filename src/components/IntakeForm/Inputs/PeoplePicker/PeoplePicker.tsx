@@ -6,7 +6,7 @@ import {
 } from '@fluentui/react';
 import { usePeoplePicker } from 'components/Hooks';
 import { ErrorMessage, Field } from 'formik';
-
+import './PeoplePicker.css';
 const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: 'Suggested People',
   mostRecentlyUsedHeaderText: 'Suggested Contacts',
@@ -65,7 +65,7 @@ export const PeoplePicker = ({
                 )}
               </div>
               <NormalPeoplePicker
-                className='test'
+                className='fluentUIPeoplePicker'
                 onChange={(pickerItems: any) => {
                   setFormikValue(pickerItems, fieldProps, fieldName);
                 }}

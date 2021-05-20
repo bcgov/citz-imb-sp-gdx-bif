@@ -6,7 +6,9 @@ interface GlobalFilterProps {
   setGlobalFilter: any;
   useAsyncDebounce: any;
 }
-const searchBoxStyles: Partial<ISearchBoxStyles> = { root: { width: 200 } };
+const searchBoxStyles: Partial<ISearchBoxStyles> = {
+  root: { width: 200, marginRight: '10px' },
+};
 
 export const GlobalFilter = ({
   preGlobalFilteredRows,

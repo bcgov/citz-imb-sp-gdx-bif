@@ -25,10 +25,15 @@ export const App = () => {
         cacheTime: 30 * 60 * 1000, //30 minutes
       }
     );
-    await queryClient.prefetchQuery('CurrentUser', () => GetCurrentUser(), {
-      staleTime: 30 * 60 * 1000, //30 minutes
-      cacheTime: 30 * 60 * 1000, //30 minutes
-    });
+    await queryClient.prefetchQuery(
+      'CurrentUser',
+      () => GetCurrentUser('GDX Service Billing Owners'),
+      {
+        staleTime: 30 * 60 * 1000, //30 minutes
+        cacheTime: 30 * 60 * 1000, //30 minutes
+      }
+    );
+
     setIsLoading(false);
   };
 

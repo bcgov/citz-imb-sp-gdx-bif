@@ -2,19 +2,10 @@ import React from 'react';
 
 export const dialogStyles = (status: string) => {
   switch (status) {
-    case 'New':
-      return {
-        main: {
-          background: 'white',
-          borderRadius: '10px',
-        },
-      };
-
     case 'Submitted':
       return {
         main: {
-          background:
-            'linear-gradient(135deg, rgb(233 245 255), rgb(0 120 212))',
+          background: 'rgb(0 120 212 / 46%)',
           borderRadius: '10px',
         },
         header: {
@@ -25,7 +16,7 @@ export const dialogStyles = (status: string) => {
     case 'Approved':
       return {
         main: {
-          background: '#baffc9',
+          background: 'linear-gradient(177deg, rgb(7 205 50), transparent)',
           borderRadius: '10px',
         },
       };
@@ -33,8 +24,16 @@ export const dialogStyles = (status: string) => {
     case 'Rejected':
       return {
         main: {
-          background: '#ffb3ba',
+          background:
+            'linear-gradient(341deg, rgba(255, 39, 39, 0.99), transparent)',
           borderRadius: '10px',
+        },
+      };
+    default:
+      return {
+        main: {
+          background: 'transparent',
+          padding: '20px',
         },
       };
   }

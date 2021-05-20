@@ -5,6 +5,11 @@ export const commandItems = (toggleHideDialog: any) => {
       text: 'New',
       iconProps: { iconName: 'Add' },
       onClick: toggleHideDialog,
+      styles: {
+        main: {
+          background: 'red',
+        },
+      },
     },
   ];
 };

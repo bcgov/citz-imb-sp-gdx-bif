@@ -1,11 +1,11 @@
-import { CommandBar, DetailsList, Stack } from '@fluentui/react';
+import { CommandBar, DetailsList, Stack, PrimaryButton } from '@fluentui/react';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { Row, useAsyncDebounce } from 'react-table';
 import { GlobalFilter } from './Filters/GlobalFilter';
 import { StatusFilter } from './Filters/StatusFilter/StatusFilter';
 import { commandItems } from './NavBar/commandItems/commandItems';
 import { tableSort } from './TableFunctions/tableSort';
-
+import './SubmittedRequestsTable.css';
 // To intialize
 initializeIcons(undefined, { disableWarnings: true });
 
@@ -35,10 +35,13 @@ export const SubmittedRequestsTable = ({
         verticalAlign={'center'}
       >
         <div style={{ minWidth: '110px' }}>
-          <CommandBar
-            items={commandItems(handleNewForm)}
-            ariaLabel='Use left and right arrow keys to navigate between commands'
-            onReduceData={() => undefined}
+          <PrimaryButton
+            onClick={() => {
+              handleNewForm();
+            }}
+            text='New'
+            iconProps={{ iconName: 'Add' }}
+            styles={{ root: { marginLeft: '10px' } }}
           />
         </div>
         <StatusFilter

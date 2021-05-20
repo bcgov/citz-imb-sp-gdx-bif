@@ -24,29 +24,28 @@ export const OnSubmit = async (
   toggleHideDialog: any,
   ListItemEntityTypeFullName: string
 ) => {
+  console.log(`formValues`, formValues);
   const nextClientNumber = await getNextClientNumber();
+
   const GDXGroupMembers = await GetGroupMembers({
     groupName: 'GDX Service Billing Owners',
   });
   switch (formValues.Status) {
     case 'New':
       try {
-        AddItemsToList({
+        const AddItemsToListResponse = await AddItemsToList({
           listName: 'Submitted Requests',
           items: formatNewRequest(formValues, nextClientNumber),
           ListItemEntityTypeFullName,
         });
-
         sendNotification({
           formValues,
           notificationKey: 'ExpenseAuthority',
-          nextClientNumber,
           toField: () => {
-            return formValues.CASExpAuth.map((user: userToEmail) => {
-              return user.account;
-            });
+            return formValues.CASExpAuth[0].account;
           },
-          ccField: [],
+          newSubmissionId: AddItemsToListResponse[0].d.Id,
+          clientNumber: AddItemsToListResponse[0].d.ClientNumber,
         });
       } catch (error) {}
       break;
@@ -54,7 +53,7 @@ export const OnSubmit = async (
     case 'Approved':
       try {
         const createGroupResponse = await CreateGroup({
-          groupName: `GDX Service Billing - ${nextClientNumber}`,
+          groupName: `GDX Service Billing - ${formValues.ClientNumber}`,
           allowMembersEditMembership: true,
         });
 
@@ -78,7 +77,6 @@ export const OnSubmit = async (
           listName: 'Client Accounts',
           items: newClientAccount(
             formValues,
-            nextClientNumber,
             newClientTeamResp[0].d.Id,
             createGroupResponse.Id
           ),
@@ -98,6 +96,8 @@ export const OnSubmit = async (
               (item: string, index: string) =>
                 formValues.TeamNames.indexOf(item) === index
             ),
+          newSubmissionId: formValues.id,
+          clientNumber: formValues.ClientNumber,
         });
         //GDX notification
         sendNotification({
@@ -108,6 +108,8 @@ export const OnSubmit = async (
               return member.LoginName;
             });
           },
+          newSubmissionId: formValues.id,
+          clientNumber: formValues.ClientNumber,
         });
       } catch (error) {
         console.log(`error`, error);

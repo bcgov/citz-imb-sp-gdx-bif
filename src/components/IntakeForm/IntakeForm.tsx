@@ -11,7 +11,7 @@ import { Render } from './Render';
 import { FormButtons } from './FormButtons';
 import { useQueryClient } from 'react-query';
 import _ from 'lodash';
-
+import { formStyles } from './formStyles';
 const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
 const columnProps: Partial<IStackProps> = {
   tokens: { childrenGap: 15 },
@@ -28,9 +28,7 @@ export const IntakeForm = ({
   setShowLoader,
   columnsPerRow = 2,
 }: any) => {
-  console.log(`initialValues`, initialValues);
   const clientQuery: any = useQueryClient();
-
   const definedColumns = columns.filter(
     (item: any) => item.fieldName !== undefined
   );
@@ -48,7 +46,6 @@ export const IntakeForm = ({
     <Formik
       initialValues={initialValues}
       onSubmit={async (values: any) => {
-        console.log(`values`, values);
         setShowLoader(true);
         await OnSubmit(
           values,
@@ -65,7 +62,7 @@ export const IntakeForm = ({
     >
       {(form) => {
         return (
-          <Form style={{ background: 'white', padding: '32px' }}>
+          <Form style={formStyles(initialValues.Status)}>
             {filteredFields.map((column: any, i: number) => {
               return (
                 <Stack
@@ -104,7 +101,13 @@ export const IntakeForm = ({
 
             <DialogFooter>
               <Stack {...columnProps} horizontal>
-                {FormButtons(toggleHideDialog, initialValues.Status, form)}
+                {FormButtons(
+                  toggleHideDialog,
+                  initialValues.Status,
+                  form,
+                  clientQuery.getQueryData('CurrentUser'),
+                  initialValues.CASExpAuthName
+                )}
               </Stack>
             </DialogFooter>
           </Form>

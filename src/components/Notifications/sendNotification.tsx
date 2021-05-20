@@ -1,24 +1,25 @@
 import { SendEmail, GetUser } from 'components/ApiCalls';
-import { IreplacementPair } from '../Interfaces';
+import { ISendNotification } from '../Interfaces';
 import { GetListItems, GetCurrentUser } from '../ApiCalls';
 
 export const sendNotification = async ({
   formValues,
   notificationKey,
   toField,
-  ccField = () => [],
-  nextClientNumber,
-}: any) => {
+  newSubmissionId,
+  clientNumber,
+}: ISendNotification) => {
   const currentUser: any = await GetCurrentUser();
   console.log(`formValues`, formValues);
   const standardReplacementPairs: any = {
-    '[SiteLink]': `<a href='${_spPageContextInfo.webAbsoluteUrl}?GDXBIFID=${formValues.id}'>${_spPageContextInfo.webTitle}</a>`,
+    '[SiteLink]': `<a href='${_spPageContextInfo.webAbsoluteUrl}?GDXBIFID=${newSubmissionId}'>${_spPageContextInfo.webTitle}</a>`,
     '[SubmitterDisplayName]': currentUser.Title,
     '[ExpenseAuthority]': formValues.CASExpAuth,
     '[ClientAccountName]': formValues.ClientTeamName,
     '[PrimaryContact]': formValues.PrimaryContact,
     '[Approvers]': formValues.Approver,
     '[FinancialContacts]': formValues.FinContact,
+    '[ClientAccountNumber]': clientNumber,
   };
   const allNotifications: any = await GetListItems({
     listName: 'NotificationsConfig',
@@ -30,8 +31,8 @@ export const sendNotification = async ({
         tempBody = allNotifications[i].body.replace(
           /\[SiteLink\]|\[SubmitterDisplayName\]|\[ExpenseAuthority\]|\[FinancialContacts\]|\[ClientAccountName\]|\[ClientAccountNumber\]|\[PrimaryContact\]|\[Approvers\]/gi,
           (matched: any) => {
-            console.log(`matched`, matched);
             const temp = standardReplacementPairs[matched];
+            console.log(`matched`, matched);
             console.log(`temp`, temp);
             return temp;
           }
@@ -52,6 +53,5 @@ export const sendNotification = async ({
     to: [...toField(), currentUser.LoginName], //!needs to be updated
     subject: subject(),
     body: body(),
-    cc: ccField(),
   });
 };

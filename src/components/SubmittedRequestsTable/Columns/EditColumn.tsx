@@ -12,7 +12,7 @@ export const EditColumn = (
     <ActionButton
       styles={{
         root: {
-          margin: '-13px 0px 0 23px',
+          margin: '-11px 0px 0 23px',
           height: '39px',
           padding: '0px 4px',
         },
@@ -45,6 +45,7 @@ export const EditColumn = (
           item.OtherContactName.split('; '),
           item.PrimaryContactName.split('; ')
         );
+        console.log(`item`, item);
         setInitialValues(item);
         toggleHideDialog();
       }}

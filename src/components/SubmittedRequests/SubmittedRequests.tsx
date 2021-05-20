@@ -46,7 +46,13 @@ export const SubmittedRequests = () => {
             return item.Id === parseInt(GDXBIFID);
           }
         )[0];
-
+        item.TeamNames = [].concat(
+          item.ApproverName.split('; '),
+          item.CASExpAuthName.split('; '),
+          item.FinContactName.split('; '),
+          item.OtherContactName.split('; '),
+          item.PrimaryContactName.split('; ')
+        );
         setInitialValues(item);
         toggleHideDialog();
       }

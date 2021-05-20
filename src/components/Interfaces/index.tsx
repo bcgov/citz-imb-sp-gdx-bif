@@ -43,3 +43,11 @@ export interface IChangeGroupOwner {
   groupIdentifier: string | number;
   ownerIdentifier: string | number;
 }
+
+export interface ISendNotification {
+  formValues: any;
+  notificationKey: string;
+  toField(): Array<string>;
+  newSubmissionId?: number;
+  clientNumber?: number;
+}

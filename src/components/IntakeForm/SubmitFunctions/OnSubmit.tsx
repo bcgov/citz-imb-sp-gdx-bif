@@ -24,7 +24,6 @@ export const OnSubmit = async (
   toggleHideDialog: any,
   ListItemEntityTypeFullName: string
 ) => {
-  console.log(`formValues`, formValues);
   const nextClientNumber = await getNextClientNumber();
 
   const GDXGroupMembers = await GetGroupMembers({

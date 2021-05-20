@@ -10,7 +10,6 @@ export const sendNotification = async ({
   clientNumber,
 }: ISendNotification) => {
   const currentUser: any = await GetCurrentUser();
-  console.log(`formValues`, formValues);
   const standardReplacementPairs: any = {
     '[SiteLink]': `<a href='${_spPageContextInfo.webAbsoluteUrl}?GDXBIFID=${newSubmissionId}'>${_spPageContextInfo.webTitle}</a>`,
     '[SubmitterDisplayName]': currentUser.Title,
@@ -32,8 +31,6 @@ export const sendNotification = async ({
           /\[SiteLink\]|\[SubmitterDisplayName\]|\[ExpenseAuthority\]|\[FinancialContacts\]|\[ClientAccountName\]|\[ClientAccountNumber\]|\[PrimaryContact\]|\[Approvers\]/gi,
           (matched: any) => {
             const temp = standardReplacementPairs[matched];
-            console.log(`matched`, matched);
-            console.log(`temp`, temp);
             return temp;
           }
         );

@@ -45,7 +45,6 @@ export const EditColumn = (
           item.OtherContactName.split('; '),
           item.PrimaryContactName.split('; ')
         );
-        console.log(`item`, item);
         setInitialValues(item);
         toggleHideDialog();
       }}

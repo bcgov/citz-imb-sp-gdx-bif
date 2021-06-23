@@ -33,8 +33,6 @@ export const formSchema = (columns: any) => {
             tempSchema[columns[i].fieldName] = Yup.array()
               .min(1, `${columns[i].name} is required`)
               .required(`${columns[i].name} is required`);
-          } else {
-            tempSchema[columns[i].fieldName] = Yup.array();
           }
           break;
         default:

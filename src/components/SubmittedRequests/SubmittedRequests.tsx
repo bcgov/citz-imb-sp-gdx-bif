@@ -46,13 +46,17 @@ export const SubmittedRequests = () => {
             return item.Id === parseInt(GDXBIFID);
           }
         )[0];
-        item.TeamNames = [].concat(
-          item.ApproverName.split('; '),
-          item.CASExpAuthName.split('; '),
-          item.FinContactName.split('; '),
-          item.OtherContactName.split('; '),
-          item.PrimaryContactName.split('; ')
-        );
+        item.TeamNames = [
+          ...item.ApproverName.split('; '),
+          ...item.CASExpAuthName.split('; '),
+          ...item.FinContactName.split('; '),
+          ...item.PrimaryContactName.split('; '),
+        ];
+        if (item.OtherContactName)
+          item.TeamNames.push(...item.OtherContactName.split('; '));
+
+        console.log(`item!!`, item);
+
         setInitialValues(item);
         toggleHideDialog();
       }

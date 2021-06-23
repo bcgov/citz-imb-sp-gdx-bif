@@ -27,6 +27,7 @@ export const SubmittedRequestsTable = ({
   const handleColumnClick = (ev: any, column: any) => {
     tableSort(ev, column, TableInstance);
   };
+  console.log(`TableInstance.sortedRows`, TableInstance.sortedRows);
   return (
     <>
       <Stack

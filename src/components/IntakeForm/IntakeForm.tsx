@@ -7,7 +7,7 @@ import {
 import { Form, Formik } from 'formik';
 import { formSchema } from './FormSchema/formSchema';
 import { OnSubmit } from './SubmitFunctions/OnSubmit';
-import { Render } from './Render';
+import { Render } from './RenderForm';
 import { FormButtons } from './FormButtons';
 import { useQueryClient } from 'react-query';
 import _ from 'lodash';

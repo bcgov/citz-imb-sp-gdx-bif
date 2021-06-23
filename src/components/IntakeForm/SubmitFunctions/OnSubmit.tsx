@@ -51,8 +51,9 @@ export const OnSubmit = async (
 
     case 'Approved':
       try {
+        console.log(`formValues.TeamNames`, formValues.TeamNames);
         const createGroupResponse = await CreateGroup({
-          groupName: `GDX Service Billing - ${formValues.ClientNumber}`,
+          groupName: `Service Billing - ${formValues.ClientNumber}`,
           allowMembersEditMembership: true,
         });
 

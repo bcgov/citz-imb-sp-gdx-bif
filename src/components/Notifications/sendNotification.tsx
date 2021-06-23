@@ -11,7 +11,7 @@ export const sendNotification = async ({
 }: ISendNotification) => {
   const currentUser: any = await GetCurrentUser();
   const standardReplacementPairs: any = {
-    '[SiteLink]': `<a href='${_spPageContextInfo.webAbsoluteUrl}?GDXBIFID=${newSubmissionId}'>${_spPageContextInfo.webTitle}</a>`,
+    '[SiteLink]': `<a href='${_spPageContextInfo.webAbsoluteUrl}/SitePages/GDXBIF.aspx?GDXBIFID=${newSubmissionId}'>${_spPageContextInfo.webTitle}</a>`,
     '[SubmitterDisplayName]': currentUser.Title,
     '[ExpenseAuthority]': formValues.CASExpAuth,
     '[ClientAccountName]': formValues.ClientTeamName,

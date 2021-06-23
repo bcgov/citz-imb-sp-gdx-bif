@@ -1,4 +1,4 @@
-import { useTable , useFilters, useGlobalFilter, useSortBy } from 'react-table';
+import { useTable, useFilters, useGlobalFilter, useSortBy } from 'react-table';
 
 export const TableInstance: any = (columns: any, data: any) => {
   return useTable(

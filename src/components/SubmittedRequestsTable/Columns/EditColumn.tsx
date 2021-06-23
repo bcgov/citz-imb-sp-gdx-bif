@@ -38,13 +38,14 @@ export const EditColumn = (
           column?.filteredRows[index ?? 0].original.OtherContactId;
         item.PrimaryContactId =
           column?.filteredRows[index ?? 0].original.PrimaryContactId;
-        item.TeamNames = [].concat(
-          item.ApproverName.split('; '),
-          item.CASExpAuthName.split('; '),
-          item.FinContactName.split('; '),
-          item.OtherContactName.split('; '),
-          item.PrimaryContactName.split('; ')
-        );
+        item.TeamNames = [
+          ...item.ApproverName.split('; '),
+          ...item.CASExpAuthName.split('; '),
+          ...item.FinContactName.split('; '),
+          ...item.PrimaryContactName.split('; '),
+        ];
+        if (item.OtherContactName)
+          item.TeamNames.push(...item.OtherContactName.split('; '));
         setInitialValues(item);
         toggleHideDialog();
       }}

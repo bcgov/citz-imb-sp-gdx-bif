@@ -3,6 +3,9 @@ import {
   IStackProps,
   IStackStyles,
   Stack,
+  Link,
+  MessageBar,
+  MessageBarType,
 } from '@fluentui/react';
 import { Form, Formik } from 'formik';
 import { formSchema } from './FormSchema/formSchema';
@@ -17,6 +20,7 @@ const columnProps: Partial<IStackProps> = {
   tokens: { childrenGap: 15 },
   styles: { root: { width: 300 } },
 };
+import React from 'react';
 
 const stackTokens = { childrenGap: 50 };
 
@@ -98,6 +102,28 @@ export const IntakeForm = ({
                 </Stack>
               );
             })}
+            <div>
+              {' '}
+              <br />
+              <MessageBar
+                messageBarType={MessageBarType.warning}
+                messageBarIconProps={{
+                  iconName: 'InfoSolid',
+                }}
+              >
+                <h3 id='test'>Agreement:</h3>
+                <Link
+                  target='_blank'
+                  href={
+                    _spPageContextInfo.webAbsoluteUrl +
+                    '/Shared%20Documents/GDX%20Service%20Billing%20Authorization%20Agreement.pdf'
+                  }
+                  underline
+                >
+                  GDX Service Billing Authorization Agreement
+                </Link>
+              </MessageBar>
+            </div>
 
             <DialogFooter>
               <Stack {...columnProps} horizontal>

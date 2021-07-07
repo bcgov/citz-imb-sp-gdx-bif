@@ -80,7 +80,7 @@
     "sp-rest-proxy": "^3.0.5",
     "typescript": "^4.1.5"
   },
-  "proxy": "http://localhost:8082",
+  "proxy": "http://localhost:8081",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"

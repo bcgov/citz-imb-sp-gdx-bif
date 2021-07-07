@@ -55,8 +55,6 @@ export const SubmittedRequests = () => {
         if (item.OtherContactName)
           item.TeamNames.push(...item.OtherContactName.split('; '));
 
-        console.log(`item!!`, item);
-
         setInitialValues(item);
         toggleHideDialog();
       }

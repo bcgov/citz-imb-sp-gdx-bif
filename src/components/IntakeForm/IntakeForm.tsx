@@ -51,13 +51,14 @@ export const IntakeForm = ({
       initialValues={initialValues}
       onSubmit={async (values: any) => {
         setShowLoader(true);
+        clientQuery.invalidateQueries();
         await OnSubmit(
           values,
-          toggleHideDialog,
           clientQuery.queryCache.queries[2].state.data.listInfo
             .ListItemEntityTypeFullName
         );
         clientQuery.invalidateQueries();
+        toggleHideDialog();
         setShowLoader(false);
       }}
       validationSchema={formSchema(

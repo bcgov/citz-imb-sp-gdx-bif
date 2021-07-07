@@ -51,7 +51,6 @@ export const ChangeGroupOwner = ({
 
     const onfailed = (sender: any, args: any) => {
       reject(args);
-      console.log('Failed' + args.get_message() + '\n' + args.get_stackTrace());
     };
     clientContext.executeQueryAsync(onsuccess, onfailed);
   });

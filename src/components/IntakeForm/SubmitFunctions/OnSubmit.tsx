@@ -21,7 +21,6 @@ import {
 
 export const OnSubmit = async (
   formValues: any,
-  toggleHideDialog: any,
   ListItemEntityTypeFullName: string
 ) => {
   const nextClientNumber = await getNextClientNumber();
@@ -66,7 +65,6 @@ export const OnSubmit = async (
           groupIdentifier: createGroupResponse.Id,
           ownerIdentifier: 'GDX Service Billing Owners',
         });
-
         const newClientTeamResp = await AddItemsToList({
           listName: 'Client Teams',
           items: newClientTeam(formValues),
@@ -81,7 +79,7 @@ export const OnSubmit = async (
             createGroupResponse.Id
           ),
         });
-
+        console.log(`formValues`, formValues);
         UpdateListItem({
           listName: 'Submitted Requests',
           items: updateRequest(formValues, 'Approved'),
@@ -125,5 +123,4 @@ export const OnSubmit = async (
         console.log(`error`, error);
       }
   }
-  toggleHideDialog();
 };

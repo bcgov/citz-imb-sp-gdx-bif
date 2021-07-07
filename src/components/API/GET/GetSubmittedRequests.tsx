@@ -22,7 +22,6 @@ export const GetSubmittedRequests = async () => {
     expand,
     select,
   });
-  console.log(`items`, items);
   const filteredData = items.map((listItem: any) => {
     const tempItem: any = { ...listItem };
 
@@ -57,7 +56,6 @@ export const GetSubmittedRequests = async () => {
         }
       }
     );
-    console.log(`tempItem`, tempItem);
     return tempItem;
   });
 

@@ -42,7 +42,7 @@ export const OnSubmit = async (
           toField: () => {
             return formValues.CASExpAuth[0].account;
           },
-          newSubmissionId: AddItemsToListResponse[0].d.Id,
+          newSubmissionId: AddItemsToListResponse[0].d.id,
           clientNumber: AddItemsToListResponse[0].d.ClientNumber,
         });
       } catch (error) {}
@@ -75,7 +75,7 @@ export const OnSubmit = async (
           listName: 'Client Accounts',
           items: newClientAccount(
             formValues,
-            newClientTeamResp[0].d.Id,
+            newClientTeamResp[0].d.id,
             createGroupResponse.Id
           ),
         });

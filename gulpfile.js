@@ -34,6 +34,22 @@ gulp.task('build-css-uat', function () {
     .pipe(gulp.dest('b:/GDXBIF/SiteAssets/css')); //uat
 });
 
+gulp.task('build-script-prod', function () {
+  return gulp
+    .src('./build/static/js/*.js')
+    .pipe(concat('gdxintake.js'))
+    .pipe(gulp.dest('./dist/js'))
+    .pipe(gulp.dest('d:/SiteAssets/js')); //prod
+});
+
+gulp.task('build-css-prod', function () {
+  return gulp
+    .src('./build/static/css/*.css')
+    .pipe(concat('gdxintake.css'))
+    .pipe(gulp.dest('./dist/css'))
+    .pipe(gulp.dest('d:/SiteAssets/css')); //prod
+});
+
 gulp.task('build-script-devuat', function () {
   return gulp
     .src('./build/static/js/*.js')
@@ -52,4 +68,6 @@ gulp.task('build-css-devuat', function () {
 
 gulp.task('dev', gulp.parallel(['build-script-dev', 'build-css-dev']));
 gulp.task('uat', gulp.parallel(['build-script-uat', 'build-css-uat']));
+gulp.task('prod', gulp.parallel(['build-script-prod', 'build-css-prod']));
+
 gulp.task('devuat', gulp.parallel(['build-script-devuat', 'build-css-devuat']));

@@ -20,6 +20,7 @@ export const sendNotification = async ({
     '[FinancialContacts]': formValues.FinContact,
     '[ClientAccountNumber]': clientNumber,
     '[AgreementURL]': `<a href='${_spPageContextInfo.webAbsoluteUrl}/Shared%20Documents/GDX%20Service%20Billing%20Authorization%20Agreement.pdf'>GDX Service Billing Authorization Agreement</a>`,
+    'href="/sites/': 'href="https://citz.sp.gov.bc.ca/sites/',
   };
   const allNotifications: any = await GetListItems({
     listName: 'NotificationsConfig',
@@ -29,7 +30,7 @@ export const sendNotification = async ({
     for (let i = 0; i < allNotifications.length; i++) {
       if (allNotifications[i].key === notificationKey) {
         tempBody = allNotifications[i].body.replace(
-          /\[SiteLink\]|\[SubmitterDisplayName\]|\[ExpenseAuthority\]|\[FinancialContacts\]|\[ClientAccountName\]|\[ClientAccountNumber\]|\[PrimaryContact\]|\[Approvers\]|\[AgreementURL\]/gi,
+          /\[SiteLink\]|\[SubmitterDisplayName\]|\[ExpenseAuthority\]|\[FinancialContacts\]|\[ClientAccountName\]|\[ClientAccountNumber\]|\[PrimaryContact\]|\[Approvers\]|\[AgreementURL\]|href="\/sites\//gi,
           (matched: any) => {
             const temp = standardReplacementPairs[matched];
             return temp;

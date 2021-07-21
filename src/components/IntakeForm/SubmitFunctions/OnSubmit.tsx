@@ -42,7 +42,7 @@ export const OnSubmit = async (
           toField: () => {
             return formValues.CASExpAuth[0].account;
           },
-          newSubmissionId: AddItemsToListResponse[0].d.id,
+          newSubmissionId: AddItemsToListResponse[0].d.ID,
           clientNumber: AddItemsToListResponse[0].d.ClientNumber,
         });
       } catch (error) {}
@@ -75,7 +75,7 @@ export const OnSubmit = async (
           listName: 'Client Accounts',
           items: newClientAccount(
             formValues,
-            newClientTeamResp[0].d.id,
+            newClientTeamResp[0].d.ID,
             createGroupResponse.Id
           ),
         });
@@ -94,7 +94,7 @@ export const OnSubmit = async (
               (item: string, index: string) =>
                 formValues.TeamNames.indexOf(item) === index
             ),
-          newSubmissionId: formValues.id,
+          newSubmissionId: formValues.ID,
           clientNumber: formValues.ClientNumber,
         });
         //GDX notification
@@ -106,7 +106,7 @@ export const OnSubmit = async (
               return member.LoginName;
             });
           },
-          newSubmissionId: formValues.id,
+          newSubmissionId: formValues.ID,
           clientNumber: formValues.ClientNumber,
         });
       } catch (error) {

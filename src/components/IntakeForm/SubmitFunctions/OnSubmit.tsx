@@ -55,60 +55,62 @@ export const OnSubmit = async (
           groupName: `Service Billing - ${formValues.ClientNumber}`,
           allowMembersEditMembership: true,
         });
-
         AddUsersToGroup({
           groupId: createGroupResponse.Id,
           loginNames: formValues.TeamNames,
         });
+        try {
+          ChangeGroupOwner({
+            groupIdentifier: createGroupResponse.Id,
+            ownerIdentifier: 'GDX Service Billing Owners',
+          });
+          const newClientTeamResp = await AddItemsToList({
+            listName: 'Client Teams',
+            items: newClientTeam(formValues),
+          });
 
-        ChangeGroupOwner({
-          groupIdentifier: createGroupResponse.Id,
-          ownerIdentifier: 'GDX Service Billing Owners',
-        });
-        const newClientTeamResp = await AddItemsToList({
-          listName: 'Client Teams',
-          items: newClientTeam(formValues),
-        });
-
-        //Add to Client Accounts List
-        AddItemsToList({
-          listName: 'Client Accounts',
-          items: newClientAccount(
-            formValues,
-            newClientTeamResp[0].d.ID,
-            createGroupResponse.Id
-          ),
-        });
-        console.log(`formValues on submit`, formValues);
-        UpdateListItem({
-          listName: 'Submitted Requests',
-          items: updateRequest(formValues, 'Approved'),
-        });
-
-        // team notification
-        sendNotification({
-          formValues,
-          notificationKey: 'TeamWelcome',
-          toField: () =>
-            formValues.TeamNames.filter(
-              (item: string, index: string) =>
-                formValues.TeamNames.indexOf(item) === index
+          //Add to Client Accounts List
+          AddItemsToList({
+            listName: 'Client Accounts',
+            items: newClientAccount(
+              formValues,
+              newClientTeamResp[0].d.ID,
+              createGroupResponse.Id
             ),
-          newSubmissionId: formValues.ID,
-          clientNumber: formValues.ClientNumber,
-        });
-        //GDX notification
-        sendNotification({
-          formValues,
-          notificationKey: 'GDXApproved',
-          toField: () => {
-            return GDXGroupMembers.map((member: { LoginName: string }) => {
-              return member.LoginName;
-            });
-          },
-          newSubmissionId: formValues.ID,
-          clientNumber: formValues.ClientNumber,
-        });
+          });
+          console.log(`formValues on submit`, formValues);
+          UpdateListItem({
+            listName: 'Submitted Requests',
+            items: updateRequest(formValues, 'Approved'),
+          });
+
+          // team notification
+          sendNotification({
+            formValues,
+            notificationKey: 'TeamWelcome',
+            toField: () =>
+              formValues.TeamNames.filter(
+                (item: string, index: string) =>
+                  formValues.TeamNames.indexOf(item) === index
+              ),
+            newSubmissionId: formValues.ID,
+            clientNumber: formValues.ClientNumber,
+          });
+          //GDX notification
+          sendNotification({
+            formValues,
+            notificationKey: 'GDXApproved',
+            toField: () => {
+              return GDXGroupMembers.map((member: { LoginName: string }) => {
+                return member.LoginName;
+              });
+            },
+            newSubmissionId: formValues.ID,
+            clientNumber: formValues.ClientNumber,
+          });
+        } catch (error) {
+          console.log(`error`, error);
+        }
       } catch (error) {
         console.log(`error`, error);
       }

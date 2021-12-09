@@ -7,6 +7,7 @@ import {
   MessageBar,
   MessageBarType,
 } from '@fluentui/react';
+
 import { Form, Formik } from 'formik';
 import { formSchema } from './FormSchema/formSchema';
 import { OnSubmit } from './SubmitFunctions/OnSubmit';
@@ -59,6 +60,7 @@ export const IntakeForm = ({
         );
         clientQuery.invalidateQueries();
         toggleHideDialog();
+        console.log(`values`, values);
         setShowLoader(false);
       }}
       validationSchema={formSchema(

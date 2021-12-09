@@ -65,6 +65,7 @@ export const FormDialog = ({
         dialogContentProps={dialogContentProps}
         modalProps={modalProps}
         maxWidth={3000}
+        responsiveMode={0}
         styles={
           !showLoader
             ? dialogStyles(status)

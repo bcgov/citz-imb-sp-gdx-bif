@@ -39,7 +39,7 @@ gulp.task('build-script-prod', function () {
     .src('./build/static/js/*.js')
     .pipe(concat('gdxintake.js'))
     .pipe(gulp.dest('./dist/js'))
-    .pipe(gulp.dest('d:/SiteAssets/js')); //prod
+    .pipe(gulp.dest('e:/SiteAssets/js')); //prod
 });
 
 gulp.task('build-css-prod', function () {
@@ -47,7 +47,7 @@ gulp.task('build-css-prod', function () {
     .src('./build/static/css/*.css')
     .pipe(concat('gdxintake.css'))
     .pipe(gulp.dest('./dist/css'))
-    .pipe(gulp.dest('d:/SiteAssets/css')); //prod
+    .pipe(gulp.dest('e:/SiteAssets/css')); //prod
 });
 
 gulp.task('build-script-devuat', function () {

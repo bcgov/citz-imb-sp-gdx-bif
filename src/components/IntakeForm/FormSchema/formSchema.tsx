@@ -30,9 +30,10 @@ export const formSchema = (columns: any) => {
           break;
         case 20:
           if (columns[i].required) {
-            tempSchema[columns[i].fieldName] = Yup.array()
-              .min(1, `${columns[i].name} is required`)
-              .required(`${columns[i].name} is required`);
+            tempSchema[columns[i].fieldName] = Yup.array().min(
+              1,
+              `${columns[i].name} is required`
+            );
           }
           break;
         default:

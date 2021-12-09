@@ -10,12 +10,14 @@ import {
   AddUsersToGroup,
   UpdateListItem,
   ChangeGroupOwner,
+  GetListItems,
 } from '../../ApiCalls';
 
 import {
   formatNewRequest,
   newClientAccount,
   newClientTeam,
+  updateAccountNumber,
   updateRequest,
 } from '../ListItemBodies';
 
@@ -23,7 +25,7 @@ export const OnSubmit = async (
   formValues: any,
   ListItemEntityTypeFullName: string
 ) => {
-  const nextClientNumber = await getNextClientNumber();
+  let nextClientNumber = await getNextClientNumber();
 
   const GDXGroupMembers = await GetGroupMembers({
     groupName: 'GDX Service Billing Owners',
@@ -31,21 +33,41 @@ export const OnSubmit = async (
   switch (formValues.Status) {
     case 'New':
       try {
-        const AddItemsToListResponse = await AddItemsToList({
-          listName: 'Submitted Requests',
-          items: formatNewRequest(formValues, nextClientNumber),
-          ListItemEntityTypeFullName,
+        let AddItemsToListResponse: any;
+        try {
+          AddItemsToListResponse = await AddItemsToList({
+            listName: 'Submitted Requests',
+            items: formatNewRequest(formValues, nextClientNumber),
+            ListItemEntityTypeFullName,
+          });
+        } catch (error) {
+          try {
+            AddItemsToListResponse = await AddItemsToList({
+              listName: 'Submitted Requests',
+              items: formatNewRequest(formValues, nextClientNumber++),
+              ListItemEntityTypeFullName,
+            });
+          } catch (error) {
+            throw error;
+          }
+        }
+
+        // sendNotification({
+        //   formValues,
+        //   notificationKey: 'ExpenseAuthority',
+        //   toField: () => {
+        //     return formValues.CASExpAuth[0].account;
+        //   },
+        //   newSubmissionId: AddItemsToListResponse[0].d.ID,
+        //   clientNumber: AddItemsToListResponse[0].d.ClientNumber,
+        // });
+        UpdateListItem({
+          listName: 'Account Number',
+          items: updateAccountNumber(nextClientNumber),
         });
-        sendNotification({
-          formValues,
-          notificationKey: 'ExpenseAuthority',
-          toField: () => {
-            return formValues.CASExpAuth[0].account;
-          },
-          newSubmissionId: AddItemsToListResponse[0].d.ID,
-          clientNumber: AddItemsToListResponse[0].d.ClientNumber,
-        });
-      } catch (error) {}
+      } catch (error) {
+        console.log(`error`, error);
+      }
       break;
 
     case 'Approved':
@@ -85,29 +107,29 @@ export const OnSubmit = async (
           });
 
           // team notification
-          sendNotification({
-            formValues,
-            notificationKey: 'TeamWelcome',
-            toField: () =>
-              formValues.TeamNames.filter(
-                (item: string, index: string) =>
-                  formValues.TeamNames.indexOf(item) === index
-              ),
-            newSubmissionId: formValues.ID,
-            clientNumber: formValues.ClientNumber,
-          });
+          // sendNotification({
+          //   formValues,
+          //   notificationKey: 'TeamWelcome',
+          //   toField: () =>
+          //     formValues.TeamNames.filter(
+          //       (item: string, index: string) =>
+          //         formValues.TeamNames.indexOf(item) === index
+          //     ),
+          //   newSubmissionId: formValues.ID,
+          //   clientNumber: formValues.ClientNumber,
+          // });
           //GDX notification
-          sendNotification({
-            formValues,
-            notificationKey: 'GDXApproved',
-            toField: () => {
-              return GDXGroupMembers.map((member: { LoginName: string }) => {
-                return member.LoginName;
-              });
-            },
-            newSubmissionId: formValues.ID,
-            clientNumber: formValues.ClientNumber,
-          });
+          // sendNotification({
+          //   formValues,
+          //   notificationKey: 'GDXApproved',
+          //   toField: () => {
+          //     return GDXGroupMembers.map((member: { LoginName: string }) => {
+          //       return member.LoginName;
+          //     });
+          //   },
+          //   newSubmissionId: formValues.ID,
+          //   clientNumber: formValues.ClientNumber,
+          // });
         } catch (error) {
           console.log(`error`, error);
         }

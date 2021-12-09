@@ -11,8 +11,8 @@ export const PeoplePickerSearch = async ({
   AllowMultipleEntities = false,
   AllUrlZones = false,
   MaximumEntitySuggestions = 50,
-  PrincipalSource = 1,
-  PrincipalType = 1,
+  PrincipalSource = 15,
+  PrincipalType = 15,
 }: PeoplePickerSearchProps) => {
   const options: IRestCall = {
     endPoint:

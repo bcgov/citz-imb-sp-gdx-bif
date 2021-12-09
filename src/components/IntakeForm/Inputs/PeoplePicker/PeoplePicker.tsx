@@ -4,9 +4,12 @@ import {
   Label,
   NormalPeoplePicker,
 } from '@fluentui/react';
+import { useState } from 'react';
+import { EnsureUser } from 'components/ApiCalls/PeoplePickerSearch/EnsureUser';
 import { usePeoplePicker } from 'components/Hooks';
 import { ErrorMessage, Field } from 'formik';
 import './PeoplePicker.css';
+import { EnsureUserLoader } from './EnsureUserLoader';
 const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: 'Suggested People',
   mostRecentlyUsedHeaderText: 'Suggested Contacts',
@@ -32,10 +35,13 @@ export const PeoplePicker = ({
   AllowMultipleValues,
 }: PeoplePickerProps) => {
   const { searchPeople, setFormikValue } = usePeoplePicker();
-
+  const [showEnsureUserLoader, setShowEnsureUserLoader] = useState(false);
   return (
     <>
-      <Field name={fieldName} disabled={status === 'Submitted' ? true : false}>
+      <Field
+        name={fieldName}
+        disabled={status === 'Submitted' && showEnsureUserLoader ? true : false}
+      >
         {(fieldProps: any) => {
           return (
             <div>
@@ -63,11 +69,28 @@ export const PeoplePicker = ({
                     {title}
                   </Label>
                 )}
+                {showEnsureUserLoader && (
+                  <EnsureUserLoader loaderMessage='Adding User' />
+                )}
               </div>
+
               <NormalPeoplePicker
+                disabled={showEnsureUserLoader ? true : false}
                 className='fluentUIPeoplePicker'
-                onChange={(pickerItems: any) => {
-                  setFormikValue(pickerItems, fieldProps, fieldName);
+                onChange={async (pickerItems: any) => {
+                  console.log('pickerItems', pickerItems);
+                  if (pickerItems.length <= 0) {
+                    setShowEnsureUserLoader(false);
+                    setFormikValue(pickerItems, fieldProps, fieldName);
+                  } else {
+                    setShowEnsureUserLoader(true);
+
+                    const ensuredUser = await EnsureUser(
+                      pickerItems[0]?.account
+                    );
+                    setFormikValue(ensuredUser, fieldProps, fieldName);
+                    setShowEnsureUserLoader(false);
+                  }
                 }}
                 itemLimit={AllowMultipleValues ? undefined : 1}
                 onResolveSuggestions={(filterText: any) => {
@@ -85,7 +108,7 @@ export const PeoplePicker = ({
               />
               <ErrorMessage
                 name={fieldName}
-                render={(msg: any) => {
+                render={(msg: string) => {
                   return (
                     <p
                       style={{
@@ -97,7 +120,11 @@ export const PeoplePicker = ({
                         alignItems: 'center',
                       }}
                     >
-                      {msg}
+                      {console.log(
+                        `showEnsureUserLoader`,
+                        showEnsureUserLoader
+                      )}
+                      {showEnsureUserLoader ? 'adding user to your site' : msg}
                     </p>
                   );
                 }}

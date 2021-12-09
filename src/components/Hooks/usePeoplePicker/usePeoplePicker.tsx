@@ -15,6 +15,8 @@ export const usePeoplePicker = () => {
     setTimeout(() => {
       fieldProps.form.setFieldValue(fieldName, pickerItems, true);
       fieldProps.form.setFieldTouched(fieldName, true, true);
+      console.log('setFormikValue');
+
       reset();
     }, 100); //Time before execution
   };
@@ -22,6 +24,7 @@ export const usePeoplePicker = () => {
   const searchPeople = async (filterText?: string) => {
     if (filterText && filterText.length > 2) {
       const results = await PeoplePickerSearch({ filterText });
+      console.log(`results`, results);
       // People picker user properties that are available
       const users = results.map((result: any) => {
         return {

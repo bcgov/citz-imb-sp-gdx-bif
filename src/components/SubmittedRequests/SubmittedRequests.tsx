@@ -88,7 +88,10 @@ export const SubmittedRequests = () => {
       />
     );
 
-  if (query.isError) return <Reauthenticator />;
+  if (query.isError) {
+    console.log(`query.error`, query.error);
+    return <h1>error</h1>;
+  }
   return (
     <>
       <SubmittedRequestsTable

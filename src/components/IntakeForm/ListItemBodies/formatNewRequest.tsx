@@ -18,7 +18,7 @@ export const formatNewRequest = (formValues: any, nextClientNumber: any) => {
     },
     CASExpAuthId: formValues.CASExpAuth[0].userId,
     OtherContactId: {
-      results: formValues.Approver.map((user: any) => user.userId),
+      results: formValues.OtherContact.map((user: any) => user.userId),
     },
     ClientTeamName: `${formValues.Ministry}-${formValues.ClientTeamName}`,
   };

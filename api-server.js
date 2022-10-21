@@ -1,7 +1,7 @@
-const RestProxy = require('sp-rest-proxy')
+const RestProxy = require('sp-rest-proxy');
 const settings = {
-    port: 8081
-}
+  port: 8081,
+};
 
-const restProxy = new RestProxy(settings)
-restProxy.serve()
+const restProxy = new RestProxy(settings);
+restProxy.serve();

@@ -22,46 +22,42 @@ export const GetSubmittedRequests = async () => {
     expand,
     select,
   });
-
   const filteredData = items.map((listItem: any) => {
     const tempItem: any = { ...listItem };
 
-    Object.entries(listItem).forEach(([key, listItemProperty]) => {
-      if (typeof listItemProperty === 'object') {
-        //@ts-expect-error previous if statement ensures it's an object
-        if (listItemProperty.results) {
-          //@ts-expect-error a previous if statement ensures results is a property
-          tempItem[key] = listItemProperty.results
-            .map((person: { Title: string }) => {
-              return person.Title;
-            })
-            .join('; ');
-          //@ts-expect-error a previous if statement ensures results is a property
-          tempItem[key + 'Name'] = listItemProperty.results
-            .map((person: { Name: string }) => {
-              return person.Name;
-            })
-            .join('; ');
-          //@ts-expect-error a previous if statement ensures results is a property
-          tempItem[key + 'Id'] = listItemProperty.results.map(
-            (person: { Id: string }) => {
-              return person.Id;
+    Object.entries(listItem).forEach(
+      ([key, listItemProperty]: [string, any]) => {
+        if (typeof listItemProperty === 'object') {
+          if (listItemProperty.__deferred) {
+            tempItem[key] = null;
+          } else {
+            if (listItemProperty.results) {
+              tempItem[key] = listItemProperty.results
+                .map((person: { Title: string }) => {
+                  return person.Title;
+                })
+                .join('; ');
+              tempItem[key + 'Name'] = listItemProperty.results
+                .map((person: { Name: string }) => {
+                  return person.Name;
+                })
+                .join('; ');
+              tempItem[key + 'Id'] = listItemProperty.results.map(
+                (person: { Id: string }) => {
+                  return person.Id;
+                }
+              );
+            } else if (listItemProperty.Title) {
+              tempItem[key] = listItemProperty.Title;
+              tempItem[key + 'Name'] = listItemProperty.Name;
+              tempItem[key + 'Id'] = listItemProperty.Id;
             }
-          );
-
-          //@ts-expect-error a previous if statement ensures it's an object
-        } else if (listItemProperty.Title) {
-          //@ts-expect-error a previous if statement ensures Title is a property
-          tempItem[key] = listItemProperty.Title;
-          //@ts-expect-error a previous if statement ensures Title is a property
-          tempItem[key + 'Name'] = listItemProperty.Name;
-          //@ts-expect-error a previous if statement ensures Title is a property
-          tempItem[key + 'Id'] = listItemProperty.Id;
+          }
         }
       }
-    });
-
+    );
     return tempItem;
   });
+
   return { listInfo: newListInfo, items: filteredData };
 };

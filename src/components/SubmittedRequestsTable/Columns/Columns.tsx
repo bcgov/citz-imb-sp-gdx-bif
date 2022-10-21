@@ -31,11 +31,16 @@ export const Columns = (
           initialColumns[i].hideOnForm = true;
 
           break;
+        case 'ClientNumber':
+          initialColumns[i].hideOnForm = true;
+
+          break;
+
         default:
       }
     }
 
-    initialColumns.push({
+    initialColumns.unshift({
       accessor: 'editColumn',
       id: 'editColumn',
       onRender: (item?: any, index?: number, column?: IColumn | any) => {
@@ -47,8 +52,8 @@ export const Columns = (
           index
         );
       },
-      key: 'editColumn',
-      name: 'editColumn',
+      key: 'Open Item',
+      name: 'Open Item',
       minWidth: 100,
       maxWidth: 100,
       canSort: false,

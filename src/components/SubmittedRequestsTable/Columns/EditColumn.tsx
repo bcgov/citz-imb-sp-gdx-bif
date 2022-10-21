@@ -10,6 +10,13 @@ export const EditColumn = (
 ) => {
   return (
     <ActionButton
+      styles={{
+        root: {
+          margin: '-11px 0px 0 23px',
+          height: '39px',
+          padding: '0px 4px',
+        },
+      }}
       onClick={() => {
         item.id = column?.filteredRows[index ?? 0].original.Id;
         item.ApproverName =
@@ -31,13 +38,14 @@ export const EditColumn = (
           column?.filteredRows[index ?? 0].original.OtherContactId;
         item.PrimaryContactId =
           column?.filteredRows[index ?? 0].original.PrimaryContactId;
-        item.TeamNames = [].concat(
-          item.ApproverName.split('; '),
-          item.CASExpAuthName.split('; '),
-          item.FinContactName.split('; '),
-          item.OtherContactName.split('; '),
-          item.PrimaryContactName.split('; ')
-        );
+        item.TeamNames = [
+          ...item.ApproverName.split('; '),
+          ...item.CASExpAuthName.split('; '),
+          ...item.FinContactName.split('; '),
+          ...item.PrimaryContactName.split('; '),
+        ];
+        if (item.OtherContactName)
+          item.TeamNames.push(...item.OtherContactName.split('; '));
         setInitialValues(item);
         toggleHideDialog();
       }}

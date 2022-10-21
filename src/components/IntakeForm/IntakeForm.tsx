@@ -3,28 +3,37 @@ import {
   IStackProps,
   IStackStyles,
   Stack,
+  Link,
+  MessageBar,
+  MessageBarType,
 } from '@fluentui/react';
+
 import { Form, Formik } from 'formik';
 import { formSchema } from './FormSchema/formSchema';
 import { OnSubmit } from './SubmitFunctions/OnSubmit';
-import { Render } from './Render';
+import { Render } from './RenderForm';
 import { FormButtons } from './FormButtons';
+import { useQueryClient } from 'react-query';
+import _ from 'lodash';
+import { formStyles } from './formStyles';
 const stackStyles: Partial<IStackStyles> = { root: { width: 650 } };
 const columnProps: Partial<IStackProps> = {
   tokens: { childrenGap: 15 },
   styles: { root: { width: 300 } },
 };
-import _ from 'lodash';
+import React from 'react';
+
 const stackTokens = { childrenGap: 50 };
 
 export const IntakeForm = ({
   columns,
   toggleHideDialog,
   initialValues,
-  clientQuery,
+
   setShowLoader,
   columnsPerRow = 2,
 }: any) => {
+  const clientQuery: any = useQueryClient();
   const definedColumns = columns.filter(
     (item: any) => item.fieldName !== undefined
   );
@@ -41,21 +50,17 @@ export const IntakeForm = ({
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={async (values: any, formikBag: any) => {
+      onSubmit={async (values: any) => {
         setShowLoader(true);
+        clientQuery.invalidateQueries();
         await OnSubmit(
           values,
-          toggleHideDialog,
           clientQuery.queryCache.queries[2].state.data.listInfo
             .ListItemEntityTypeFullName
         );
         clientQuery.invalidateQueries();
-
-        clientQuery.invalidateQueries();
-        clientQuery.invalidateQueries();
-        clientQuery.invalidateQueries();
-        clientQuery.invalidateQueries();
-        clientQuery.invalidateQueries();
+        toggleHideDialog();
+        console.log(`values`, values);
         setShowLoader(false);
       }}
       validationSchema={formSchema(
@@ -64,7 +69,7 @@ export const IntakeForm = ({
     >
       {(form) => {
         return (
-          <Form style={{ background: 'white', padding: '32px' }}>
+          <Form style={formStyles(initialValues.Status)}>
             {filteredFields.map((column: any, i: number) => {
               return (
                 <Stack
@@ -100,10 +105,38 @@ export const IntakeForm = ({
                 </Stack>
               );
             })}
+            <div>
+              {' '}
+              <br />
+              <MessageBar
+                messageBarType={MessageBarType.warning}
+                messageBarIconProps={{
+                  iconName: 'InfoSolid',
+                }}
+              >
+                <h3 id='test'>Agreement:</h3>
+                <Link
+                  target='_blank'
+                  href={
+                    _spPageContextInfo.webAbsoluteUrl +
+                    '/Shared%20Documents/GDX%20Service%20Billing%20Authorization%20Agreement.pdf'
+                  }
+                  underline
+                >
+                  GDX Service Billing Authorization Agreement
+                </Link>
+              </MessageBar>
+            </div>
 
             <DialogFooter>
               <Stack {...columnProps} horizontal>
-                {FormButtons(toggleHideDialog, initialValues.Status, form)}
+                {FormButtons(
+                  toggleHideDialog,
+                  initialValues.Status,
+                  form,
+                  clientQuery.getQueryData('CurrentUser'),
+                  initialValues.CASExpAuthName
+                )}
               </Stack>
             </DialogFooter>
           </Form>

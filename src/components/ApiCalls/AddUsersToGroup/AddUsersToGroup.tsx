@@ -1,5 +1,6 @@
 import { RestCall } from '../RestCall/RestCall';
 import { IAddUsersToGroup } from '../../Interfaces';
+import { formatDiagnostic } from 'typescript';
 export const AddUsersToGroup = async ({
   groupId,
   groupName,
@@ -17,7 +18,7 @@ export const AddUsersToGroup = async ({
 
   const responses: any = [];
 
-  loginNames.forEach(async (loginName) => {
+  for (let i = 0; i < loginNames.length; i++) {
     const response = await RestCall({
       endPoint: endPoint,
       method: 'post',
@@ -25,11 +26,11 @@ export const AddUsersToGroup = async ({
         __metadata: {
           type: 'SP.User',
         },
-        LoginName: loginName,
+        LoginName: loginNames[i],
       },
     });
-
+    console.log(`response`, i, response);
     responses.push(response);
-  });
+  }
   return responses;
 };

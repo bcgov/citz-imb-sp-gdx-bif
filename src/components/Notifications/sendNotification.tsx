@@ -1,44 +1,45 @@
 import { SendEmail, GetUser } from 'components/ApiCalls';
-import { IreplacementPair } from '../Interfaces';
+import { ISendNotification } from '../Interfaces';
 import { GetListItems, GetCurrentUser } from '../ApiCalls';
 
-export const sendNotification = async (
-  formValues: any,
-  notificationKey: string,
-  nextClientNumber?: number
-) => {
+export const sendNotification = async ({
+  formValues,
+  notificationKey,
+  toField,
+  newSubmissionId,
+  clientNumber,
+}: ISendNotification) => {
   const currentUser: any = await GetCurrentUser();
-
   const standardReplacementPairs: any = {
-    '[SubmitterDisplayName]': currentUser.Title, //!replace with submitter variable
-    '[SiteLink]': `<a href='${_spPageContextInfo.webAbsoluteUrl}'>${_spPageContextInfo.webTitle}</a>`,
-    '[ExpenseAuthority]': <b>{formValues.CASExpAuth}</b>,
-    '[ClientAccountName]': <b>{formValues.ClientName}</b>,
-    '[ClientAccountNumber]': nextClientNumber,
-    '[PrimaryContact]': <b>{formValues.PrimaryContact}</b>,
-    '[Approvers]': <b>{formValues.Approver}</b>,
-    '[FinancialContacts]': <b>{formValues.FinContact}</b>,
+    '[SiteLink]': `<a href='${_spPageContextInfo.webAbsoluteUrl}/SitePages/GDXBIF.aspx?GDXBIFID=${newSubmissionId}'>${_spPageContextInfo.webTitle}</a>`,
+    '[SubmitterDisplayName]': currentUser.Title,
+    '[ExpenseAuthority]': formValues.CASExpAuth,
+    '[ClientAccountName]': formValues.ClientTeamName,
+    '[PrimaryContact]': formValues.PrimaryContact,
+    '[Approvers]': formValues.Approver,
+    '[FinancialContacts]': formValues.FinContact,
+    '[ClientAccountNumber]': clientNumber,
+    '[AgreementURL]': `<a href='${_spPageContextInfo.webAbsoluteUrl}/Shared%20Documents/GDX%20Service%20Billing%20Authorization%20Agreement.pdf'>GDX Service Billing Authorization Agreement</a>`,
+    'href="/sites/': 'href="https://citz.sp.gov.bc.ca/sites/',
   };
-
   const allNotifications: any = await GetListItems({
     listName: 'NotificationsConfig',
   });
-
   const body: any = () => {
     let tempBody;
     for (let i = 0; i < allNotifications.length; i++) {
       if (allNotifications[i].key === notificationKey) {
         tempBody = allNotifications[i].body.replace(
-          /\[SubmitterDisplayName\]|\[ExpenseAuthority\]|\[FinancialContacts\]|\[ClientAccountName\]|\[ClientAccountNumber\]|\[PrimaryContact\]|\[Approvers\]|\[SiteLink\]/gi,
-          function (matched: any) {
-            return standardReplacementPairs[matched];
+          /\[SiteLink\]|\[SubmitterDisplayName\]|\[ExpenseAuthority\]|\[FinancialContacts\]|\[ClientAccountName\]|\[ClientAccountNumber\]|\[PrimaryContact\]|\[Approvers\]|\[AgreementURL\]|href="\/sites\//gi,
+          (matched: any) => {
+            const temp = standardReplacementPairs[matched];
+            return temp;
           }
         );
       }
     }
     return tempBody;
   };
-
   const subject = () => {
     for (let i = 0; i < allNotifications.length; i++) {
       if (allNotifications[i].key === notificationKey) {
@@ -46,14 +47,10 @@ export const sendNotification = async (
       }
     }
   };
-
+  body();
   await SendEmail({
-    to: [
-      'i:0ǵ.t|bcgovidp|fc2ed940df8a443db9eab7c8769b9840',
-      'i:0ǵ.t|bcgovidp|1e9f2b4e96094ae2a9cba4387a9f668d',
-    ], //!needs to be updated
+    to: [...toField(), currentUser.LoginName], //!needs to be updated
     subject: subject(),
     body: body(),
-    cc: [currentUser.LoginName],
   });
 };

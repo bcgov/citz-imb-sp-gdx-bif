@@ -28,6 +28,8 @@ export const UpdateListItem = async ({
       ...item,
       __metadata: { type: listResponse.ListItemEntityTypeFullName },
     };
+    console.log(`tempItem`, tempItem);
+    console.log(`URL:   ${endPoint}(${tempItem.Id})`);
     const response = await RestCall({
       endPoint: `${endPoint}(${tempItem.Id})`,
       method: 'merge',

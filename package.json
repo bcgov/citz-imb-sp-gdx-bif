@@ -6,9 +6,11 @@
     "@fluentui/react": "^8.9.4",
     "@fluentui/react-hooks": "^8.1.1",
     "@material-ui/core": "^4.11.3",
+    "@types/react-router-dom": "^5.1.7",
     "formik": "^2.2.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-iframe": "^1.8.0",
     "react-query": "^3.13.6",
     "react-scripts": "^4.0.3",
     "react-table": "^7.6.3",
@@ -16,7 +18,7 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3007 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -26,7 +28,8 @@
     "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "devbuild": "react-scripts build && gulp dev",
     "uatbuild": "react-scripts build && gulp uat",
-    "devuatbuild": "react-scripts build && gulp devuat"
+    "devuatbuild": "react-scripts build && gulp devuat",
+    "prodbuild": "react-scripts build && gulp prod"
   },
   "eslintConfig": {
     "extends": [
@@ -73,6 +76,7 @@
     "gulp-concat": "^2.6.1",
     "husky": "^4.3.8",
     "lint-staged": "^10.5.4",
+    "lottie-web": "^5.7.13",
     "prettier": "^2.2.1",
     "sp-rest-proxy": "^3.0.5",
     "typescript": "^4.1.5"

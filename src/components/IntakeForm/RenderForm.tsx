@@ -1,6 +1,6 @@
 import React from 'react';
 import { RenderInputs } from './RenderInputs';
-import { RenderReadOnly } from './RenderReadOnly';
+import { RenderReadInputs } from './RenderReadInputs';
 export const Render = (
   fieldType: number,
   fieldName: string,
@@ -26,7 +26,7 @@ export const Render = (
     case 'Submitted':
     case 'Approved':
     case 'Rejected':
-      return RenderReadOnly(
+      return RenderReadInputs(
         name,
         hideOnForm,
         description,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField, Label } from '@fluentui/react';
 import { Field } from 'formik';
-export const RenderReadOnly = (
+export const RenderReadInputs = (
   name: string,
   hideOnForm: boolean,
   description: string,

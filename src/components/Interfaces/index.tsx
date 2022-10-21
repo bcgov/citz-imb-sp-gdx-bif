@@ -17,7 +17,7 @@ export interface IAddUsersToGroup {
 }
 
 export interface IGetGroupMembers {
-  groupId: number;
+  groupId?: number;
   groupName?: string;
 }
 
@@ -31,4 +31,23 @@ export interface IAddItemsToList {
   listName: string;
   items: any;
   ListItemEntityTypeFullName?: string;
+}
+export interface userToEmail {
+  account: string;
+  text: string;
+  userId: string;
+}
+
+export interface IChangeGroupOwner {
+  baseurl?: string;
+  groupIdentifier: string | number;
+  ownerIdentifier: string | number;
+}
+
+export interface ISendNotification {
+  formValues: any;
+  notificationKey: string;
+  toField(): Array<string>;
+  newSubmissionId?: number;
+  clientNumber?: number;
 }

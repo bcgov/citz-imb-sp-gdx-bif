@@ -1,13 +1,14 @@
 import { GetListItems } from 'components/ApiCalls';
 
 export const getNextClientNumber = async () => {
-  const listName = 'Client Accounts';
-
-  const listItems = await GetListItems({ listName });
-
-  const clientNumbers: Array<number> = listItems.map((item: any) => {
-    return parseInt(item.Title);
+  const clientNumberListItems = await GetListItems({
+    listName: 'Account Number',
   });
+  const clientNumbers: Array<number> = clientNumberListItems.map(
+    (item: any) => {
+      return parseInt(item.number);
+    }
+  );
 
   return Math.max(...clientNumbers) + 1;
 };

@@ -1,8 +1,10 @@
-import { Dialog, DialogType } from '@fluentui/react';
+import { Dialog, DialogType, FontIcon } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
 import * as React from 'react';
 import { Loader } from '../Loader';
 import { dialogStyles } from './Styles';
+import { CheckMark, XMark } from '../VectorAnimations';
+import './formDialog.css';
 export const FormDialog = ({
   hideDialog,
   toggleHideDialog,
@@ -12,15 +14,23 @@ export const FormDialog = ({
 }: any) => {
   const dialogContentProps = {
     type: DialogType.normal,
-    title: showLoader
-      ? 'In Progress'
-      : status === 'New'
-      ? 'New'
-      : status === 'Submitted'
-      ? 'Request for Approval'
-      : status === 'Approved'
-      ? 'Approved'
-      : 'Rejected',
+    title: showLoader ? (
+      'In Progress'
+    ) : status === 'New' ? (
+      'New'
+    ) : status === 'Submitted' ? (
+      'Request for Approval'
+    ) : status === 'Approved' ? (
+      <div style={{ display: 'flex' }}>
+        <h3 style={{ marginTop: '15px' }}>Approved</h3>
+        <CheckMark />
+      </div>
+    ) : (
+      <div style={{ display: 'flex' }}>
+        <h3 style={{ marginTop: '5px' }}>Rejected</h3>
+        <XMark />
+      </div>
+    ),
     closeButtonAriaLabel: 'Close',
     subText: showLoader
       ? ''
@@ -47,43 +57,47 @@ export const FormDialog = ({
   );
 
   return (
-    <Dialog
-      hidden={hideDialog}
-      onDismiss={toggleHideDialog}
-      dialogContentProps={dialogContentProps}
-      modalProps={modalProps}
-      maxWidth={3000}
-      styles={
-        !showLoader
-          ? dialogStyles(status)
-          : {
+    <>
+      <Dialog
+        className='formDialog'
+        hidden={hideDialog}
+        onDismiss={toggleHideDialog}
+        dialogContentProps={dialogContentProps}
+        modalProps={modalProps}
+        maxWidth={3000}
+        responsiveMode={0}
+        styles={
+          !showLoader
+            ? dialogStyles(status)
+            : {
+                main: {
+                  background: 'linear-gradient(7deg, black, transparent)',
+                },
+              }
+        }
+      >
+        {showLoader ? (
+          <Loader
+            styles={{
               main: {
-                background: 'linear-gradient(7deg, black, transparent)',
+                color: 'white',
               },
+              // progressBar: {
+              //   background:
+              //     'linear-gradient(to right, rgb(237, 235, 233) 0%, rgb(0 212 23) 50%, rgb(237, 235, 233) 100%)',
+              // },
+            }}
+            label={<p style={{ color: 'white' }}>Submitting Data</p>}
+            description={
+              <p style={{ color: 'white' }}>
+                Please DO NOT close or refresh this tab...
+              </p>
             }
-      }
-    >
-      {showLoader ? (
-        <Loader
-          styles={{
-            main: {
-              color: 'white',
-            },
-            // progressBar: {
-            //   background:
-            //     'linear-gradient(to right, rgb(237, 235, 233) 0%, rgb(0 212 23) 50%, rgb(237, 235, 233) 100%)',
-            // },
-          }}
-          label={<p style={{ color: 'white' }}>Submitting Data</p>}
-          description={
-            <p style={{ color: 'white' }}>
-              Please DO NOT close or refresh this tab...
-            </p>
-          }
-        />
-      ) : (
-        content
-      )}
-    </Dialog>
+          />
+        ) : (
+          content
+        )}
+      </Dialog>
+    </>
   );
 };

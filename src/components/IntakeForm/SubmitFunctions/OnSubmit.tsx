@@ -107,29 +107,29 @@ export const OnSubmit = async (
           });
 
           // team notification
-          // sendNotification({
-          //   formValues,
-          //   notificationKey: 'TeamWelcome',
-          //   toField: () =>
-          //     formValues.TeamNames.filter(
-          //       (item: string, index: string) =>
-          //         formValues.TeamNames.indexOf(item) === index
-          //     ),
-          //   newSubmissionId: formValues.ID,
-          //   clientNumber: formValues.ClientNumber,
-          // });
-          //GDX notification
-          // sendNotification({
-          //   formValues,
-          //   notificationKey: 'GDXApproved',
-          //   toField: () => {
-          //     return GDXGroupMembers.map((member: { LoginName: string }) => {
-          //       return member.LoginName;
-          //     });
-          //   },
-          //   newSubmissionId: formValues.ID,
-          //   clientNumber: formValues.ClientNumber,
-          // });
+          sendNotification({
+            formValues,
+            notificationKey: 'TeamWelcome',
+            toField: () =>
+              formValues.TeamNames.filter(
+                (item: string, index: string) =>
+                  formValues.TeamNames.indexOf(item) === index
+              ),
+            newSubmissionId: formValues.ID,
+            clientNumber: formValues.ClientNumber,
+          });
+          // GDX notification
+          sendNotification({
+            formValues,
+            notificationKey: 'GDXApproved',
+            toField: () => {
+              return GDXGroupMembers.map((member: { LoginName: string }) => {
+                return member.LoginName;
+              });
+            },
+            newSubmissionId: formValues.ID,
+            clientNumber: formValues.ClientNumber,
+          });
         } catch (error) {
           console.log(`error`, error);
         }

@@ -6,7 +6,7 @@ gulp.task('build-script-dev', function () {
     .src('./build/static/js/*.js')
     .pipe(concat('gdxintake.js'))
     .pipe(gulp.dest('./dist/js'))
-    .pipe(gulp.dest('a:/GDXBIF/SiteAssets/js')); //dev
+    // .pipe(gulp.dest('a:/GDXBIF/SiteAssets/js')); //dev
   // .pipe(gulp.dest('y:/VDRoom/SiteAssets/js'))  //uat (dev)
 });
 
@@ -15,7 +15,7 @@ gulp.task('build-css-dev', function () {
     .src('./build/static/css/*.css')
     .pipe(concat('gdxintake.css'))
     .pipe(gulp.dest('./dist/css'))
-    .pipe(gulp.dest('a:/GDXBIF/SiteAssets/css')); //dev
+    // .pipe(gulp.dest('a:/GDXBIF/SiteAssets/css')); //dev
 });
 
 gulp.task('build-script-uat', function () {
@@ -23,7 +23,7 @@ gulp.task('build-script-uat', function () {
     .src('./build/static/js/*.js')
     .pipe(concat('gdxintake.js'))
     .pipe(gulp.dest('./dist/js'))
-    .pipe(gulp.dest('b:/GDXBIF/SiteAssets/js')); //uat
+    // .pipe(gulp.dest('b:/GDXBIF/SiteAssets/js')); //uat
 });
 
 gulp.task('build-css-uat', function () {
@@ -31,7 +31,7 @@ gulp.task('build-css-uat', function () {
     .src('./build/static/css/*.css')
     .pipe(concat('gdxintake.css'))
     .pipe(gulp.dest('./dist/css'))
-    .pipe(gulp.dest('b:/GDXBIF/SiteAssets/css')); //uat
+    // .pipe(gulp.dest('b:/GDXBIF/SiteAssets/css')); //uat
 });
 
 gulp.task('build-script-prod', function () {
@@ -39,7 +39,7 @@ gulp.task('build-script-prod', function () {
     .src('./build/static/js/*.js')
     .pipe(concat('gdxintake.js'))
     .pipe(gulp.dest('./dist/js'))
-    .pipe(gulp.dest('e:/SiteAssets/js')); //prod
+    // .pipe(gulp.dest('e:/SiteAssets/js')); //prod
 });
 
 gulp.task('build-css-prod', function () {
@@ -47,7 +47,7 @@ gulp.task('build-css-prod', function () {
     .src('./build/static/css/*.css')
     .pipe(concat('gdxintake.css'))
     .pipe(gulp.dest('./dist/css'))
-    .pipe(gulp.dest('e:/SiteAssets/css')); //prod
+    // .pipe(gulp.dest('e:/SiteAssets/css')); //prod
 });
 
 gulp.task('build-script-devuat', function () {
@@ -55,7 +55,7 @@ gulp.task('build-script-devuat', function () {
     .src('./build/static/js/*.js')
     .pipe(concat('gdxintake.js'))
     .pipe(gulp.dest('./dist/js'))
-    .pipe(gulp.dest('b:/GDXBIFUAT/SiteAssets/js')); //uat
+    // .pipe(gulp.dest('b:/GDXBIFUAT/SiteAssets/js')); //uat
 });
 
 gulp.task('build-css-devuat', function () {
@@ -63,7 +63,7 @@ gulp.task('build-css-devuat', function () {
     .src('./build/static/css/*.css')
     .pipe(concat('gdxintake.css'))
     .pipe(gulp.dest('./dist/css'))
-    .pipe(gulp.dest('b:/GDXBIFUAT/SiteAssets/css')); //uat
+    // .pipe(gulp.dest('b:/GDXBIFUAT/SiteAssets/css')); //uat
 });
 
 gulp.task('dev', gulp.parallel(['build-script-dev', 'build-css-dev']));

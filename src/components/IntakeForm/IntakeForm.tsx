@@ -51,6 +51,7 @@ export const IntakeForm = ({
     <Formik
       initialValues={initialValues}
       onSubmit={async (values: any) => {
+        console.log('values', values);
         setShowLoader(true);
         clientQuery.invalidateQueries();
         await OnSubmit(

@@ -9,6 +9,7 @@ export const sendNotification = async ({
   newSubmissionId,
   clientNumber,
 }: ISendNotification) => {
+  console.log('...toField()', ...toField());
   const currentUser: any = await GetCurrentUser();
   const standardReplacementPairs: any = {
     '[SiteLink]': `<a href='${_spPageContextInfo.webAbsoluteUrl}/SitePages/GDXBIF.aspx?GDXBIFID=${newSubmissionId}'>${_spPageContextInfo.webTitle}</a>`,

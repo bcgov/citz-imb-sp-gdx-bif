@@ -52,15 +52,19 @@ export const OnSubmit = async (
           }
         }
 
-        // sendNotification({
-        //   formValues,
-        //   notificationKey: 'ExpenseAuthority',
-        //   toField: () => {
-        //     return formValues.CASExpAuth[0].account;
-        //   },
-        //   newSubmissionId: AddItemsToListResponse[0].d.ID,
-        //   clientNumber: AddItemsToListResponse[0].d.ClientNumber,
-        // });
+        sendNotification({
+          formValues,
+          notificationKey: 'ExpenseAuthority',
+          toField: () => {
+            return formValues.CASExpAuth.concat(formValues.PrimaryContact).map(
+              (userAccount: any) => {
+                return userAccount.account;
+              }
+            );
+          },
+          newSubmissionId: AddItemsToListResponse[0].d.ID,
+          clientNumber: AddItemsToListResponse[0].d.ClientNumber,
+        });
         UpdateListItem({
           listName: 'Account Number',
           items: updateAccountNumber(nextClientNumber),
@@ -72,7 +76,6 @@ export const OnSubmit = async (
 
     case 'Approved':
       try {
-        console.log(`formValues.TeamNames`, formValues.TeamNames);
         const createGroupResponse = await CreateGroup({
           groupName: `Service Billing - ${formValues.ClientNumber}`,
           allowMembersEditMembership: true,
